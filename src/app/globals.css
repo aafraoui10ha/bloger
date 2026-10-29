@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Components use the semantic names (bg, fg, muted, accent…),
+   never raw palette values, so light/dark themes stay consistent.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Brand palette (flat colours only, no gradients). */
+  --ink: #290044;
+  --plum: #500071;
+  --berry: #8a2a78;
+  --cream: #eee3b0;
+
+  --bg: #faf7ea;
+  --surface: #ffffff;
+  --surface-2: #f4eed3;
+  --fg: #290044;
+  --muted: #5d4a69;
+  --border: #e6ddbd;
+  --border-strong: #cbbd8c;
+  --accent: #500071;
+  --accent-hover: #290044;
+  --accent-fg: #eee3b0;
+  --accent-soft: #f3e7f1;
+  --accent-2: #8a2a78;
+  --success: #17803d;
+  --success-soft: #e6f4ea;
+  --warning: #8a5300;
+  --warning-soft: #fbf1dc;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --focus: #8a2a78;
+  --band-bg: #290044;
+  --shadow: 0 1px 0 rgb(41 0 68 / 0.06);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #290044;
+  --surface: #33004f;
+  --surface-2: #3e0060;
+  --fg: #eee3b0;
+  --muted: #cdbcd5;
+  --border: #4d0f69;
+  --border-strong: #6e1f86;
+  --accent: #eee3b0;
+  --accent-hover: #f8f0cf;
+  --accent-fg: #290044;
+  --accent-soft: #4a0d66;
+  --accent-2: #eab8dc;
+  --success: #6fd394;
+  --success-soft: #123a24;
+  --warning: #f0c060;
+  --warning-soft: #3a2a0c;
+  --danger: #ff9b92;
+  --danger-soft: #4a1520;
+  --focus: #eee3b0;
+  --band-bg: #500071;
+  --shadow: none;
+  color-scheme: dark;
+}
+
+/* A solid brand band (header, hero, footer): re-maps the semantic tokens so any
+   component placed inside it gets cream-on-purple colours automatically. */
+.band {
+  --surface: var(--band-bg);
+  --surface-2: #3e0060;
+  --fg: #eee3b0;
+  --muted: #d6c8dc;
+  --border: #4d0f69;
+  --border-strong: #6e1f86;
+  --accent: #eee3b0;
+  --accent-hover: #fff7d8;
+  --accent-fg: #290044;
+  --accent-soft: #500071;
+  --accent-2: #eee3b0;
+  --focus: #eee3b0;
+  background: var(--band-bg);
+  color: var(--fg);
+}
+.dark .band {
+  --surface-2: #640a88;
+  --border: #6e1f86;
+  --accent-soft: #640a88;
+}
+/* Header rows: deep purple utility strip above a plum navigation row. */
+.band-ink {
+  --band-bg: #290044;
+}
+.dark .band-ink {
+  --band-bg: #1f0034;
+  --border: #4d0f69;
+}
+.band-plum {
+  --band-bg: #500071;
+  --surface-2: #640a88;
+  --border: #6e1f86;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
+  --color-ink: var(--ink);
+  --color-plum: var(--plum);
+  --color-berry: var(--berry);
+  --color-cream: var(--cream);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --shadow-card: var(--shadow);
+  --font-sans: var(--font-latin), var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 1.25rem;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-arabic), var(--font-latin), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Before GSAP runs, animated elements start transparent. The class is added by an
+   inline script only when motion is allowed, and removed if GSAP fails to start. */
+.motion-ok [data-reveal],
+.motion-ok [data-anim-step] {
+  opacity: 0;
+}
+
+::selection {
+  background: var(--berry);
+  color: var(--cream);
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+   --------------------------------------------------------------------------- */
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+@utility card {
+  @apply rounded-[var(--radius-card)] border border-border bg-surface shadow-card;
+}
+@utility btn {
+  @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-[color,background-color,border-color,transform] duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-accent-fg hover:bg-accent-hover active:translate-y-px;
+}
+@utility btn-secondary {
+  @apply btn border border-border-strong bg-surface text-fg hover:border-accent hover:bg-surface-2;
+}
+@utility btn-ghost {
+  @apply btn text-fg hover:bg-surface-2;
+}
+@utility btn-danger {
+  @apply btn bg-danger text-white hover:opacity-90;
+}
+@utility btn-sm {
+  @apply min-h-8 px-3 py-1 text-xs;
+}
+@utility input {
+  @apply block w-full rounded-xl border border-border-strong bg-surface px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:opacity-60;
+}
+@utility label {
+  @apply mb-1 block text-sm font-medium text-fg;
+}
+@utility hint {
+  @apply mt-1 text-xs text-muted;
+}
+@utility eyebrow {
+  @apply text-xs font-bold tracking-[0.14em] text-accent-2 uppercase;
+}
+@utility icon-tile {
+  @apply grid size-11 place-items-center rounded-xl bg-plum text-cream;
+}
+@utility card-hover {
+  @apply transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent-2;
+}
+@utility badge {
+  @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium;
+}
+@utility alert {
+  @apply rounded-lg border px-4 py-3 text-sm;
+}
+@utility alert-error {
+  @apply alert border-danger/30 bg-danger-soft text-danger;
+}
+@utility alert-success {
+  @apply alert border-success/30 bg-success-soft text-success;
+}
+@utility alert-warning {
+  @apply alert border-warning/30 bg-warning-soft text-warning;
+}
+@utility alert-info {
+  @apply alert border-accent/30 bg-accent-soft text-fg;
+}
+
+/* Long-form content (articles, legal pages, tool explanations). */
+.prose-content {
+  max-width: 72ch;
+  font-size: 1.0625rem;
+}
+.prose-content > * + * {
+  margin-top: 1em;
+}
+.prose-content h2 {
+  margin-top: 2em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  scroll-margin-top: 5rem;
+}
+.prose-content h3 {
+  margin-top: 1.6em;
+  font-size: 1.2rem;
+  font-weight: 650;
+  scroll-margin-top: 5rem;
+}
+.prose-content a {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-content ul {
+  list-style: disc;
+  padding-inline-start: 1.5em;
+}
+.prose-content ol {
+  list-style: decimal;
+  padding-inline-start: 1.5em;
+}
+.prose-content li + li {
+  margin-top: 0.35em;
+}
+.prose-content blockquote {
+  border-inline-start: 3px solid var(--border-strong);
+  padding-inline-start: 1em;
+  color: var(--muted);
+}
+.prose-content code {
+  background: var(--surface-2);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+.prose-content pre {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+}
+.prose-content pre code {
+  background: none;
+  padding: 0;
+}
+.prose-content img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+.prose-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.prose-content th,
+.prose-content td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.75em;
+  text-align: start;
+}
+
+/* TipTap editor surface */
+.tiptap {
+  min-height: 320px;
+  outline: none;
+}
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  float: inline-start;
+  height: 0;
+  pointer-events: none;
+}

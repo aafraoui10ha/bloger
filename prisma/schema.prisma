@@ -1,0 +1,572 @@
+// Toolbox Atlas database schema.
+// Shared identity lives on the parent model (Article, Tool, Category, Page);
+// editable localized content lives on the *Translation models.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Locale {
+  en
+  fr
+  ar
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  AUTHOR
+}
+
+enum ContentStatus {
+  DRAFT
+  IN_REVIEW
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CategoryKind {
+  ARTICLE
+  TOOL
+}
+
+enum RevisionKind {
+  AUTOSAVE
+  MANUAL
+  PUBLISH
+  RESTORE
+}
+
+enum StructuredDataType {
+  NONE
+  ARTICLE
+  BLOG_POSTING
+}
+
+enum MediaStorage {
+  DATABASE
+  S3
+}
+
+enum NavLocation {
+  HEADER
+  FOOTER
+  SOCIAL
+}
+
+enum AdMode {
+  TEST
+  LIVE
+}
+
+enum AdApprovalStatus {
+  NOT_APPLIED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  UNKNOWN
+}
+
+enum ConsentMode {
+  BUILT_IN
+  EXTERNAL_CMP
+}
+
+// ---------------------------------------------------------------------------
+// Users, sessions and authentication
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique @db.VarChar(254)
+  name         String
+  passwordHash String
+  role         Role      @default(AUTHOR)
+  locale       Locale    @default(en)
+  bio          String?   @db.Text
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions      Session[]
+  resetTokens   PasswordResetToken[]
+  articles      Article[]            @relation("ArticleAuthor")
+  revisions     ArticleRevision[]
+  pageRevisions PageRevision[]
+  media         MediaAsset[]
+  auditLogs     AuditLog[]
+  pageEdits     PageTranslation[]
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  tokenHash  String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  userAgent  String?  @db.VarChar(255)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+/// Fixed-window counters used for rate limiting (works on serverless hosts).
+model RateLimit {
+  key         String   @id @db.VarChar(255)
+  count       Int
+  windowStart DateTime
+}
+
+// ---------------------------------------------------------------------------
+// Categories and tags
+// ---------------------------------------------------------------------------
+
+model Category {
+  id        String       @id @default(cuid())
+  kind      CategoryKind
+  icon      String?
+  order     Int          @default(0)
+  imageId   String?
+  image     MediaAsset?  @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  translations CategoryTranslation[]
+  articles     Article[]
+  tools        Tool[]
+
+  @@index([kind, order])
+}
+
+model CategoryTranslation {
+  id             String       @id @default(cuid())
+  categoryId     String
+  category       Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  kind           CategoryKind
+  locale         Locale
+  name           String
+  slug           String
+  description    String?      @db.Text
+  seoTitle       String?      @db.VarChar(255)
+  seoDescription String?      @db.VarChar(500)
+
+  @@unique([categoryId, locale])
+  @@unique([kind, locale, slug])
+}
+
+model Tag {
+  id        String       @id @default(cuid())
+  locale    Locale
+  name      String
+  slug      String
+  createdAt DateTime     @default(now())
+  articles  ArticleTag[]
+
+  @@unique([locale, slug])
+}
+
+model ArticleTag {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@index([tagId])
+}
+
+// ---------------------------------------------------------------------------
+// Articles
+// ---------------------------------------------------------------------------
+
+model Article {
+  id               String        @id @default(cuid())
+  status           ContentStatus @default(DRAFT)
+  authorId         String
+  author           User          @relation("ArticleAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+  categoryId       String?
+  category         Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  featuredImageId  String?
+  featuredImage    MediaAsset?   @relation(fields: [featuredImageId], references: [id], onDelete: SetNull)
+  /// When status is SCHEDULED, the moment it becomes public.
+  publishAt        DateTime?
+  /// First publication time; never moved by later updates.
+  publishedAt      DateTime?
+  /// Last substantive update of published content.
+  contentUpdatedAt DateTime?
+  archivedAt       DateTime?
+  isDemo           Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  translations ArticleTranslation[]
+  revisions    ArticleRevision[]
+  tags         ArticleTag[]
+  relatedFrom  ArticleRelation[]    @relation("RelatedFrom")
+  relatedTo    ArticleRelation[]    @relation("RelatedTo")
+  toolLinks    ArticleTool[]
+
+  @@index([status, publishAt])
+  @@index([categoryId])
+  @@index([authorId])
+}
+
+model ArticleTranslation {
+  id                 String             @id @default(cuid())
+  articleId          String
+  article            Article            @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  locale             Locale
+  title              String             @db.VarChar(255)
+  slug               String
+  excerpt            String             @default("") @db.VarChar(1000)
+  contentHtml        String             @db.LongText
+  /// FAQ entries: [{ q: string, a: string }]. Validated with Zod on write.
+  faq                Json
+  readingTimeMinutes Int                @default(1)
+  featuredImageAlt   String?            @db.VarChar(500)
+  seoTitle           String?            @db.VarChar(255)
+  seoDescription     String?            @db.VarChar(500)
+  canonicalUrl       String?            @db.VarChar(1000)
+  ogTitle            String?            @db.VarChar(255)
+  ogDescription      String?            @db.VarChar(500)
+  robotsNoindex      Boolean            @default(false)
+  robotsNofollow     Boolean            @default(false)
+  structuredData     StructuredDataType @default(BLOG_POSTING)
+  /// A translation is only public when an editor marks it complete.
+  isComplete         Boolean            @default(false)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  @@unique([articleId, locale])
+  @@unique([locale, slug])
+}
+
+model ArticleRevision {
+  id          String       @id @default(cuid())
+  articleId   String
+  article     Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  locale      Locale
+  kind        RevisionKind
+  title       String       @db.VarChar(255)
+  excerpt     String       @db.VarChar(1000)
+  contentHtml String       @db.LongText
+  faq         Json
+  userId      String?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime     @default(now())
+
+  @@index([articleId, locale, createdAt])
+}
+
+model ArticleRelation {
+  fromId String
+  toId   String
+  from   Article @relation("RelatedFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to     Article @relation("RelatedTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@id([fromId, toId])
+}
+
+model ArticleTool {
+  articleId String
+  toolId    String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tool      Tool    @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, toolId])
+}
+
+// ---------------------------------------------------------------------------
+// Tools (metadata only — functionality lives in version-controlled modules)
+// ---------------------------------------------------------------------------
+
+model Tool {
+  id         String    @id @default(cuid())
+  /// Must match a module key in src/tools/registry.ts. Never executable content.
+  moduleKey  String    @unique
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  icon       String    @default("wrench")
+  order      Int       @default(0)
+  featured   Boolean   @default(false)
+  enabled    Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  translations ToolTranslation[]
+  relatedFrom  ToolRelation[]    @relation("ToolRelatedFrom")
+  relatedTo    ToolRelation[]    @relation("ToolRelatedTo")
+  adPlacements ToolAdPlacement[]
+  articleLinks ArticleTool[]
+
+  @@index([enabled, featured, order])
+}
+
+model ToolTranslation {
+  id               String   @id @default(cuid())
+  toolId           String
+  tool             Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  locale           Locale
+  slug             String
+  title            String   @db.VarChar(255)
+  shortDescription String   @db.VarChar(500)
+  /// Sanitized HTML: purpose, how-it-works explanation.
+  aboutHtml        String   @db.Text
+  /// Ordered steps, one per entry.
+  steps            Json
+  /// Examples, one per entry.
+  examples         Json
+  /// FAQ entries: [{ q, a }].
+  faq              Json
+  seoTitle         String?  @db.VarChar(255)
+  seoDescription   String?  @db.VarChar(500)
+  isComplete       Boolean  @default(false)
+  updatedAt        DateTime @updatedAt
+
+  @@unique([toolId, locale])
+  @@unique([locale, slug])
+}
+
+model ToolRelation {
+  fromId String
+  toId   String
+  from   Tool   @relation("ToolRelatedFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to     Tool   @relation("ToolRelatedTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@id([fromId, toId])
+}
+
+model ToolAdPlacement {
+  toolId      String
+  placementId String
+  tool        Tool        @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  placement   AdPlacement @relation(fields: [placementId], references: [id], onDelete: Cascade)
+
+  @@id([toolId, placementId])
+}
+
+// ---------------------------------------------------------------------------
+// Static pages
+// ---------------------------------------------------------------------------
+
+model Page {
+  id        String   @id @default(cuid())
+  /// Stable identifier: about, contact, privacy, terms, cookies, editorial-policy, corrections.
+  key       String   @unique
+  /// Legal pages show a "requires qualified legal review" flag in the dashboard.
+  isLegal   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations PageTranslation[]
+  revisions    PageRevision[]
+}
+
+model PageTranslation {
+  id             String   @id @default(cuid())
+  pageId         String
+  page           Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  locale         Locale
+  slug           String
+  title          String   @db.VarChar(255)
+  contentHtml    String   @db.LongText
+  seoTitle       String?  @db.VarChar(255)
+  seoDescription String?  @db.VarChar(500)
+  isPublished    Boolean  @default(true)
+  legalReviewed  Boolean  @default(false)
+  updatedById    String?
+  updatedBy      User?    @relation(fields: [updatedById], references: [id], onDelete: SetNull)
+  updatedAt      DateTime @updatedAt
+
+  @@unique([pageId, locale])
+  @@unique([locale, slug])
+}
+
+model PageRevision {
+  id          String   @id @default(cuid())
+  pageId      String
+  page        Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  locale      Locale
+  title       String   @db.VarChar(255)
+  contentHtml String   @db.LongText
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([pageId, locale, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Media
+// ---------------------------------------------------------------------------
+
+model MediaAsset {
+  id           String       @id @default(cuid())
+  filename     String       @db.VarChar(255)
+  mimeType     String
+  sizeBytes    Int
+  width        Int?
+  height       Int?
+  storage      MediaStorage
+  storageKey   String       @unique
+  /// Binary content when storage = DATABASE.
+  data         Bytes?       @db.LongBlob
+  alt          String       @default("") @db.VarChar(500)
+  caption      String?      @db.VarChar(1000)
+  uploadedById String?
+  uploadedBy   User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime     @default(now())
+
+  articles   Article[]
+  categories Category[]
+
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Navigation
+// ---------------------------------------------------------------------------
+
+model NavigationItem {
+  id       String      @id @default(cuid())
+  location NavLocation
+  order    Int         @default(0)
+  /// Internal path without locale prefix (e.g. "/tools") or an absolute https URL.
+  href     String      @db.VarChar(1000)
+  external Boolean     @default(false)
+  labelEn  String
+  labelFr  String
+  labelAr  String
+  enabled  Boolean     @default(true)
+
+  @@index([location, order])
+}
+
+// ---------------------------------------------------------------------------
+// Advertising
+// ---------------------------------------------------------------------------
+
+model AdPlacement {
+  id          String            @id @default(cuid())
+  /// article-top, article-in-content, article-bottom, sidebar, tool-below-result, footer
+  key         String            @unique
+  label       String
+  slotId      String?
+  enabled     Boolean           @default(false)
+  /// Reserved height in px to prevent layout shift.
+  minHeight   Int               @default(280)
+  desktopOnly Boolean           @default(false)
+  updatedAt   DateTime          @updatedAt
+  tools       ToolAdPlacement[]
+}
+
+/// Singleton row (id = "default").
+model AdSettings {
+  id                       String           @id @default("default")
+  masterEnabled            Boolean          @default(false)
+  mode                     AdMode           @default(TEST)
+  siteHostname             String?
+  publisherId              String?
+  autoAds                  Boolean          @default(false)
+  /// Owner explicitly confirms the site is approved/authorized in their AdSense account.
+  ownerConfirmedAuthorized Boolean          @default(false)
+  approvalStatus           AdApprovalStatus @default(NOT_APPLIED)
+  approvalSource           String?          @db.VarChar(500)
+  approvalVerifiedAt       DateTime?
+  adsTxt                   String?          @db.Text
+  updatedAt                DateTime         @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Settings, consent, analytics
+// ---------------------------------------------------------------------------
+
+/// Singleton row (id = "default").
+model SiteSettings {
+  id                  String    @id @default("default")
+  siteName            String    @default("Toolbox Atlas")
+  taglineEn           String    @default("") @db.VarChar(500)
+  taglineFr           String    @default("") @db.VarChar(500)
+  taglineAr           String    @default("") @db.VarChar(500)
+  contactEmail        String?
+  organizationName    String?
+  organizationLogoUrl String?   @db.VarChar(1000)
+  defaultLocale       Locale    @default(en)
+  maintenanceNotice   String?   @db.VarChar(1000)
+  lastSchedulerRunAt  DateTime?
+  updatedAt           DateTime  @updatedAt
+}
+
+/// Singleton row (id = "default").
+model AnalyticsSettings {
+  id                        String   @id @default("default")
+  gaMeasurementId           String?
+  searchConsoleVerification String?
+  enabled                   Boolean  @default(false)
+  updatedAt                 DateTime @updatedAt
+}
+
+/// Singleton row (id = "default").
+model ConsentConfiguration {
+  id               String      @id @default("default")
+  mode             ConsentMode @default(BUILT_IN)
+  bannerEnabled    Boolean     @default(true)
+  /// Bump to re-ask every visitor after material policy changes.
+  policyVersion    Int         @default(1)
+  externalCmpNotes String?     @db.Text
+  updatedAt        DateTime    @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Redirects and audit
+// ---------------------------------------------------------------------------
+
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique @db.VarChar(500)
+  toPath    String   @db.VarChar(1000)
+  permanent Boolean  @default(true)
+  hits      Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  entityType String
+  entityId   String?
+  /// Non-sensitive summary of the change. Never contains secrets or content bodies.
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([entityType, entityId])
+}

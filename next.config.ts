@@ -19,7 +19,9 @@ const google = [
   "https://fundingchoicesmessages.google.com",
 ].join(" ");
 
-// Background remover: ONNX runtime from jsDelivr, model weights from Hugging Face (images stay local).
+// Background remover: model files and ONNX runtime are served from this site
+// (/models/background-removal/<version>/); jsDelivr and Hugging Face are the
+// verified fallback sources. Images never leave the browser.
 const aiRuntime = "https://cdn.jsdelivr.net";
 const aiModels = "https://huggingface.co https://*.huggingface.co https://*.hf.co";
 
@@ -62,6 +64,20 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: securityHeaders },
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }, { key: "Cache-Control", value: "no-store" }] },
       { source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
+      // Versioned, hash-verified model files never change at a given URL.
+      {
+        source: "/models/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          // Public, hash-verified files: the desktop app downloads them from this site.
+          { key: "Cross-Origin-Resource-Policy", value: "cross-origin" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      { source: "/models/:path(.*\\.(?:onnx|part\\d+))", headers: [{ key: "Content-Type", value: "application/octet-stream" }] },
+      // Chart Designer fonts (OFL, committed): cache for a week, revalidate in the background.
+      { source: "/fonts/designer/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
     ];
   },
 };

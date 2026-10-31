@@ -44,10 +44,22 @@ npm run db:seed
 
 1. Push the repository to GitHub/GitLab and import it in Vercel.
 2. Set the environment variables (Production and Preview; use a **separate database for Preview**).
-3. Build command: `prisma migrate deploy && next build`. Install command: `npm install` (it runs `prisma generate`).
+3. Build command: `prisma migrate deploy && npm run build`. Install command: `npm install` (it runs `prisma generate`). Use `npm run build`, not `next build`: its `prebuild` step syncs the background-remover model files (see below).
 4. Deploy. `vercel.json` registers the daily scheduled-publishing cron. Scheduled articles still become public on time without it; the cron only finalizes their status.
 
 **Note:** `sitemap.xml` and `ads.txt` are pre-rendered during the build, so the build needs database access.
+
+### Background-remover model files
+
+The background remover serves its AI model and ONNX Runtime files from the site itself, at `/models/background-removal/<version>/`. They are **not in git** (about 173 MB; `public/models/` is ignored).
+
+- **How they get there:** `npm run build` first runs `scripts/models/sync-models.mjs`. It reads `src/tools/image/bg-models.manifest.json`, then takes each file from `node_modules/onnxruntime-web` or downloads it from its pinned Hugging Face revision or jsDelivr URL. It writes a file into `public/` only after its SHA-256 matches the manifest. A mismatch fails the build, so an unverified model is never deployed. Files larger than 16 MB are split into 16 MB parts.
+- **Build impact:** the first build downloads about 140 MB from Hugging Face. Builds then need network access to huggingface.co, unless the files are already present.
+- **Headers:** `next.config.ts` serves `/models/*` with `Cache-Control: public, max-age=31536000, immutable`, `Cross-Origin-Resource-Policy: same-origin` and `application/octet-stream` for model parts. The version is part of the URL, so immutable caching is safe.
+- **In the browser:** the tool tries the site's copy first and falls back to the pinned Hugging Face or jsDelivr URLs. Every file is checked with SHA-256 before use and stored in the Cache API under `bg-models-<version>`. Caches from older versions are deleted automatically.
+- **Skipping:** set `SKIP_MODEL_SYNC=1` to build without self-hosting. The tool then downloads every file from the external sources, still verifying each one.
+- **Changing models or upgrading `@huggingface/transformers`:** run `npm run models:update`. It re-downloads the files, checks them against the upstream LFS SHA-256, git blob ids and npm package, and writes a new manifest version. Commit the new manifest.
+- **Hobby plan:** Vercel limits CLI uploads, but Git-based deployments build these files on Vercel, so they don't count toward that limit.
 
 ## 5. Domain, DNS and HTTPS
 

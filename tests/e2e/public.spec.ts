@@ -139,11 +139,36 @@ test("new tools work: loan calculator and password generator", async ({ page }) 
   await expect(page.getByLabel("Password", { exact: true })).toHaveValue(/^.{16}$/);
 });
 
-// Model inference is verified manually: it downloads AI weights from Hugging Face.
 test("background remover page renders and rejects non-image files", async ({ page }) => {
   await page.goto("/en/tools/remove-background");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Background Remover");
   await page.locator('input[type="file"]').setInputFiles({ name: "notes.png", mimeType: "image/png", buffer: Buffer.from("not really a png") });
   await expect(page.locator(".alert-error")).toBeVisible();
   await expect(page.getByRole("button", { name: "Remove background" })).toHaveCount(0);
+});
+
+// Runs the real model from this website's own copy (needs `npm run build`, which syncs the files).
+test("background remover runs from self-hosted model files and never uploads the image", async ({ page }) => {
+  test.setTimeout(240_000);
+  const png = makePng(320, 240);
+  const requests: { url: string; method: string; body: Buffer | null }[] = [];
+  page.context().on("request", (r) => requests.push({ url: r.url(), method: r.method(), body: r.postDataBuffer() }));
+  await page.goto("/en/tools/remove-background");
+  await page.locator('input[type="file"]').setInputFiles({ name: "photo.png", mimeType: "image/png", buffer: png });
+  await page.getByRole("button", { name: "Remove background" }).click();
+  await expect(page.getByRole("progressbar", { name: "AI model download" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Image with the background removed" })).toBeVisible({ timeout: 200_000 });
+  await expect(page.getByRole("status")).toContainText("Background removed");
+
+  const modelRequests = requests.filter((r) => r.url.includes("/models/background-removal/"));
+  expect(modelRequests.length).toBeGreaterThan(0);
+  expect(modelRequests.every((r) => r.method === "GET")).toBe(true);
+  expect(requests.filter((r) => /huggingface.co|hf.co|jsdelivr/.test(r.url))).toEqual([]);
+  // No request carries the image: no bodies containing PNG data and nothing larger than a small event payload.
+  const signature = png.subarray(0, 8);
+  for (const r of requests) {
+    if (!r.body) continue;
+    expect(r.body.includes(signature), r.url).toBe(false);
+    expect(r.body.length, r.url).toBeLessThan(4096);
+  }
 });

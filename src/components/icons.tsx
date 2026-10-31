@@ -1,6 +1,6 @@
 import {
   Binary, Braces, Cake, Calculator, Clock, Dices, Hash, HeartPulse, KeyRound, Landmark, Pilcrow, Scissors, CaseSensitive, Code, Eraser, FileImage, FileSearch, FileType, Image as ImageIcon,
-  ImageDown, Link as LinkIcon, Palette, Percent, QrCode, Ruler, Scaling, Sigma, Tag, Text, Type, Wrench,
+  ImageDown, Link as LinkIcon, ChartPie, SwatchBook, LayoutGrid, Palette, Percent, QrCode, Ruler, Scaling, Sigma, Tag, Text, Type, Wrench,
   type LucideIcon,
 } from "lucide-react";
 import type { ToolIcon } from "@/tools/registry";
@@ -37,6 +37,9 @@ const ICONS: Record<ToolIcon, LucideIcon> = {
   landmark: Landmark,
   pilcrow: Pilcrow,
   scissors: Scissors,
+  "chart-pie": ChartPie,
+  "swatch-book": SwatchBook,
+  "layout-grid": LayoutGrid,
 };
 
 /** Renders an allow-listed icon by name; unknown names fall back to a wrench. */

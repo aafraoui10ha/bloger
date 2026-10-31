@@ -50,7 +50,11 @@
 ## Known trade-offs
 
 - **CSP allows `'unsafe-inline'` scripts.** Without nonces, Next.js needs inline scripts for hydration. A nonce-based CSP via `proxy.ts` is possible, but it forces dynamic rendering of every page. Other directives stay strict: `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, and `frame-ancestors 'none'`.
-- **Background remover CSP additions:** `script-src` allows `https://cdn.jsdelivr.net` and `'wasm-unsafe-eval'` (ONNX runtime), and `connect-src` allows jsDelivr and Hugging Face (model weights). Images never leave the browser. `blob:` scripts stay blocked.
+- **Background remover:**
+  - Model and runtime files are served from the site and verified in the browser with SHA-256 against a pinned manifest before they are used or cached.
+  - The CSP still allows `https://cdn.jsdelivr.net` (`script-src`, `connect-src`) and Hugging Face (`connect-src`), because they are the verified fallback sources, plus `'wasm-unsafe-eval'` for WebAssembly.
+  - The runtime's small glue script (`.mjs`) is imported by URL from whichever source served its verified copy. Its integrity rests on that source, like any other script on the page.
+  - Images never leave the browser, and `blob:` scripts stay blocked.
 - **Client IP for rate limiting** comes from `x-forwarded-for`, which is trustworthy on Vercel. Behind other proxies, make sure the proxy overwrites this header.
 
 ## Operator checklist

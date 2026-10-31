@@ -38,6 +38,9 @@ const COMPONENTS: Record<ToolModuleKey, ComponentType> = {
   "age-calculator": dynamic(() => import("./modules/extra-tools").then((m) => m.AgeCalculator), { loading: Loading, ssr: false }),
   "loan-calculator": dynamic(() => import("./modules/extra-tools").then((m) => m.LoanCalculator), { loading: Loading, ssr: false }),
   "lorem-ipsum-generator": dynamic(() => import("./modules/extra-tools").then((m) => m.LoremIpsumGenerator), { loading: Loading, ssr: false }),
+  "chart-designer": dynamic(() => import("./designer/ui/ChartDesigner").then((m) => m.ChartDesigner), { loading: Loading, ssr: false }),
+  "color-palettes": dynamic(() => import("./modules/color-design-tools").then((m) => m.ColorPaletteLibrary), { loading: Loading, ssr: false }),
+  "pattern-generator": dynamic(() => import("./modules/color-design-tools").then((m) => m.PatternGenerator), { loading: Loading, ssr: false }),
 };
 
 export function ToolRenderer({ moduleKey }: { moduleKey: ToolModuleKey; toolKey: string }) {

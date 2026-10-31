@@ -10,7 +10,7 @@ import { redirectOrNotFound } from "@/lib/not-found";
 import { decodeParam } from "@/lib/urls";
 import { readFaq, readStringList } from "@/lib/json-fields";
 import { sanitizeRichText } from "@/lib/sanitize";
-import { isToolModuleKey, TOOL_MODULES, type ToolModuleKey } from "@/tools/registry";
+import { isToolModuleKey, isWideTool, TOOL_MODULES, type ToolModuleKey } from "@/tools/registry";
 import { ArticleCard, Breadcrumbs, FaqList, JsonLd, ToolCard } from "@/components/site/ui";
 import { RegisterAlternates } from "@/components/site/alternates";
 import { AdSlot, AdsLoader } from "@/components/ads/Ads";
@@ -67,7 +67,7 @@ export default async function ToolPage({ params }: Props) {
     name: tr.title,
     description: tr.shortDescription,
     url,
-    applicationCategory: TOOL_MODULES[moduleKey].category === "developer" ? "DeveloperApplication" : "UtilitiesApplication",
+    applicationCategory: TOOL_MODULES[moduleKey].category === "developer" ? "DeveloperApplication" : TOOL_MODULES[moduleKey].category === "design" ? "DesignApplication" : "UtilitiesApplication",
     operatingSystem: "Any (web browser)",
     browserRequirements: "Requires JavaScript",
     inLanguage: locale,
@@ -111,19 +111,22 @@ export default async function ToolPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="container-page">
+      <div className={isWideTool(moduleKey) ? "mx-auto w-full max-w-[1680px] px-2 sm:px-4" : "container-page"}>
         <p className="mt-6 flex items-start gap-2 text-sm text-muted">
           <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true" />
           {t("privacyLocal")}
         </p>
 
         {/* The interactive tool. No ads are ever placed inside this container. */}
-        <section aria-label={tr.title} className="card mt-4 p-4 sm:p-6">
+        <section aria-label={tr.title} className={isWideTool(moduleKey) ? "mt-4" : "card mt-4 p-4 sm:p-6"}>
           <noscript>
             <p className="alert-warning">{tc("noJavascript")}</p>
           </noscript>
           <ToolRenderer moduleKey={moduleKey} toolKey={moduleKey} />
         </section>
+      </div>
+
+      <div className="container-page">
 
         <AdSlot {...ads.slot("tool-below-result")} />
 

@@ -1,0 +1,6 @@
+/* The website's design system, plus the shared folders Tailwind must scan for class
+   names (Next runs the desktop build from desktop/, so ../src is not scanned by default). */
+@import "../../src/app/globals.css";
+@source "../../src/tools";
+@source "../../src/components";
+@source "../src";

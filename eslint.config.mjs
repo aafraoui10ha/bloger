@@ -5,7 +5,7 @@ const config = [
   ...nextVitals,
   ...nextTs,
   {
-    ignores: [".next/**", "node_modules/**", "src/generated/**", ".pgdata/**", ".pgdata-test/**", "playwright-report/**", "test-results/**", "next-env.d.ts"],
+    ignores: [".next/**", "node_modules/**", "src/generated/**", ".pgdata/**", ".pgdata-test/**", "playwright-report/**", "test-results/**", "next-env.d.ts", "public/models/**", "desktop/.next/**", "desktop/out/**", "desktop/next-env.d.ts", "src-tauri/target/**", "src-tauri/gen/**"],
   },
 ];
 

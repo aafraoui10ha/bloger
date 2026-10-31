@@ -20,7 +20,9 @@ export type ExtraToolKey =
   | "password-generator" | "uuid-generator" | "hash-generator" | "timestamp-converter"
   | "bmi-calculator" | "age-calculator" | "loan-calculator" | "lorem-ipsum-generator" | "background-remover";
 
-export type AnyToolKey = ToolKey | ExtraToolKey;
+export type DesignToolKey = "color-palettes" | "pattern-generator" | "chart-designer";
+
+export type AnyToolKey = ToolKey | ExtraToolKey | DesignToolKey;
 
 export type PageContent = { slug: string; title: string; html: string; seoDescription: string };
 export type PageKey = "about" | "services" | "contact" | "privacy" | "terms" | "cookies" | "editorial-policy" | "corrections";

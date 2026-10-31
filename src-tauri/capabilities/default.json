@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The local Toolbox window: basic window/event APIs, opening web links in the default browser, and the app's two commands (native save, app info). No filesystem, shell or HTTP access is granted to the webview; remote pages get no capabilities at all.",
+  "windows": ["main"],
+  "permissions": ["core:default", "opener:default", "allow-save-file", "allow-app-info"]
+}

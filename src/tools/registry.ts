@@ -31,7 +31,15 @@ export const TOOL_MODULES = {
   "age-calculator": { category: "calculators", icon: "cake", processing: "local" },
   "loan-calculator": { category: "calculators", icon: "landmark", processing: "local" },
   "lorem-ipsum-generator": { category: "text", icon: "pilcrow", processing: "local" },
-} as const satisfies Record<string, { category: string; icon: string; processing: "local" | "server" }>;
+  "chart-designer": { category: "design", icon: "chart-pie", processing: "local", wide: true },
+  "color-palettes": { category: "design", icon: "swatch-book", processing: "local" },
+  "pattern-generator": { category: "design", icon: "layout-grid", processing: "local" },
+} as const satisfies Record<string, { category: string; icon: string; processing: "local" | "server"; wide?: boolean }>;
+
+/** Tools that need the full page width (editors). */
+export function isWideTool(key: ToolModuleKey): boolean {
+  return "wide" in TOOL_MODULES[key] && TOOL_MODULES[key].wide === true;
+}
 
 export type ToolModuleKey = keyof typeof TOOL_MODULES;
 
@@ -43,6 +51,6 @@ export function isToolModuleKey(key: string): key is ToolModuleKey {
 export const TOOL_ICONS = [
   "image-down", "scaling", "file-image", "file-type", "file-search", "type", "eraser", "case-sensitive",
   "percent", "tag", "sigma", "qr-code", "braces", "palette", "ruler", "binary", "link", "wrench", "image",
-  "calculator", "code", "text", "key-round", "dices", "hash", "clock", "heart-pulse", "cake", "landmark", "pilcrow", "scissors",
+  "calculator", "code", "text", "key-round", "dices", "hash", "clock", "heart-pulse", "cake", "landmark", "pilcrow", "scissors", "chart-pie", "swatch-book", "layout-grid",
 ] as const;
 export type ToolIcon = (typeof TOOL_ICONS)[number];

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Toolbox",
+  "version": "../package.json",
+  "identifier": "com.toolbox.desktop",
+  "build": {
+    "frontendDist": "../desktop/out",
+    "devUrl": "http://localhost:3010",
+    "beforeDevCommand": "npm run desktop:frontend:dev",
+    "beforeBuildCommand": "npm run desktop:frontend"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Toolbox",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 960,
+        "minHeight": 640,
+        "center": true,
+        "resizable": true,
+        "useHttpsScheme": true,
+        "dragDropEnabled": false,
+        "backgroundColor": "#FAF7EA"
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' data: blob:",
+        "font-src": "'self' data:",
+        "connect-src": "'self' ipc: http://ipc.localhost blob: data: https://huggingface.co https://*.huggingface.co https://*.hf.co https://cdn.jsdelivr.net",
+        "worker-src": "'self' blob:",
+        "media-src": "'self' blob: data:",
+        "object-src": "'none'",
+        "base-uri": "'self'",
+        "form-action": "'none'",
+        "frame-src": "'none'"
+      },
+      "dangerousDisableAssetCspModification": ["style-src"],
+      "freezePrototype": false
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis", "msi"],
+    "publisher": "Toolbox",
+    "copyright": "© Toolbox",
+    "category": "Productivity",
+    "shortDescription": "Free tools for images, text, numbers and design",
+    "longDescription": "Toolbox Desktop brings the Toolbox tools to your computer: image tools, an AI background remover, a chart and infographic designer, colour palettes, patterns, text tools and calculators. Files are processed on your device.",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English", "French", "Arabic"],
+        "displayLanguageSelector": true,
+        "installerIcon": "icons/icon.ico"
+      },
+      "wix": { "language": "en-US" }
+    }
+  }
+}

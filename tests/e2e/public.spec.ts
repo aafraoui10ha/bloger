@@ -172,3 +172,26 @@ test("background remover runs from self-hosted model files and never uploads the
     expect(r.body.length, r.url).toBeLessThan(4096);
   }
 });
+
+test("desktop download page works in every language and offers no unpublished downloads", async ({ page }) => {
+  for (const [path, heading, nav] of [
+    ["/en/desktop", "Toolbox Desktop", "Desktop app"],
+    ["/fr/desktop", "Toolbox Desktop", "Application PC"],
+    ["/ar/desktop", "Toolbox Desktop", "تطبيق الحاسوب"],
+  ] as const) {
+    const res = await page.goto(path);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
+    await expect(page.getByRole("link", { name: nav }).first()).toBeVisible();
+  }
+  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  // No release is configured in the test environment: no download buttons, a clear notice instead.
+  await page.goto("/en/desktop");
+  await expect(page.getByTestId("coming-soon")).toBeVisible();
+  await expect(page.getByTestId("primary-download")).toHaveCount(0);
+  await expect(page.locator('a[href$=".exe"], a[href$=".msi"]')).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "System requirements" })).toBeVisible();
+  await expect(page.getByText("SmartScreen", { exact: false }).first()).toBeVisible();
+  await page.getByRole("link", { name: "Installation guide" }).click();
+  await expect(page.getByRole("heading", { name: "How to install" })).toBeInViewport();
+});

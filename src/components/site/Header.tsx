@@ -29,6 +29,7 @@ export async function Header({ locale, siteName }: { locale: AppLocale; siteName
   // Page links use each language's own slug, so they live here rather than in the navigation table.
   if (pages.services) items.push({ href: `/${pages.services.slug}`, label: tn("services"), external: false });
   if (pages.about) items.push({ href: `/${pages.about.slug}`, label: tn("about"), external: false });
+  items.push({ href: "/desktop", label: tn("desktop"), external: false });
   const contact = pages.contact ? { href: `/${pages.contact.slug}`, label: tn("contact"), external: false } : null;
   const linkClass =
     "relative rounded-lg px-3 py-2 text-sm font-semibold text-muted transition-colors hover:text-fg after:absolute after:inset-x-3 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-cream after:transition-transform after:duration-300 hover:after:scale-x-100 rtl:after:origin-right";

@@ -61,6 +61,11 @@ export async function Footer({ locale, siteName }: { locale: AppLocale; siteName
                 {tc("allTools")}
               </Link>
             </li>
+            <li>
+              <Link href="/desktop" className="transition-colors hover:text-fg">
+                {tn("desktop")}
+              </Link>
+            </li>
             {categories.map((c) => (
               <li key={c.id}>
                 <Link href={`/tools/category/${c.slug}`} className="transition-colors hover:text-fg">

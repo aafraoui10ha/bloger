@@ -38,7 +38,7 @@ function check() {
   const tauri = JSON.parse(fs.readFileSync(TAURI, "utf8")).version;
   if (tauri !== "../package.json" && tauri !== v) problems.push(`tauri.conf.json version is ${tauri}`);
   if (fs.existsSync(LOCK)) {
-    const lock = /name = "toolbox-desktop"\nversion = "([^"]+)"/.exec(fs.readFileSync(LOCK, "utf8"))?.[1];
+    const lock = /name = "toolbox-desktop"\r?\nversion = "([^"]+)"/.exec(fs.readFileSync(LOCK, "utf8"))?.[1];
     if (lock && lock !== v) problems.push(`src-tauri/Cargo.lock has ${lock}`);
   }
   if (problems.length) {
@@ -56,7 +56,7 @@ function set(v) {
   const toml = fs.readFileSync(CARGO, "utf8").replace(/^(\[package\][\s\S]*?^version\s*=\s*")[^"]+(")/m, `$1${v}$2`);
   fs.writeFileSync(CARGO, toml);
   if (fs.existsSync(LOCK)) {
-    fs.writeFileSync(LOCK, fs.readFileSync(LOCK, "utf8").replace(/(name = "toolbox-desktop"\nversion = ")[^"]+(")/, `$1${v}$2`));
+    fs.writeFileSync(LOCK, fs.readFileSync(LOCK, "utf8").replace(/(name = "toolbox-desktop"\r?\nversion = ")[^"]+(")/, `$1${v}$2`));
   }
   console.log(`desktop version set to ${v}`);
 }

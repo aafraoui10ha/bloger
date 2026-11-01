@@ -13,6 +13,7 @@ export async function getSitemapEntries() {
   const groups: SitemapGroup[] = [
     { paths: samePathEverywhere("/"), priority: 1, changeFrequency: "weekly" },
     { paths: samePathEverywhere("/tools"), priority: 0.9, changeFrequency: "weekly" },
+    { paths: samePathEverywhere("/desktop"), priority: 0.6, changeFrequency: "monthly" },
   ];
 
   const [tools, toolCats, articles, articleCats, pages] = await Promise.all([

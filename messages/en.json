@@ -54,7 +54,8 @@
     "cookies": "Cookie Settings",
     "editorial": "Editorial Policy",
     "corrections": "Corrections Policy",
-    "services": "Services"
+    "services": "Services",
+    "desktop": "Desktop app"
   },
   "home": {
     "metaTitle": "Free online tools for images, text and calculations",
@@ -1314,6 +1315,147 @@
       "windows": "Windows",
       "macos": "macOS",
       "linux": "Linux"
+    }
+  },
+  "desktopPage": {
+    "metaTitle": "Toolbox Desktop for Windows – Free Download",
+    "metaDescription": "Download Toolbox Desktop for Windows 10 and 11: image tools, background removal, chart and infographic design, colour tools and more, processed on your computer.",
+    "title": "Toolbox Desktop",
+    "subtitle": "Your favorite tools, directly on your computer.",
+    "description": "Access Toolbox tools from a dedicated desktop application with convenient file handling, professional workflows, and regular updates.",
+    "downloadWindows": "Download for Windows",
+    "downloadFormat": "Download {format}",
+    "viewNotes": "View release notes",
+    "installGuide": "Installation guide",
+    "comingSoon": "The Windows app is being tested and will be available here soon.",
+    "facts": {
+      "version": "Latest version",
+      "notYet": "Coming soon",
+      "windows": "Windows",
+      "windowsValue": "10 and 11, 64-bit",
+      "size": "Installer size",
+      "date": "Release date",
+      "price": "Price",
+      "free": "Free, no account"
+    },
+    "downloads": "Downloads",
+    "exeTitle": "Windows installer (.exe)",
+    "exeHint": "Recommended. Installs for your user account, no administrator rights needed.",
+    "msiTitle": "Windows installer (.msi)",
+    "msiHint": "For IT administrators and installing for all users.",
+    "card": {
+      "platform": "Platform",
+      "arch": "Architecture",
+      "format": "Format",
+      "version": "Version",
+      "size": "File size",
+      "date": "Release date"
+    },
+    "channels": {
+      "stable": "Stable",
+      "beta": "Beta"
+    },
+    "verifyHint": "After downloading, you can compare the file’s SHA-256 checksum with the one shown here (PowerShell: Get-FileHash <file> -Algorithm SHA256).",
+    "featuresTitle": "What you get",
+    "features": {
+      "desktop": {
+        "title": "A real desktop app",
+        "text": "Its own window, sidebar navigation, keyboard shortcuts and the native Windows save dialog."
+      },
+      "local": {
+        "title": "Files stay on your PC",
+        "text": "Images, data and designs are processed on your computer and never uploaded."
+      },
+      "designer": {
+        "title": "Chart & infographic designer",
+        "text": "Create charts, KPI cards and infographics, then export PNG, JPG, SVG or PDF."
+      },
+      "background": {
+        "title": "AI background removal",
+        "text": "Remove photo backgrounds on your computer. The AI model is downloaded once, then reused."
+      },
+      "images": {
+        "title": "Image, colour and text tools",
+        "text": "Compress, resize and convert images, build palettes and patterns, count and clean text."
+      },
+      "offline": {
+        "title": "Works offline",
+        "text": "After installation, the tools work without internet. Only the first use of the background remover needs a connection."
+      },
+      "fast": {
+        "title": "Quick access",
+        "text": "Favourites, recently used tools and your saved design projects on the home screen."
+      },
+      "languages": {
+        "title": "English, French and Arabic",
+        "text": "Full right-to-left support for Arabic, with Arabic fonts in the designer."
+      }
+    },
+    "requirementsTitle": "System requirements",
+    "requirements": {
+      "os": "Windows 10 (version 1809 or later) or Windows 11",
+      "arch": "64-bit (x64) processor",
+      "webview": "Microsoft Edge WebView2 runtime (included in Windows 11; the installer adds it if missing)",
+      "internet": "Internet connection for the download, and once for the background-removal model",
+      "storage": "Free disk space for the app, plus about 135 MB if you use the background remover"
+    },
+    "requirementsNote": "Minimum hardware requirements will be published after testing on a range of computers.",
+    "notesTitle": "Release notes",
+    "notesVersion": "Version {version}",
+    "notes": {
+      "n1": "First release of Toolbox Desktop for Windows.",
+      "n2": "All Toolbox tools run locally, including the Chart & Infographic Designer.",
+      "n3": "Background remover with a verified, one-time model download.",
+      "n4": "Native save dialog, favourites, recent tools and local design projects.",
+      "n5": "English, French and Arabic, with right-to-left layout."
+    },
+    "notesPlatforms": "Platforms: Windows 10 and 11, x64.",
+    "notesNone": "Release notes will appear here with the first public release.",
+    "installTitle": "How to install",
+    "install": {
+      "download": {
+        "title": "Download",
+        "text": "Click “Download for Windows” to get the .exe installer."
+      },
+      "verify": {
+        "title": "Check the file (optional)",
+        "text": "Compare its SHA-256 checksum with the one on this page."
+      },
+      "run": {
+        "title": "Run the installer",
+        "text": "Open the downloaded file, choose your language and follow the steps."
+      },
+      "open": {
+        "title": "Open Toolbox",
+        "text": "Start Toolbox from the Start menu or the desktop shortcut."
+      },
+      "update": {
+        "title": "Updates",
+        "text": "New versions are published on this page. Install a new version over the old one; your projects are kept."
+      },
+      "uninstall": {
+        "title": "Uninstall",
+        "text": "Go to Settings → Apps → Installed apps, find Toolbox and choose Uninstall. Your projects are kept unless you choose to delete app data."
+      }
+    },
+    "troubleTitle": "Troubleshooting",
+    "trouble": {
+      "smartscreen": {
+        "q": "Windows SmartScreen shows a warning",
+        "a": "SmartScreen warns about apps that are new or not yet code-signed. Only continue if you downloaded the installer from this page and its SHA-256 checksum matches; then choose “More info” and “Run anyway”. If anything does not match, delete the file and do not run it."
+      },
+      "webview": {
+        "q": "The installer mentions WebView2",
+        "a": "Toolbox uses Microsoft Edge WebView2 to display its interface. Stay connected to the internet so the installer can add it, or install it from Microsoft."
+      },
+      "model": {
+        "q": "The background remover cannot download its model",
+        "a": "Check your internet connection and firewall. The model is downloaded once; after that the tool works offline."
+      },
+      "update": {
+        "q": "How do I update?",
+        "a": "Download the latest version from this page and install it over your current version. Automatic updates are planned for a future version."
+      }
     }
   }
 }

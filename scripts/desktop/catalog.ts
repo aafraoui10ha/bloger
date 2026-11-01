@@ -43,7 +43,9 @@ const tools = (Object.keys(TOOL_MODULES) as ToolModuleKey[]).map((key) => {
 const out = path.resolve(import.meta.dirname, "../../desktop/src/generated/catalog.json");
 const json = JSON.stringify({ tools }, null, 2) + "\n";
 if (process.argv.includes("--check")) {
-  if (!fs.existsSync(out) || fs.readFileSync(out, "utf8") !== json) {
+  // Compare content, not line-ending style (git may check files out with CRLF on Windows).
+  const current = fs.existsSync(out) ? fs.readFileSync(out, "utf8").replace(/\r\n/g, "\n") : null;
+  if (current !== json) {
     console.error("desktop/src/generated/catalog.json is out of date: run `npx tsx scripts/desktop/catalog.ts`");
     process.exit(1);
   }

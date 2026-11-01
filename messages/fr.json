@@ -54,7 +54,8 @@
     "cookies": "Paramètres des cookies",
     "editorial": "Politique éditoriale",
     "corrections": "Politique de correction",
-    "services": "Services"
+    "services": "Services",
+    "desktop": "Application PC"
   },
   "home": {
     "metaTitle": "Outils en ligne gratuits pour images, textes et calculs",
@@ -1314,6 +1315,147 @@
       "windows": "Windows",
       "macos": "macOS",
       "linux": "Linux"
+    }
+  },
+  "desktopPage": {
+    "metaTitle": "Toolbox Desktop pour Windows – Téléchargement gratuit",
+    "metaDescription": "Téléchargez Toolbox Desktop pour Windows 10 et 11 : outils image, suppression d’arrière-plan, création de graphiques et d’infographies, outils couleur et plus, traités sur votre ordinateur.",
+    "title": "Toolbox Desktop",
+    "subtitle": "Vos outils préférés, directement sur votre ordinateur.",
+    "description": "Accédez aux outils Toolbox depuis une application de bureau dédiée, avec une gestion pratique des fichiers, des flux de travail professionnels et des mises à jour régulières.",
+    "downloadWindows": "Télécharger pour Windows",
+    "downloadFormat": "Télécharger le {format}",
+    "viewNotes": "Voir les notes de version",
+    "installGuide": "Guide d’installation",
+    "comingSoon": "L’application Windows est en cours de test et sera bientôt disponible ici.",
+    "facts": {
+      "version": "Dernière version",
+      "notYet": "Bientôt",
+      "windows": "Windows",
+      "windowsValue": "10 et 11, 64 bits",
+      "size": "Taille de l’installateur",
+      "date": "Date de publication",
+      "price": "Prix",
+      "free": "Gratuit, sans compte"
+    },
+    "downloads": "Téléchargements",
+    "exeTitle": "Installateur Windows (.exe)",
+    "exeHint": "Recommandé. S’installe pour votre compte, sans droits administrateur.",
+    "msiTitle": "Installateur Windows (.msi)",
+    "msiHint": "Pour les administrateurs et l’installation pour tous les utilisateurs.",
+    "card": {
+      "platform": "Plateforme",
+      "arch": "Architecture",
+      "format": "Format",
+      "version": "Version",
+      "size": "Taille",
+      "date": "Date de publication"
+    },
+    "channels": {
+      "stable": "Stable",
+      "beta": "Bêta"
+    },
+    "verifyHint": "Après le téléchargement, vous pouvez comparer l’empreinte SHA-256 du fichier avec celle affichée ici (PowerShell : Get-FileHash <fichier> -Algorithm SHA256).",
+    "featuresTitle": "Ce que vous obtenez",
+    "features": {
+      "desktop": {
+        "title": "Une vraie application de bureau",
+        "text": "Sa propre fenêtre, une navigation latérale, des raccourcis clavier et la boîte d’enregistrement native de Windows."
+      },
+      "local": {
+        "title": "Vos fichiers restent sur votre PC",
+        "text": "Images, données et designs sont traités sur votre ordinateur et jamais envoyés."
+      },
+      "designer": {
+        "title": "Créateur de graphiques et d’infographies",
+        "text": "Créez graphiques, cartes KPI et infographies, puis exportez en PNG, JPG, SVG ou PDF."
+      },
+      "background": {
+        "title": "Suppression d’arrière-plan par IA",
+        "text": "Détourez vos photos sur votre ordinateur. Le modèle d’IA est téléchargé une fois, puis réutilisé."
+      },
+      "images": {
+        "title": "Outils image, couleur et texte",
+        "text": "Compressez, redimensionnez et convertissez des images, créez palettes et motifs, comptez et nettoyez du texte."
+      },
+      "offline": {
+        "title": "Fonctionne hors ligne",
+        "text": "Après l’installation, les outils fonctionnent sans internet. Seule la première utilisation du détourage demande une connexion."
+      },
+      "fast": {
+        "title": "Accès rapide",
+        "text": "Favoris, outils récents et projets de design enregistrés sur l’écran d’accueil."
+      },
+      "languages": {
+        "title": "Français, anglais et arabe",
+        "text": "Prise en charge complète de l’arabe de droite à gauche, avec des polices arabes dans l’éditeur."
+      }
+    },
+    "requirementsTitle": "Configuration requise",
+    "requirements": {
+      "os": "Windows 10 (version 1809 ou ultérieure) ou Windows 11",
+      "arch": "Processeur 64 bits (x64)",
+      "webview": "Runtime Microsoft Edge WebView2 (inclus dans Windows 11 ; l’installateur l’ajoute s’il manque)",
+      "internet": "Connexion internet pour le téléchargement, et une fois pour le modèle de détourage",
+      "storage": "Espace disque pour l’application, plus environ 135 Mo si vous utilisez le détourage"
+    },
+    "requirementsNote": "La configuration matérielle minimale sera publiée après des tests sur différents ordinateurs.",
+    "notesTitle": "Notes de version",
+    "notesVersion": "Version {version}",
+    "notes": {
+      "n1": "Première version de Toolbox Desktop pour Windows.",
+      "n2": "Tous les outils Toolbox fonctionnent en local, y compris le Créateur de graphiques et d’infographies.",
+      "n3": "Suppression d’arrière-plan avec téléchargement unique et vérifié du modèle.",
+      "n4": "Boîte d’enregistrement native, favoris, outils récents et projets de design locaux.",
+      "n5": "Français, anglais et arabe, avec mise en page de droite à gauche."
+    },
+    "notesPlatforms": "Plateformes : Windows 10 et 11, x64.",
+    "notesNone": "Les notes de version apparaîtront ici avec la première version publique.",
+    "installTitle": "Comment installer",
+    "install": {
+      "download": {
+        "title": "Télécharger",
+        "text": "Cliquez sur « Télécharger pour Windows » pour obtenir l’installateur .exe."
+      },
+      "verify": {
+        "title": "Vérifier le fichier (facultatif)",
+        "text": "Comparez son empreinte SHA-256 avec celle de cette page."
+      },
+      "run": {
+        "title": "Lancer l’installateur",
+        "text": "Ouvrez le fichier téléchargé, choisissez votre langue et suivez les étapes."
+      },
+      "open": {
+        "title": "Ouvrir Toolbox",
+        "text": "Lancez Toolbox depuis le menu Démarrer ou le raccourci du bureau."
+      },
+      "update": {
+        "title": "Mises à jour",
+        "text": "Les nouvelles versions sont publiées sur cette page. Installez-les par-dessus l’ancienne ; vos projets sont conservés."
+      },
+      "uninstall": {
+        "title": "Désinstaller",
+        "text": "Allez dans Paramètres → Applications → Applications installées, trouvez Toolbox et choisissez Désinstaller. Vos projets sont conservés sauf si vous supprimez les données."
+      }
+    },
+    "troubleTitle": "Dépannage",
+    "trouble": {
+      "smartscreen": {
+        "q": "Windows SmartScreen affiche un avertissement",
+        "a": "SmartScreen avertit pour les applications récentes ou pas encore signées. Ne continuez que si vous avez téléchargé l’installateur depuis cette page et que son empreinte SHA-256 correspond ; choisissez alors « Informations complémentaires » puis « Exécuter quand même ». Si quelque chose ne correspond pas, supprimez le fichier sans l’exécuter."
+      },
+      "webview": {
+        "q": "L’installateur mentionne WebView2",
+        "a": "Toolbox utilise Microsoft Edge WebView2 pour son interface. Restez connecté pour que l’installateur l’ajoute, ou installez-le depuis le site de Microsoft."
+      },
+      "model": {
+        "q": "Le détourage ne peut pas télécharger son modèle",
+        "a": "Vérifiez votre connexion et votre pare-feu. Le modèle est téléchargé une fois ; ensuite l’outil fonctionne hors ligne."
+      },
+      "update": {
+        "q": "Comment mettre à jour ?",
+        "a": "Téléchargez la dernière version sur cette page et installez-la par-dessus la vôtre. Les mises à jour automatiques sont prévues dans une prochaine version."
+      }
     }
   }
 }

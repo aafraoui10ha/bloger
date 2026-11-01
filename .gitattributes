@@ -1,0 +1,4 @@
+# Generated files are compared byte-for-byte in CI; keep them LF on every OS
+# (Windows runners check out with core.autocrlf=true).
+desktop/src/generated/*.json text eol=lf
+src-tauri/Cargo.lock text eol=lf

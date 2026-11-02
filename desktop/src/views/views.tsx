@@ -17,6 +17,36 @@ import { CategoryIcon } from "./icons";
 const page = "mx-auto w-full max-w-6xl px-6 py-8";
 const byKeys = (keys: readonly string[]) => keys.map((k) => getTool(k)).filter((t): t is NonNullable<typeof t> => !!t);
 
+/** "Built by Nexoraat" call to action, with the website's own wording (agency.*). */
+function AgencyCta() {
+  const t = useTranslations("agency");
+  const locale = useLocale();
+  return (
+    <section className="band band-ink mt-10 rounded-2xl p-6 sm:p-8" aria-labelledby="agency-cta-h" data-testid="agency-cta">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+        {/* eslint-disable-next-line @next/next/no-img-element -- static app logo */}
+        <img src="/app-logo.png" alt="" className="size-16 shrink-0" />
+        <div className="min-w-0 flex-1">
+          <h2 id="agency-cta-h" className="text-xl font-bold">
+            {t("title")}
+          </h2>
+          <p className="mt-1 max-w-3xl text-muted">{t("body")}</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2">
+          <button type="button" className="btn-primary" onClick={() => void openExternal(agencyUrl(locale))}>
+            <ExternalLink className="size-4" aria-hidden="true" />
+            {t("visit")}
+          </button>
+          <button type="button" className="btn-secondary" onClick={() => void openExternal(`${agencyUrl(locale)}/services`)}>
+            <Briefcase className="size-4" aria-hidden="true" />
+            {t("services")}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function HomeView() {
   const t = useTranslations("desktop");
   const favorites = favoritesStore.use();
@@ -67,6 +97,7 @@ export function HomeView() {
           ))}
         </div>
       </section>
+      <AgencyCta />
     </div>
   );
 }
@@ -306,7 +337,7 @@ export function AboutView() {
       <PageTitle title={t("title")} />
       <section className="card mb-4 flex items-center gap-5 p-6">
         {/* eslint-disable-next-line @next/next/no-img-element -- static app icon */}
-        <img src="/app-icon.svg" alt="" className="size-16" />
+        <img src="/app-logo.png" alt="" className="size-16" />
         <div>
           <p className="text-xl font-bold">{t("product")}</p>
           {info && (

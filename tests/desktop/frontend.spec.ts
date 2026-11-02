@@ -144,5 +144,15 @@ test("sends tool downloads to the native save dialog and shows app info", async 
     .poll(async () => (await page.evaluate(() => (window as unknown as { __calls: { cmd: string; args: unknown }[] }).__calls)).filter((c) => c.cmd === "plugin:opener|open_url").map((c) => (c.args as { url: string }).url))
     .toEqual(["https://wa.me/212619043143", "https://nexoraat.com/en"]);
   expect(page.url()).toContain("/about/");
+
+  // Home page call to action: the website's "Built by Nexoraat" block.
+  await page.goto("/");
+  const cta = page.getByTestId("agency-cta");
+  await expect(cta).toContainText("Built by Nexoraat");
+  await cta.getByRole("button", { name: "Visit nexoraat.com" }).click();
+  await cta.getByRole("button", { name: "See our services" }).click();
+  await expect
+    .poll(async () => (await page.evaluate(() => (window as unknown as { __calls: { cmd: string; args: unknown }[] }).__calls)).filter((c) => c.cmd === "plugin:opener|open_url").map((c) => (c.args as { url: string }).url))
+    .toEqual(["https://nexoraat.com/en", "https://nexoraat.com/en/services"]);
   expect(errors).toEqual([]);
 });

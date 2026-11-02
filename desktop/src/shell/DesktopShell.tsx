@@ -127,7 +127,7 @@ function Sidebar({ searchRef }: { searchRef: React.RefObject<HTMLInputElement | 
     <aside className="band band-ink flex w-60 shrink-0 flex-col gap-4 overflow-y-auto px-3 py-4">
       <Link href="/" className="flex items-center gap-2 px-2 text-lg font-bold text-cream">
         {/* eslint-disable-next-line @next/next/no-img-element -- static app icon */}
-        <img src="/app-icon.svg" alt="" className="size-8" />
+        <img src="/app-logo.png" alt="" className="size-8" />
         {t("appName")}
       </Link>
       <div className="relative">

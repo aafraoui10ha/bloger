@@ -127,3 +127,49 @@ Follow [ADSENSE-CHECKLIST.md](ADSENSE-CHECKLIST.md). After adding `ads.txt` in t
 - [ ] No `googlesyndication` requests before ads are configured, confirmed and consented.
 - [ ] Site settings: contact email filled in; legal pages completed and reviewed.
 - [ ] Send one test message through the Contact page and confirm it arrives at `RECIPIENT_EMAIL`.
+
+
+## Vercel + Hostinger MySQL (step by step)
+
+### 1. Prepare the Hostinger database
+1. In hPanel, go to **Databases → MySQL Databases**. Create the database and user, or use your existing ones. The database must be **utf8mb4** (collation `utf8mb4_unicode_ci`) for Arabic.
+2. Go to **Databases → Remote MySQL**. Add **Any Host (%)**, because Vercel's servers have no fixed IP. Note the host name shown there, for example `srv123.hstgr.io`, or the server IP.
+3. Shared plans limit connections per user, so keep the app's pool small with `connectionLimit=3`:
+   ```
+   DATABASE_URL="mysql://USER:PASSWORD@HOST:3306/DBNAME?connectionLimit=3&connectTimeout=10000"
+   ```
+   URL-encode special characters in the password (`@` → `%40`, `#` → `%23`).
+4. From your PC, with that `DATABASE_URL` set **only in your terminal** (not in `.env`), run:
+   ```bash
+   npx prisma migrate deploy      # creates the tables (never resets data)
+   npm run db:seed                # tools, categories, pages (idempotent)
+   npm run admin:create           # your dashboard account
+   ```
+
+### 2. Create the Vercel project
+1. Go to vercel.com → **Add New → Project** and import the GitHub repository.
+2. Set **Production branch** to the branch you deploy, normally `main`.
+3. Use these settings:
+   - Framework: Next.js
+   - Install command: `npm install`
+   - Build command: `prisma migrate deploy && npm run build`
+4. Add the **Environment Variables** (Production):
+
+| Variable | Value |
+|---|---|
+| `DATABASE_URL` | The Hostinger URL above |
+| `NEXT_PUBLIC_SITE_URL` | `https://<project>.vercel.app`, or your domain later |
+| `NEXT_PUBLIC_SITE_NAME` | Your site name |
+| `CRON_SECRET` | A long random string: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `MEDIA_STORAGE` | `database` |
+| `ADS_ALLOW_LIVE` | `false` until AdSense is approved |
+| `EMAIL_USER`, `EMAIL_PASS`, `RECIPIENT_EMAIL` | Gmail and app password for the contact form |
+| `DESKTOP_*` | Only once installers are on R2 (see DESKTOP.md) |
+
+5. Click **Deploy**. Then open `/api/health` and `/en` on the new URL.
+
+### 3. Notes
+- **Request size:** Vercel functions accept requests of at most about 4.5 MB, so dashboard image uploads must stay under that size.
+- **Model files:** the first build downloads and checks them (about 140 MB). If Vercel ever rejects the deployment size, set `SKIP_MODEL_SYNC=1`. The background remover then uses the verified Hugging Face fallback.
+- **Desktop app:** after the site is live, set the GitHub repository variable `TOOLBOX_SITE_URL` to the site URL and rebuild the app. It then downloads models from your site and checks it for new versions.
+- **Plan:** use Vercel **Pro** if the site earns money (ads). Hobby is for non-commercial use.

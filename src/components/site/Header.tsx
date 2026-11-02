@@ -60,9 +60,8 @@ export async function Header({ locale, siteName }: { locale: AppLocale; siteName
       <header className="band band-plum sticky top-0 z-40 border-b border-border">
         <div className="container-page flex h-16 items-center gap-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5 font-bold tracking-tight" aria-label={`${siteName} — ${t("home")}`}>
-            <span aria-hidden="true" className="grid size-9 place-items-center rounded-xl bg-cream text-base font-extrabold text-ink">
-              {siteName.slice(0, 1)}
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- small static logo, already optimised */}
+            <img src="/logo/logo-128.png" alt="" width={36} height={36} className="size-9 shrink-0" />
             <span className="text-lg">{siteName}</span>
           </Link>
 

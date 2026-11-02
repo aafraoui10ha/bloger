@@ -1332,7 +1332,21 @@
       "macos": "macOS",
       "linux": "Linux"
     },
-    "builtBy": "من تطوير Nexoraat · ابدأ مشروعك"
+    "builtBy": "من تطوير Nexoraat · ابدأ مشروعك",
+    "updates": {
+      "available": "الإصدار {version} من Toolbox متاح.",
+      "current": "لديك الإصدار {current}.",
+      "download": "تنزيل التحديث",
+      "later": "لاحقًا",
+      "check": "التحقق من التحديثات",
+      "checking": "جارٍ التحقق…",
+      "upToDate": "لديك أحدث إصدار ({version}).",
+      "failed": "تعذّر التحقق من التحديثات. تحقّق من اتصالك بالإنترنت.",
+      "downloadVersion": "تنزيل الإصدار {version}",
+      "howTo": "يتحقق Toolbox من الموقع لمعرفة الإصدارات الجديدة ويُعلمك بها. للتحديث، نزّل المثبّت الجديد وشغّله، وستبقى تصاميمك وإعداداتك.",
+      "notConfigured": "يبدأ التحقق من التحديثات بعد تحديد عنوان موقع Toolbox لهذا الإصدار.",
+      "onlyInApp": "يعمل التحقق من التحديثات في التطبيق المثبّت."
+    }
   },
   "desktopPage": {
     "metaTitle": "Toolbox Desktop لنظام Windows – تنزيل مجاني",

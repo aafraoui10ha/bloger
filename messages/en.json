@@ -1332,7 +1332,21 @@
       "macos": "macOS",
       "linux": "Linux"
     },
-    "builtBy": "Built by Nexoraat · Start a project"
+    "builtBy": "Built by Nexoraat · Start a project",
+    "updates": {
+      "available": "Toolbox {version} is available.",
+      "current": "You have version {current}.",
+      "download": "Download update",
+      "later": "Later",
+      "check": "Check for updates",
+      "checking": "Checking…",
+      "upToDate": "You have the latest version ({version}).",
+      "failed": "Couldn’t check for updates. Check your internet connection.",
+      "downloadVersion": "Download version {version}",
+      "howTo": "Toolbox checks the website for new versions and lets you know. To update, download the new installer and run it: your designs and settings are kept.",
+      "notConfigured": "Update checks start once the Toolbox website address is set for this build.",
+      "onlyInApp": "Update checks run in the installed app."
+    }
   },
   "desktopPage": {
     "metaTitle": "Toolbox Desktop for Windows – Free Download",

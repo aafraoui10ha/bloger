@@ -12,6 +12,7 @@ import { CATEGORIES } from "../catalog";
 import { installNativeLinks, isTauri, type SaveResult } from "./native";
 import { settingsStore, type Locale } from "./store";
 import { CategoryIcon } from "../views/icons";
+import { UpdateBanner } from "./UpdateBanner";
 import { agencyUrl } from "@/lib/agency-links";
 
 const MESSAGES: Record<Locale, typeof en> = { en, fr, ar };
@@ -88,6 +89,7 @@ function Frame({ children }: { children: ReactNode }) {
         <Sidebar searchRef={searchRef} />
       </Suspense>
       <main className="min-w-0 flex-1 overflow-y-auto" id="main">
+        <UpdateBanner />
         {children}
       </main>
       {saved && (

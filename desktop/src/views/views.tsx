@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, Briefcase, ExternalLink, FilePlus2, FolderOpen, MessageCircle, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowLeft, Briefcase, Download, ExternalLink, FilePlus2, FolderOpen, MessageCircle, RefreshCw, ShieldCheck, Trash2 } from "lucide-react";
+import { checkForUpdate, downloadPage, type UpdateCheck } from "../shell/updates";
 import { agencyUrl, WHATSAPP_URL } from "@/lib/agency-links";
 import { ToolRenderer } from "@/tools/ToolRenderer";
 import { deleteProject, listProjects, rememberLastProject, type ProjectSummary } from "@/tools/designer/storage";
@@ -314,6 +315,47 @@ export function SettingsView() {
   );
 }
 
+function UpdatesCard({ current, site }: { current: string | null; site: string }) {
+  const t = useTranslations("desktop.updates");
+  const ta = useTranslations("desktop.about");
+  const locale = useLocale();
+  const [result, setResult] = useState<UpdateCheck | "checking" | null>(null);
+  return (
+    <section className="card mb-4 p-6" data-testid="updates-card">
+      <h2 className="mb-2 font-semibold">{ta("updates")}</h2>
+      <p className="text-sm text-muted">{t("howTo")}</p>
+      {site && current ? (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            className="btn-secondary btn-sm"
+            disabled={result === "checking"}
+            onClick={async () => {
+              setResult("checking");
+              setResult(await checkForUpdate(current, site));
+            }}
+          >
+            <RefreshCw className={`size-4 ${result === "checking" ? "animate-spin" : ""}`} aria-hidden="true" />
+            {result === "checking" ? t("checking") : t("check")}
+          </button>
+          <p role="status" className="text-sm">
+            {result && result !== "checking" && result.state === "current" && t("upToDate", { version: current })}
+            {result && result !== "checking" && result.state === "error" && <span className="text-danger">{t("failed")}</span>}
+          </p>
+          {result && result !== "checking" && result.state === "available" && (
+            <button type="button" className="btn-primary btn-sm" onClick={() => void openExternal(downloadPage(result.latest, locale))}>
+              <Download className="size-4" aria-hidden="true" />
+              {t("downloadVersion", { version: result.latest.version })}
+            </button>
+          )}
+        </div>
+      ) : (
+        <p className="hint mt-2">{site ? t("onlyInApp") : t("notConfigured")}</p>
+      )}
+    </section>
+  );
+}
+
 export function AboutView() {
   const t = useTranslations("desktop.about");
   const tp = useTranslations("desktop.platforms");
@@ -397,18 +439,7 @@ export function AboutView() {
           </div>
         </div>
       </section>
-      <section className="card mb-4 p-6">
-        <h2 className="mb-2 font-semibold">{t("updates")}</h2>
-        <p className="text-sm text-muted">{t("updatesNote")}</p>
-        {site ? (
-          <button type="button" className="btn-secondary btn-sm mt-3" onClick={() => void openExternal(site)}>
-            <ExternalLink className="size-4" aria-hidden="true" />
-            {t("website")}
-          </button>
-        ) : (
-          <p className="hint mt-2">{t("noWebsite")}</p>
-        )}
-      </section>
+      <UpdatesCard current={info?.version ?? null} site={site} />
       <section className="card mb-4 p-6">
         <h2 className="mb-2 font-semibold">{t("privacy")}</h2>
         <p className="text-sm text-muted">{t("privacyText")}</p>

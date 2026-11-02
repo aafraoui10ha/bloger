@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, ExternalLink, FilePlus2, FolderOpen, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowLeft, Briefcase, ExternalLink, FilePlus2, FolderOpen, MessageCircle, ShieldCheck, Trash2 } from "lucide-react";
+import { agencyUrl, WHATSAPP_URL } from "@/lib/agency-links";
 import { ToolRenderer } from "@/tools/ToolRenderer";
 import { deleteProject, listProjects, rememberLastProject, type ProjectSummary } from "@/tools/designer/storage";
 import { CATEGORIES, FEATURED, getTool, searchTools, toolsIn, type CategoryId } from "../catalog";
@@ -340,6 +341,31 @@ export function AboutView() {
           </dl>
         </section>
       )}
+      <section className="band band-plum mb-4 rounded-2xl p-6" aria-labelledby="agency-h" data-testid="agency-card">
+        <div className="flex items-start gap-4">
+          <span className="icon-tile size-11 shrink-0">
+            <Briefcase className="size-5" aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <h2 id="agency-h" className="text-lg font-bold">
+              {t("agencyTitle")}
+            </h2>
+            <p className="mt-1 text-sm text-muted">{t("agencyBody")}</p>
+            <p className="mt-4 font-semibold">{t("projectTitle")}</p>
+            <p className="mt-1 text-sm text-muted">{t("projectBody")}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button type="button" className="btn-primary btn-sm" onClick={() => void openExternal(WHATSAPP_URL)}>
+                <MessageCircle className="size-4" aria-hidden="true" />
+                {t("projectCta")}
+              </button>
+              <button type="button" className="btn-secondary btn-sm" onClick={() => void openExternal(agencyUrl(locale))}>
+                <ExternalLink className="size-4" aria-hidden="true" />
+                {t("agencyVisit")}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="card mb-4 p-6">
         <h2 className="mb-2 font-semibold">{t("updates")}</h2>
         <p className="text-sm text-muted">{t("updatesNote")}</p>

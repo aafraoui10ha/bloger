@@ -185,11 +185,24 @@ test("desktop download page works in every language and offers no unpublished do
     await expect(page.getByRole("link", { name: nav }).first()).toBeVisible();
   }
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-  // No release is configured in the test environment: no download buttons, a clear notice instead.
   await page.goto("/en/desktop");
-  await expect(page.getByTestId("coming-soon")).toBeVisible();
-  await expect(page.getByTestId("primary-download")).toHaveCount(0);
-  await expect(page.locator('a[href$=".exe"], a[href$=".msi"]')).toHaveCount(0);
+  if (await page.getByTestId("coming-soon").isVisible()) {
+    // No release configured: no download buttons at all.
+    await expect(page.getByTestId("primary-download")).toHaveCount(0);
+    await expect(page.locator('a[href$=".exe"], a[href$=".msi"]')).toHaveCount(0);
+  } else {
+    // A release is configured: every card shows a SHA-256 and its link serves the installer as a download.
+    const cards = page.locator('[data-testid^="download-"]');
+    expect(await cards.count()).toBeGreaterThan(0);
+    for (const card of await cards.all()) {
+      await expect(card.locator("code")).toHaveText(/^[0-9a-f]{64}$/);
+      const href = await card.getByRole("link").getAttribute("href");
+      const res = await page.request.head(new URL(href!, page.url()).href);
+      expect(res.status(), href!).toBe(200);
+      expect(res.headers()["content-disposition"] ?? "", href!).toContain("attachment");
+    }
+    await expect(page.getByTestId("primary-download")).toHaveAttribute("href", /.exe$/);
+  }
   await expect(page.getByRole("heading", { name: "System requirements" })).toBeVisible();
   await expect(page.getByText("SmartScreen", { exact: false }).first()).toBeVisible();
   await page.getByRole("link", { name: "Installation guide" }).click();

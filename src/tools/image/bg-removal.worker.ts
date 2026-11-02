@@ -101,16 +101,35 @@ const runtimeFiles = (() => {
   return loader.file(files.mjs) && loader.file(files.wasm) ? files : null;
 })();
 
+/**
+ * URL to import the runtime's small glue script from (it is imported by URL, not from
+ * the verified bytes). The desktop app ships its own copy, checked against the manifest
+ * at build time, so it also works offline. On the website, after a cache hit, the site's
+ * copy is used only if it is actually served (it may be missing when models are not
+ * self-hosted); otherwise the pinned external URL.
+ */
+async function runtimeScriptUrl(path: string, origin: "cache" | "local" | "external"): Promise<string> {
+  const name = path.slice(path.lastIndexOf("/") + 1);
+  if (process.env.NEXT_PUBLIC_DESKTOP === "1") return `${self.location.origin}/ort/${name}`;
+  const external = loader.file(path)!.external;
+  if (origin === "external") return external;
+  const local = loader.localUrl(path);
+  if (origin === "local") return local;
+  try {
+    const res = await fetch(local, { method: "HEAD", cache: "no-store", credentials: "omit" });
+    return res.ok && /javascript/i.test(res.headers.get("content-type") ?? "") ? local : external;
+  } catch {
+    return external;
+  }
+}
+
 let runtimeReady: Promise<void> | null = null;
 function prepareRuntime(): Promise<void> {
   runtimeReady ??= (async () => {
     if (!runtimeFiles || !ortWasm) return; // unknown runtime variant: keep the library defaults
     const [wasm, mjs] = await Promise.all([loader.fetchFile(runtimeFiles.wasm), loader.fetchFile(runtimeFiles.mjs)]);
     ortWasm.wasmBinary = wasm.bytes.buffer;
-    ortWasm.wasmPaths = {
-      mjs: mjs.origin === "external" ? loader.file(runtimeFiles.mjs)!.external : loader.localUrl(runtimeFiles.mjs),
-      wasm: loader.localUrl(runtimeFiles.wasm),
-    };
+    ortWasm.wasmPaths = { mjs: await runtimeScriptUrl(runtimeFiles.mjs, mjs.origin), wasm: loader.localUrl(runtimeFiles.wasm) };
   })();
   runtimeReady.catch(() => {
     runtimeReady = null;

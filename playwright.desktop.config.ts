@@ -13,5 +13,5 @@ export default defineConfig({
   reporter: [["list"]],
   use: { baseURL: "http://localhost:3020", trace: "retain-on-failure", locale: "en-US", viewport: { width: 1440, height: 900 }, contextOptions: { reducedMotion: "reduce" } },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } }],
-  webServer: { command: "node scripts/desktop/serve-out.mjs 3020", url: "http://localhost:3020/", reuseExistingServer: true, timeout: 30_000 },
+  webServer: { command: "node scripts/desktop/serve-out.mjs 3020", url: "http://localhost:3020/", reuseExistingServer: true, timeout: 30_000, gracefulShutdown: { signal: "SIGTERM", timeout: 2_000 } },
 });

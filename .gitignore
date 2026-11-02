@@ -26,3 +26,5 @@ src-tauri/target/
 src-tauri/gen/
 src-tauri/tauri.generated.conf.json
 desktop/public/fonts/
+desktop/public/ort/
+public/downloads/

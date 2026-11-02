@@ -1,6 +1,6 @@
 {
   "name": "toolbox-atlas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -33,7 +33,8 @@
     "desktop:dev": "node scripts/desktop/prepare.mjs && tauri dev --config src-tauri/tauri.generated.conf.json",
     "desktop:build": "node scripts/desktop/prepare.mjs && tauri build --config src-tauri/tauri.generated.conf.json",
     "desktop:build:windows": "node scripts/desktop/prepare.mjs && tauri build --target x86_64-pc-windows-msvc --config src-tauri/tauri.generated.conf.json",
-    "desktop:version": "node scripts/desktop/version.mjs"
+    "desktop:version": "node scripts/desktop/version.mjs",
+    "desktop:publish-local": "node scripts/desktop/publish-local.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

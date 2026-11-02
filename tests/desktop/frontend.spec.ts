@@ -135,5 +135,14 @@ test("sends tool downloads to the native save dialog and shows app info", async 
   await expect(page.getByTestId("app-version")).toHaveText("Version 1.0.0");
   await expect(page.getByText("ci-123")).toBeVisible();
   await expect(page.getByText("Windows x64")).toBeVisible();
+
+  // Agency section: links open in the default browser through the opener plugin.
+  await expect(page.getByTestId("agency-card")).toContainText("Have a project in mind?");
+  await page.getByRole("button", { name: "Contact us on WhatsApp" }).click();
+  await page.getByTestId("agency-link").click();
+  await expect
+    .poll(async () => (await page.evaluate(() => (window as unknown as { __calls: { cmd: string; args: unknown }[] }).__calls)).filter((c) => c.cmd === "plugin:opener|open_url").map((c) => (c.args as { url: string }).url))
+    .toEqual(["https://wa.me/212619043143", "https://nexoraat.com/en"]);
+  expect(page.url()).toContain("/about/");
   expect(errors).toEqual([]);
 });

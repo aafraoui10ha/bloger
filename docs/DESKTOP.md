@@ -2,7 +2,7 @@
 
 Toolbox Desktop is a Tauri 2 app for Windows 10/11 x64. It runs the website's tools locally. There is no account, and the tools need no server.
 
-> **Status: Phase 2 (development builds).**
+> **Status: Phase 2 (development builds). The installed program is `%LOCALAPPDATA%ToolboxToolbox.exe` (NSIS) and the app identifier is `com.toolbox.desktop`.**
 > - Installers are built by GitHub Actions and are **unsigned**.
 > - Automatic updates, the download center and release management come in later phases.
 > - Do not distribute these builds as production releases.
@@ -27,6 +27,8 @@ scripts/desktop/  prepare.mjs (config from environment), catalog.ts, version.mjs
 ### Background remover
 
 The app uses the same SHA-256-verified loader as the website. The model files (about 173 MB) are **not** in the installer. On first use, the app downloads them from the official website (`TOOLBOX_SITE_URL` + `/models/background-removal/<version>/`) and checks each file. It then stores them in the versioned Cache API store, so later launches don't download them again.
+
+The runtime's two small glue scripts (`ort-wasm-simd-threaded*.mjs`, about 77 KB) are imported by URL, so the app ships them in `desktop/public/ort/`. `prepare.mjs` copies them and stops the build if their SHA-256 doesn't match the manifest. Because of this the remover also works offline after the first download; previously, a cached runtime tried to import the script from a folder the app doesn't contain.
 
 If the website is not configured or not reachable, the app uses the verified Hugging Face / jsDelivr sources. The website sends `Access-Control-Allow-Origin: *` on `/models/*` so the app can fetch these public files.
 
@@ -94,3 +96,24 @@ Then run `npm ci` and `npm run desktop:build`. The installers are written to `sr
 - CI fails if they disagree.
 
 The About screen shows the version, the build id (`date.run.commit`), the channel, the release date, the platform and the Tauri version.
+
+## Offering a build on the website (/desktop)
+
+The page `/[locale]/desktop` shows download buttons only for an installer whose address, SHA-256 and size are all set (`DESKTOP_*` variables). Otherwise it says "coming soon".
+
+**On a server you run yourself (local or VPS):**
+
+```bash
+# folder = the extracted CI artifact (installers + SHA256SUMS.txt)
+node scripts/desktop/publish-local.mjs "C:\path\to\toolbox-desktop-1.0.1-windows-x64-build-N"
+# then restart the Next.js server (or rebuild for production)
+```
+
+The script does three things:
+- It verifies each installer against `SHA256SUMS.txt`.
+- It copies the installers to `public/downloads/desktop/windows/x64/`, which is gitignored, so installers are never committed.
+- It writes the matching `DESKTOP_*` settings to `.env.local`, which is also gitignored. `.env` is not touched.
+
+Files under `/downloads/` are served with `Content-Disposition: attachment` and support byte-range requests.
+
+**On Vercel:** the filesystem there is not persistent, so upload the installers to Cloudflare R2 and set the same variables in the Vercel project, using the `https://` R2 URLs. Phase 4 moves this to admin-managed release records.

@@ -1,6 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Toolbox",
+  "mainBinaryName": "Toolbox",
   "version": "../package.json",
   "identifier": "com.toolbox.desktop",
   "build": {
@@ -32,7 +33,7 @@
         "style-src": "'self' 'unsafe-inline'",
         "img-src": "'self' data: blob:",
         "font-src": "'self' data:",
-        "connect-src": "'self' ipc: http://ipc.localhost blob: data: https://huggingface.co https://*.huggingface.co https://*.hf.co https://cdn.jsdelivr.net",
+        "connect-src": "'self' ipc: http://ipc.localhost https://ipc.localhost blob: data: https://huggingface.co https://*.huggingface.co https://*.hf.co https://cdn.jsdelivr.net",
         "worker-src": "'self' blob:",
         "media-src": "'self' blob: data:",
         "object-src": "'none'",
@@ -40,28 +41,48 @@
         "form-action": "'none'",
         "frame-src": "'none'"
       },
-      "dangerousDisableAssetCspModification": ["style-src"],
+      "dangerousDisableAssetCspModification": [
+        "style-src"
+      ],
       "freezePrototype": false
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis", "msi"],
+    "targets": [
+      "nsis",
+      "msi"
+    ],
     "publisher": "Toolbox",
     "copyright": "© Toolbox",
     "category": "Productivity",
     "shortDescription": "Free tools for images, text, numbers and design",
     "longDescription": "Toolbox Desktop brings the Toolbox tools to your computer: image tools, an AI background remover, a chart and infographic designer, colour palettes, patterns, text tools and calculators. Files are processed on your device.",
-    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
     "windows": {
-      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
       "nsis": {
         "installMode": "currentUser",
-        "languages": ["English", "French", "Arabic"],
+        "languages": [
+          "English",
+          "French",
+          "Arabic"
+        ],
         "displayLanguageSelector": true,
         "installerIcon": "icons/icon.ico"
       },
-      "wix": { "language": "en-US" }
+      "wix": {
+        "language": "en-US"
+      }
     }
   }
 }

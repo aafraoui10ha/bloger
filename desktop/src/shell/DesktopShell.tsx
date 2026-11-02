@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { NextIntlClientProvider, useTranslations } from "next-intl";
+import { NextIntlClientProvider, useLocale, useTranslations } from "next-intl";
 import { BarChart3, CheckCircle2, FolderOpen, Home, Info, LayoutGrid, Search, Settings, Star, X, AlertTriangle } from "lucide-react";
 import en from "../../../messages/en.json";
 import fr from "../../../messages/fr.json";
@@ -12,6 +12,7 @@ import { CATEGORIES } from "../catalog";
 import { installNativeLinks, isTauri, type SaveResult } from "./native";
 import { settingsStore, type Locale } from "./store";
 import { CategoryIcon } from "../views/icons";
+import { agencyUrl } from "@/lib/agency-links";
 
 const MESSAGES: Record<Locale, typeof en> = { en, fr, ar };
 
@@ -117,6 +118,7 @@ function NavLink({ href, icon, children, active }: { href: string; icon: ReactNo
 
 function Sidebar({ searchRef }: { searchRef: React.RefObject<HTMLInputElement | null> }) {
   const t = useTranslations("desktop");
+  const locale = useLocale();
   const path = usePathname() || "/";
   const router = useRouter();
   const params = useSearchParams();
@@ -175,6 +177,9 @@ function Sidebar({ searchRef }: { searchRef: React.RefObject<HTMLInputElement | 
           {t("nav.about")}
         </NavLink>
       </nav>
+      <a href={agencyUrl(locale)} target="_blank" rel="noopener noreferrer" className="px-3 text-xs text-cream/60 hover:text-cream" data-testid="agency-link">
+        {t("builtBy")}
+      </a>
     </aside>
   );
 }

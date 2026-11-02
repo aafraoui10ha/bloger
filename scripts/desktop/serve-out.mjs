@@ -22,7 +22,7 @@ function cspFor(html) {
   return Object.entries(directives).map(([k, v]) => `${k} ${v}`).join("; ");
 }
 
-http
+const server = http
   .createServer((req, res) => {
     const url = new URL(req.url ?? "/", "http://localhost");
     let file = path.normalize(path.join(OUT, decodeURIComponent(url.pathname)));
@@ -41,3 +41,6 @@ http
     res.writeHead(status, headers).end(body);
   })
   .listen(port, () => console.log(`desktop/out on http://localhost:${port}`));
+// Exit promptly when the test runner stops the server (idle keep-alive sockets would otherwise keep it alive).
+server.keepAliveTimeout = 1000;
+for (const sig of ["SIGTERM", "SIGINT"]) process.on(sig, () => process.exit(0));

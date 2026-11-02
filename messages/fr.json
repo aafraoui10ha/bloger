@@ -629,7 +629,17 @@
     "done": "Arrière-plan supprimé. Vous pouvez choisir un fond et télécharger le PNG.",
     "processingLabel": "Traitement de l’image",
     "cacheSkipped": "Votre navigateur n’a pas permis d’enregistrer le modèle : il sera téléchargé de nouveau la prochaine fois.",
-    "errorIntegrity": "Les fichiers du modèle téléchargés n’ont pas passé le contrôle de sécurité ; ils n’ont donc pas été utilisés. Réessayez plus tard."
+    "errorIntegrity": "Les fichiers du modèle téléchargés n’ont pas passé le contrôle de sécurité ; ils n’ont donc pas été utilisés. Réessayez plus tard.",
+    "firstRunNoticeDesktop": "La première fois, Toolbox télécharge le modèle d’IA (jusqu’à environ {size} Mo) et l’enregistre sur cet ordinateur ; les utilisations suivantes fonctionnent hors ligne. Votre image n’est jamais envoyée : elle est traitée sur votre ordinateur.",
+    "portraitModeDesktop": "L’accélération WebGPU n’est pas disponible sur cet ordinateur : Toolbox utilise son modèle de secours compatible. Il fonctionne sur le processeur et donne les meilleurs résultats sur des photos de personnes ; pour les produits et objets, le résultat peut être moins précis.",
+    "downloadLocalDesktop": "Téléchargement du modèle d’IA depuis le site Toolbox… {percent} %",
+    "downloadLocalUnknownDesktop": "Téléchargement du modèle d’IA depuis le site Toolbox…",
+    "fallbackNoticeDesktop": "La copie du modèle sur le site Toolbox n’a pas pu être téléchargée : la source de secours (Hugging Face et jsDelivr) est utilisée. Les fichiers sont tout de même vérifiés avant utilisation.",
+    "cacheSkippedDesktop": "Le modèle n’a pas pu être enregistré sur cet ordinateur : il sera téléchargé de nouveau la prochaine fois.",
+    "errorNetworkDesktop": "Le modèle d’IA n’a pas pu être téléchargé. Vérifiez votre connexion internet. Si un antivirus ou un pare-feu est actif, autorisez Toolbox à se connecter, puis réessayez. Après un téléchargement réussi, l’outil fonctionne hors ligne.",
+    "errorReloadDesktop": "Le détourage n’a pas pu démarrer. Redémarrez Toolbox et réessayez.",
+    "errorDesktop": "L’arrière-plan n’a pas pu être supprimé. Réessayez ; si le problème persiste, redémarrez Toolbox et transmettez-nous les détails techniques.",
+    "reloadDesktop": "Recharger"
   },
   "designer": {
     "loading": "Chargement de l’éditeur…",
@@ -1304,7 +1314,13 @@
       "privacy": "Confidentialité",
       "privacyText": "Toolbox Desktop ne demande aucun compte et n’envoie aucune statistique. Vos fichiers restent sur cet ordinateur. Les seules requêtes réseau sont le téléchargement unique du modèle de suppression d’arrière-plan et les liens que vous choisissez d’ouvrir.",
       "credits": "Composants open source",
-      "creditsText": "Conçu avec Tauri, Next.js et React. Polices sous licence SIL Open Font License, icônes Lucide (ISC), modèles de suppression d’arrière-plan BiRefNet (MIT) et MODNet (Apache-2.0), ONNX Runtime (MIT)."
+      "creditsText": "Conçu avec Tauri, Next.js et React. Polices sous licence SIL Open Font License, icônes Lucide (ISC), modèles de suppression d’arrière-plan BiRefNet (MIT) et MODNet (Apache-2.0), ONNX Runtime (MIT).",
+      "agencyTitle": "Conçu par Nexoraat",
+      "agencyBody": "Toolbox est conçu et développé par Nexoraat, une agence digitale basée à Marrakech, au Maroc. Nexoraat réalise des sites web, des applications mobiles, des identités visuelles et des solutions d’IA, et pilote des campagnes de marketing digital, de SEO et de publicité pour les entreprises.",
+      "projectTitle": "Vous avez un projet ?",
+      "projectBody": "Besoin d’un site, d’une application ou d’une campagne marketing qui donne des résultats ? Parlez-nous de votre projet : l’équipe Nexoraat vous répondra.",
+      "projectCta": "Nous contacter sur WhatsApp",
+      "agencyVisit": "Visiter nexoraat.com"
     },
     "save": {
       "saved": "Enregistré dans {path}",
@@ -1315,7 +1331,8 @@
       "windows": "Windows",
       "macos": "macOS",
       "linux": "Linux"
-    }
+    },
+    "builtBy": "Conçu par Nexoraat · Lancer un projet"
   },
   "desktopPage": {
     "metaTitle": "Toolbox Desktop pour Windows – Téléchargement gratuit",

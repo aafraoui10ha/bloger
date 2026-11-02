@@ -629,7 +629,17 @@
     "done": "Background removed. You can choose a background and download the PNG.",
     "processingLabel": "Image processing",
     "cacheSkipped": "Your browser didn’t allow the model to be saved, so it will be downloaded again next time.",
-    "errorIntegrity": "The downloaded model files failed the security check, so they were not used. Please try again later."
+    "errorIntegrity": "The downloaded model files failed the security check, so they were not used. Please try again later.",
+    "firstRunNoticeDesktop": "The first time, Toolbox downloads the AI model (up to about {size} MB) and saves it on this computer, so later uses work offline. Your image is never uploaded: it is processed on your computer.",
+    "portraitModeDesktop": "WebGPU acceleration isn’t available on this computer, so Toolbox is using its compatible fallback model. It runs on the processor and works best on photos of people; results on products and objects may be less precise.",
+    "downloadLocalDesktop": "Downloading the AI model from the Toolbox website… {percent}%",
+    "downloadLocalUnknownDesktop": "Downloading the AI model from the Toolbox website…",
+    "fallbackNoticeDesktop": "The Toolbox website’s copy of the model couldn’t be downloaded, so the backup source (Hugging Face and jsDelivr) is being used. The files are still checked before use.",
+    "cacheSkippedDesktop": "The model couldn’t be saved on this computer, so it will be downloaded again next time.",
+    "errorNetworkDesktop": "The AI model couldn’t be downloaded. Check your internet connection. If an antivirus or firewall is active, allow Toolbox to connect, then try again. After one successful download the tool works offline.",
+    "errorReloadDesktop": "The background remover couldn’t start. Restart Toolbox and try again.",
+    "errorDesktop": "The background could not be removed. Try again; if it keeps failing, restart Toolbox and share the technical details with us.",
+    "reloadDesktop": "Reload"
   },
   "designer": {
     "loading": "Loading the designer…",
@@ -1304,7 +1314,13 @@
       "privacy": "Privacy",
       "privacyText": "Toolbox Desktop needs no account and sends no analytics. Your files stay on this computer. The only network requests are the one-time download of the background-removal model and the links you choose to open.",
       "credits": "Open-source components",
-      "creditsText": "Built with Tauri, Next.js and React. Fonts under the SIL Open Font License, icons by Lucide (ISC), background-removal models BiRefNet (MIT) and MODNet (Apache-2.0), ONNX Runtime (MIT)."
+      "creditsText": "Built with Tauri, Next.js and React. Fonts under the SIL Open Font License, icons by Lucide (ISC), background-removal models BiRefNet (MIT) and MODNet (Apache-2.0), ONNX Runtime (MIT).",
+      "agencyTitle": "Built by Nexoraat",
+      "agencyBody": "Toolbox is designed and developed by Nexoraat, a digital agency in Marrakech, Morocco. Nexoraat builds websites, mobile apps, branding and AI solutions, and runs digital marketing, SEO and advertising campaigns for businesses.",
+      "projectTitle": "Have a project in mind?",
+      "projectBody": "Need a website, an app or a marketing campaign that brings results? Tell us about your project, and the Nexoraat team will get back to you.",
+      "projectCta": "Contact us on WhatsApp",
+      "agencyVisit": "Visit nexoraat.com"
     },
     "save": {
       "saved": "Saved to {path}",
@@ -1315,7 +1331,8 @@
       "windows": "Windows",
       "macos": "macOS",
       "linux": "Linux"
-    }
+    },
+    "builtBy": "Built by Nexoraat · Start a project"
   },
   "desktopPage": {
     "metaTitle": "Toolbox Desktop for Windows – Free Download",

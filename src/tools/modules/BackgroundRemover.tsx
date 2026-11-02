@@ -9,6 +9,8 @@ import { ImageDropzone } from "@/tools/image/ImageDropzone";
 import { ErrorMessage, ResetButton, useToolEvents } from "@/tools/ui";
 
 const ACCEPTED: DetectedFormat[] = ["png", "jpeg", "webp"];
+/** Running inside Toolbox Desktop (Tauri): messages talk about the app, not a browser or website. */
+const IN_DESKTOP_APP = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 /** Longest side used for the cut-out; larger photos are scaled down to keep memory use safe on phones. */
 const MAX_SIDE = 4096;
 const CHECKER = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='8' height='8' fill='%23e6ddbd'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23e6ddbd'/%3E%3C/svg%3E\")";
@@ -29,6 +31,8 @@ function discardWorker() {
 
 export function BackgroundRemover() {
   const t = useTranslations("bgremove");
+  /** The desktop variant of a message ("<key>Desktop") when running in the app and one exists. */
+  const tk = (key: string) => (IN_DESKTOP_APP && t.has(`${key}Desktop`) ? `${key}Desktop` : key);
   const ti = useTranslations("image");
   const locale = useLocale();
   const events = useToolEvents("background-remover");
@@ -171,7 +175,7 @@ export function BackgroundRemover() {
     if (stage === "loading") return t("loadingModel");
     if (!progress) return t("checking");
     const key = progress.source === "local" ? "downloadLocal" : "downloadExternal";
-    return pct === null ? t(`${key}Unknown`) : t(key, { percent: pct });
+    return pct === null ? t(tk(`${key}Unknown`)) : t(tk(key), { percent: pct });
   }
 
   return (
@@ -216,13 +220,13 @@ export function BackgroundRemover() {
           <div className="h-full w-full animate-pulse rounded-full bg-accent" />
         </div>
       )}
-      {notices.fallback && busy && <p className="alert-info">{t("fallbackNotice")}</p>}
-      {notices.cacheSkipped && phase === "done" && <p className="hint">{t("cacheSkipped")}</p>}
+      {notices.fallback && busy && <p className="alert-info">{t(tk("fallbackNotice"))}</p>}
+      {notices.cacheSkipped && phase === "done" && <p className="hint">{t(tk("cacheSkipped"))}</p>}
       {phase === "done" && <p className="sr-only" role="status">{t("done")}</p>}
 
       {source && phase !== "done" && (
         <div className="space-y-3">
-          <p className="alert-info">{t("firstRunNotice", { size: BG_MODEL_MB })}</p>
+          <p className="alert-info">{t(tk("firstRunNotice"), { size: BG_MODEL_MB })}</p>
           <div className="flex flex-wrap gap-2">
             <button type="button" className="btn-primary" onClick={run} disabled={busy}>
               <Eraser className="size-4" aria-hidden="true" />
@@ -233,7 +237,7 @@ export function BackgroundRemover() {
         </div>
       )}
 
-      {mode === "portrait" && (phase === "processing" || phase === "done") && <p className="alert-warning">{t("portraitMode")}</p>}
+      {mode === "portrait" && (phase === "processing" || phase === "done") && <p className="alert-warning">{t(tk("portraitMode"))}</p>}
 
       {phase === "done" && (
         <div className="space-y-4">
@@ -267,10 +271,10 @@ export function BackgroundRemover() {
       <ErrorMessage>{error}</ErrorMessage>
       {failure && (
         <div role="alert" className="alert-error space-y-2">
-          <p>{t(failure.reload ? "errorReload" : failure.kind === "integrity" ? "errorIntegrity" : failure.kind === "network" || /fetch|network|load failed/i.test(failure.detail) ? "errorNetwork" : "error")}</p>
+          <p>{t(tk(failure.reload ? "errorReload" : failure.kind === "integrity" ? "errorIntegrity" : failure.kind === "network" || /fetch|network|load failed/i.test(failure.detail) ? "errorNetwork" : "error"))}</p>
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-secondary btn-sm" onClick={() => (failure.reload ? window.location.reload() : run())}>
-              {t(failure.reload ? "reload" : "retry")}
+              {t(tk(failure.reload ? "reload" : "retry"))}
             </button>
             <details className="text-xs">
               <summary className="cursor-pointer">{t("details")}</summary>

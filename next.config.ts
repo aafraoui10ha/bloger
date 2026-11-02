@@ -76,6 +76,15 @@ const nextConfig: NextConfig = {
         ],
       },
       { source: "/models/:path(.*\\.(?:onnx|part\\d+))", headers: [{ key: "Content-Type", value: "application/octet-stream" }] },
+      // Desktop installers published on this server (scripts/desktop/publish-local.mjs): always download, never render.
+      {
+        source: "/downloads/:path*",
+        headers: [
+          { key: "Content-Disposition", value: "attachment" },
+          { key: "Cache-Control", value: "public, max-age=3600" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
       // Chart Designer fonts (OFL, committed): cache for a week, revalidate in the background.
       { source: "/fonts/designer/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
     ];

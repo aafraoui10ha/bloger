@@ -28,10 +28,11 @@ A navigation guard (`commands/navigation.rs`) keeps the window on the app's own 
 
 ```
 default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net [site];
-connect-src 'self' ipc: http://ipc.localhost blob: data: [model hosts] [site];
+connect-src 'self' ipc: http://ipc.localhost https://ipc.localhost blob: data: [model hosts] [site];
 style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; object-src 'none'; frame-src 'none'; form-action 'none'
 ```
 
+- **IPC channel:** `ipc:` and `https://ipc.localhost` are Tauri's channel between the page and the Rust side. The app uses the https form because the window runs on `https://tauri.localhost` (`useHttpsScheme`). `http://ipc.localhost` stays as Tauri's fallback channel. Only these exact hosts are listed, with no wildcard, and they are reachable only from the app's own pages.
 - **Inline scripts:** Tauri adds hashes for the inline scripts it serves, so `'unsafe-inline'` is **not** allowed for scripts.
 - **Styles:** they keep `'unsafe-inline'` (`dangerousDisableAssetCspModification: ["style-src"]`), because the tools use inline style attributes. Scripts are unaffected.
 - **`'wasm-unsafe-eval'`** is required for the ONNX Runtime (WebAssembly).

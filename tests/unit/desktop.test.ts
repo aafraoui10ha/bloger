@@ -39,6 +39,7 @@ describe("desktop packaging config", () => {
   it("identifies the app and reads its version from package.json", () => {
     expect(conf.identifier).toBe("com.toolbox.desktop");
     expect(conf.productName).toBe("Toolbox");
+    expect(conf.mainBinaryName).toBe("Toolbox");
     expect(conf.version).toBe("../package.json");
     expect(JSON.parse(fs.readFileSync("package.json", "utf8")).version).toMatch(/^\d+\.\d+\.\d+$/);
     expect(fs.readFileSync("src-tauri/Cargo.toml", "utf8")).toMatch(new RegExp(`^version = "${JSON.parse(fs.readFileSync("package.json", "utf8")).version}"`, "m"));
@@ -54,6 +55,10 @@ describe("desktop packaging config", () => {
     expect(scriptSrc).not.toContain("'unsafe-inline'");
     expect(scriptSrc).not.toContain("'unsafe-eval'");
     expect(csp["object-src"]).toBe("'none'");
+    const connect = csp["connect-src"].split(/\s+/);
+    expect(connect).toEqual(expect.arrayContaining(["ipc:", "https://ipc.localhost", "http://ipc.localhost"]));
+    // The only wildcards are the model CDN subdomains; IPC and everything else are exact hosts.
+    expect(connect.filter((v: string) => v.includes("*") && !/^https:\/\/\*\.(huggingface\.co|hf\.co)$/.test(v))).toEqual([]);
     expect(conf.app.windows[0].useHttpsScheme).toBe(true);
     expect(caps.windows).toEqual(["main"]);
     expect(caps.remote).toBeUndefined();

@@ -1,7 +1,7 @@
 [package]
 name = "toolbox-desktop"
 # Kept in sync with package.json by `npm run desktop:version` (package.json is the source of truth).
-version = "1.0.0"
+version = "1.0.1"
 description = "Toolbox Desktop"
 authors = ["Toolbox"]
 license = "UNLICENSED"

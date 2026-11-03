@@ -55,6 +55,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   output: "standalone",
+  
   turbopack: { root: import.meta.dirname },
   reactStrictMode: true,
   experimental: {

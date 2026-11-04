@@ -58,9 +58,10 @@ const nextConfig: NextConfig = {
   
   turbopack: { root: import.meta.dirname },
   reactStrictMode: true,
-  experimental: {
-    serverActions: { bodySizeLimit: "6mb" },
-  },
+ experimental: {
+  cpus: 1,
+  serverActions: { bodySizeLimit: "6mb" },
+},
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

@@ -54,7 +54,8 @@
     "cookies": "Paramètres des cookies",
     "editorial": "Politique éditoriale",
     "corrections": "Politique de correction",
-    "services": "Services"
+    "services": "Services",
+    "desktop": "Application PC"
   },
   "home": {
     "metaTitle": "Outils en ligne gratuits pour images, textes et calculs",
@@ -596,12 +597,10 @@
   "bgremove": {
     "remove": "Supprimer l’arrière-plan",
     "working": "Traitement…",
-    "preparing": "Préparation du modèle d’IA…",
-    "downloading": "Téléchargement du modèle d’IA… {percent} %",
     "processing": "Suppression de l’arrière-plan…",
     "waiting": "Le résultat apparaîtra ici.",
-    "firstRunNotice": "La première fois, votre navigateur télécharge le modèle d’IA (jusqu’à environ {size} Mo) depuis Hugging Face et le garde en cache pour les fois suivantes. Votre image n’est jamais envoyée : elle est traitée sur votre appareil.",
-    "progressLabel": "Progression",
+    "firstRunNotice": "La première fois, votre navigateur télécharge le modèle d’IA (jusqu’à environ {size} Mo) depuis ce site et le conserve pour la prochaine fois. Votre image n’est jamais envoyée : elle est traitée sur votre appareil.",
+    "progressLabel": "Téléchargement du modèle d’IA",
     "background": "Arrière-plan",
     "bg": {
       "transparent": "Transparent",
@@ -613,10 +612,881 @@
     "error": "L’arrière-plan n’a pas pu être supprimé. Réessayez ; si le problème persiste, essayez Chrome ou Edge sur ordinateur et transmettez-nous les détails techniques.",
     "scaledNote": "Les grandes photos sont traitées en {width} × {height} pixels pour préserver la mémoire de votre appareil.",
     "portraitMode": "Votre navigateur ne prend pas en charge WebGPU : un modèle d’IA plus léger, optimisé pour les personnes, est utilisé. Pour les produits et objets, ouvrez cette page dans une version récente de Chrome, Edge ou Safari sur ordinateur.",
-    "errorNetwork": "Le modèle d’IA n’a pas pu être téléchargé. Un bloqueur de publicités, une extension de confidentialité, Brave Shields, la protection web d’un antivirus ou un pare-feu bloque peut-être huggingface.co ou cdn.jsdelivr.net. Autorisez ces sites (ou mettez le bloqueur en pause pour cette page), puis réessayez.",
+    "errorNetwork": "Le modèle d’IA n’a pu être téléchargé ni depuis ce site ni depuis la source de secours. Vérifiez votre connexion. Si un bloqueur de publicités, un antivirus ou un pare-feu est actif, autorisez ce site, huggingface.co et cdn.jsdelivr.net, puis réessayez.",
     "errorReload": "Cette page était ouverte pendant une mise à jour du site, l’outil n’a donc pas pu démarrer. Rechargez la page et réessayez.",
     "reload": "Recharger la page",
     "retry": "Réessayer",
-    "details": "Détails techniques"
+    "details": "Détails techniques",
+    "checking": "Recherche d’une copie enregistrée du modèle d’IA…",
+    "downloadLocal": "Téléchargement du modèle d’IA depuis ce site… {percent} %",
+    "downloadLocalUnknown": "Téléchargement du modèle d’IA depuis ce site…",
+    "downloadExternal": "Téléchargement du modèle d’IA depuis la source de secours… {percent} %",
+    "downloadExternalUnknown": "Téléchargement du modèle d’IA depuis la source de secours…",
+    "bytes": "{loaded} sur {total}",
+    "fallbackNotice": "La copie du modèle hébergée sur ce site n’a pas pu être téléchargée : la source de secours (Hugging Face et jsDelivr) est utilisée. Les fichiers sont tout de même vérifiés avant utilisation.",
+    "verifying": "Vérification de l’intégrité des fichiers…",
+    "loadingModel": "Chargement du modèle d’IA en mémoire…",
+    "done": "Arrière-plan supprimé. Vous pouvez choisir un fond et télécharger le PNG.",
+    "processingLabel": "Traitement de l’image",
+    "cacheSkipped": "Votre navigateur n’a pas permis d’enregistrer le modèle : il sera téléchargé de nouveau la prochaine fois.",
+    "errorIntegrity": "Les fichiers du modèle téléchargés n’ont pas passé le contrôle de sécurité ; ils n’ont donc pas été utilisés. Réessayez plus tard.",
+    "firstRunNoticeDesktop": "La première fois, Toolbox télécharge le modèle d’IA (jusqu’à environ {size} Mo) et l’enregistre sur cet ordinateur ; les utilisations suivantes fonctionnent hors ligne. Votre image n’est jamais envoyée : elle est traitée sur votre ordinateur.",
+    "portraitModeDesktop": "L’accélération WebGPU n’est pas disponible sur cet ordinateur : Toolbox utilise son modèle de secours compatible. Il fonctionne sur le processeur et donne les meilleurs résultats sur des photos de personnes ; pour les produits et objets, le résultat peut être moins précis.",
+    "downloadLocalDesktop": "Téléchargement du modèle d’IA depuis le site Toolbox… {percent} %",
+    "downloadLocalUnknownDesktop": "Téléchargement du modèle d’IA depuis le site Toolbox…",
+    "fallbackNoticeDesktop": "La copie du modèle sur le site Toolbox n’a pas pu être téléchargée : la source de secours (Hugging Face et jsDelivr) est utilisée. Les fichiers sont tout de même vérifiés avant utilisation.",
+    "cacheSkippedDesktop": "Le modèle n’a pas pu être enregistré sur cet ordinateur : il sera téléchargé de nouveau la prochaine fois.",
+    "errorNetworkDesktop": "Le modèle d’IA n’a pas pu être téléchargé. Vérifiez votre connexion internet. Si un antivirus ou un pare-feu est actif, autorisez Toolbox à se connecter, puis réessayez. Après un téléchargement réussi, l’outil fonctionne hors ligne.",
+    "errorReloadDesktop": "Le détourage n’a pas pu démarrer. Redémarrez Toolbox et réessayez.",
+    "errorDesktop": "L’arrière-plan n’a pas pu être supprimé. Réessayez ; si le problème persiste, redémarrez Toolbox et transmettez-nous les détails techniques.",
+    "reloadDesktop": "Recharger"
+  },
+  "designer": {
+    "loading": "Chargement de l’éditeur…",
+    "untitled": "Design sans titre",
+    "copyOf": "{name} (copie)",
+    "panels": "Panneaux de l’éditeur",
+    "properties": "Propriétés",
+    "selectedAnnouncement": "{type} sélectionné",
+    "tabs": {
+      "templates": "Modèles",
+      "charts": "Graphiques",
+      "elements": "Éléments",
+      "text": "Texte",
+      "colors": "Couleurs",
+      "uploads": "Imports",
+      "projects": "Projets"
+    },
+    "toolbar": {
+      "name": "Nom du design",
+      "saved": "Enregistré sur cet appareil",
+      "saving": "Enregistrement…",
+      "notSaved": "Non enregistré : stockage du navigateur indisponible",
+      "saveFailed": "Échec de l’enregistrement",
+      "undo": "Annuler",
+      "redo": "Rétablir",
+      "zoomOut": "Zoom arrière",
+      "zoomIn": "Zoom avant",
+      "fit": "Ajuster à l’écran",
+      "zoomLevel": "Zoom {percent} %. Cliquez pour ajuster à l’écran",
+      "grid": "Afficher la grille",
+      "snap": "Aimanter à la grille et aux repères",
+      "preview": "Aperçu",
+      "closePreview": "Revenir à l’édition",
+      "fullscreen": "Plein écran",
+      "exitFullscreen": "Quitter le plein écran",
+      "export": "Exporter"
+    },
+    "mobile": {
+      "edit": "Modifier",
+      "design": "Design",
+      "close": "Fermer le panneau"
+    },
+    "canvas": {
+      "label": "Toile du design : {name}",
+      "handle": {
+        "nw": "Redimensionner par le coin supérieur gauche",
+        "n": "Redimensionner par le bord supérieur",
+        "ne": "Redimensionner par le coin supérieur droit",
+        "e": "Redimensionner par le bord droit",
+        "se": "Redimensionner par le coin inférieur droit",
+        "s": "Redimensionner par le bord inférieur",
+        "sw": "Redimensionner par le coin inférieur gauche",
+        "w": "Redimensionner par le bord gauche"
+      }
+    },
+    "templates": {
+      "size": "Format",
+      "blank": "Design vierge",
+      "use": "Utiliser le modèle {name}",
+      "names": {
+        "editorial": "Éditorial minimal",
+        "corporate": "Entreprise",
+        "tech": "Technologie moderne",
+        "finance": "Rapport financier",
+        "marketing": "Statistiques marketing",
+        "social": "Infographie réseaux sociaux",
+        "premium": "Premium sombre",
+        "colorful": "Moderne coloré",
+        "swiss": "Typographie suisse",
+        "magazine": "Récit magazine",
+        "timeline": "Frise des étapes",
+        "dashboard": "Tableau de bord KPI"
+      }
+    },
+    "presets": {
+      "instagramPost": "Publication Instagram",
+      "instagramPortrait": "Instagram portrait",
+      "instagramStory": "Story Instagram",
+      "facebookPost": "Publication Facebook",
+      "linkedinPost": "Publication LinkedIn",
+      "presentation": "Présentation 16:9",
+      "a4Portrait": "A4 portrait",
+      "a4Landscape": "A4 paysage",
+      "custom": "Taille personnalisée"
+    },
+    "charts": {
+      "heading": "Ajouter un graphique",
+      "hint": "Chaque graphique contient des données d’exemple modifiables dans le panneau des propriétés."
+    },
+    "chartKinds": {
+      "bar": "Barres",
+      "hbar": "Barres horizontales",
+      "line": "Courbe",
+      "area": "Aires",
+      "pie": "Secteurs",
+      "doughnut": "Anneau",
+      "radar": "Radar",
+      "scatter": "Nuage de points",
+      "comparison": "Comparaison",
+      "progress": "Progression",
+      "kpi": "Cartes KPI",
+      "timeline": "Frise chronologique",
+      "infographic": "Infographie"
+    },
+    "variants": {
+      "bars": "Barres",
+      "rings": "Anneaux",
+      "cards": "Cartes",
+      "plain": "Simple",
+      "horizontal": "Horizontale",
+      "vertical": "Verticale",
+      "list": "Liste",
+      "grid": "Grille"
+    },
+    "elements": {
+      "shapes": "Formes et décorations",
+      "icons": "Icônes",
+      "add": "Ajouter : {name}"
+    },
+    "shapes": {
+      "rect": "Rectangle",
+      "ellipse": "Ellipse",
+      "triangle": "Triangle",
+      "line": "Ligne",
+      "star": "Étoile",
+      "ring": "Anneau",
+      "arc": "Demi-cercle",
+      "wave": "Vague",
+      "dots": "Grille de points",
+      "blob": "Forme organique"
+    },
+    "icons": {
+      "search": "Rechercher une icône",
+      "groups": {
+        "business": "Entreprise",
+        "finance": "Finance",
+        "people": "Personnes",
+        "tech": "Technologie",
+        "commerce": "Commerce et voyage",
+        "communication": "Communication",
+        "nature": "Nature",
+        "symbols": "Symboles"
+      }
+    },
+    "text": {
+      "add": "Ajouter du texte",
+      "presets": {
+        "title": "Ajouter un titre",
+        "subtitle": "Ajouter un sous-titre",
+        "body": "Ajouter un paragraphe",
+        "caption": "Ajouter une légende ou une source"
+      },
+      "pairings": "Associations de polices",
+      "pairingsHint": "Applique la police de titre aux titres et la police de texte aux autres textes et graphiques.",
+      "pairingNames": {
+        "modern": "Moderne",
+        "editorial": "Éditorial",
+        "swiss": "Suisse",
+        "tech": "Technologie",
+        "corporate": "Entreprise",
+        "magazine": "Magazine",
+        "bold": "Affiche",
+        "classic": "Classique",
+        "arabicModern": "Arabe moderne",
+        "arabicCorporate": "Arabe entreprise",
+        "arabicClassic": "Arabe classique"
+      },
+      "fonts": "Bibliothèque de polices",
+      "fontsHint": "Cliquez sur une police pour l’appliquer au texte ou au graphique sélectionné, ou pour ajouter un texte dans cette police.",
+      "fontApplied": "{font} appliquée à l’élément sélectionné."
+    },
+    "fontCategories": {
+      "sans": "Sans-serif modernes",
+      "business": "Professionnelles",
+      "serif": "Serif éditoriales",
+      "display": "Affichage",
+      "arabic": "Arabe et latin"
+    },
+    "colors": {
+      "hint": "Cliquez sur une palette pour l’appliquer aux graphiques, icônes et formes du design.",
+      "random": "Palette aléatoire",
+      "shuffle": "Nouvelle palette aléatoire",
+      "applyColors": "Appliquer les couleurs {colors}",
+      "harmony": "Harmonie à partir d’une couleur",
+      "baseColor": "Couleur de base",
+      "harmonyType": "Type d’harmonie",
+      "library": "Bibliothèque de palettes",
+      "category": "Catégorie de palette",
+      "all": "Tous les styles",
+      "applyPalette": "Appliquer la palette {name}"
+    },
+    "harmonies": {
+      "complementary": "Complémentaire",
+      "analogous": "Analogue",
+      "triadic": "Triadique",
+      "splitComplementary": "Complémentaire divisée",
+      "monochromatic": "Monochrome"
+    },
+    "paletteCategories": {
+      "modern": "Moderne",
+      "minimal": "Minimal",
+      "luxury": "Luxe",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Sombre",
+      "vibrant": "Vif",
+      "gradient": "Dégradé",
+      "monochrome": "Monochrome"
+    },
+    "uploads": {
+      "upload": "Importer des images ou logos",
+      "hint": "PNG, JPG, WebP ou SVG, jusqu’à 10 Mo. Les images restent sur votre appareil et sont enregistrées avec vos designs dans ce navigateur.",
+      "empty": "Vos imports apparaîtront ici.",
+      "add": "Ajouter {name} au design",
+      "delete": "Supprimer {name}",
+      "unsupported": "{name} : ce type de fichier n’est pas pris en charge. Utilisez PNG, JPG, WebP ou SVG.",
+      "tooLarge": "{name} dépasse {max}.",
+      "failed": "Impossible de lire {name}."
+    },
+    "projects": {
+      "new": "Nouveau design vierge",
+      "savedLocally": "Les designs sont enregistrés automatiquement dans ce navigateur, sur cet appareil.",
+      "notPersistent": "Votre navigateur n’autorise pas le stockage ici : les designs sont conservés jusqu’à la fermeture de l’onglet.",
+      "elements": "{count, plural, one {# élément} other {# éléments}}",
+      "open": "Ouvrir",
+      "current": "Ouvert",
+      "duplicate": "Dupliquer",
+      "delete": "Supprimer",
+      "confirmDelete": "Confirmer la suppression"
+    },
+    "layers": {
+      "title": "Calques",
+      "empty": "Aucun élément pour l’instant. Ajoutez un graphique, un texte ou une forme depuis le panneau de gauche.",
+      "text": "Texte",
+      "chart": "Graphique",
+      "shape": "Forme",
+      "icon": "Icône",
+      "image": "Image"
+    },
+    "patternTypes": {
+      "dots": "Pois",
+      "circles": "Cercles",
+      "grid": "Grille",
+      "plus": "Croix",
+      "stripes": "Rayures",
+      "checks": "Damier",
+      "triangles": "Triangles",
+      "diamonds": "Losanges",
+      "hexagons": "Hexagones",
+      "zigzag": "Zigzag",
+      "waves": "Vagues",
+      "confetti": "Confettis",
+      "blobs": "Formes organiques",
+      "memphis": "Memphis"
+    },
+    "inspector": {
+      "nothingSelected": "Sélectionnez un élément sur la toile pour le modifier, ou réglez le design ci-dessous.",
+      "document": "Design",
+      "name": "Nom",
+      "canvasSize": "Format",
+      "width": "Largeur",
+      "height": "Hauteur",
+      "background": "Arrière-plan",
+      "backgroundColor": "Couleur de fond",
+      "transparentBackground": "Fond transparent",
+      "pattern": "Motif de fond",
+      "noPattern": "Aucun motif",
+      "patternColor": "Couleur du motif",
+      "patternColor2": "Deuxième couleur",
+      "patternSize": "Espacement",
+      "patternScale": "Taille des formes",
+      "patternStroke": "Épaisseur du trait",
+      "rotation": "Rotation",
+      "opacity": "Opacité",
+      "duplicate": "Dupliquer",
+      "lock": "Verrouiller",
+      "unlock": "Déverrouiller",
+      "delete": "Supprimer",
+      "arrange": "Position et taille",
+      "alignToPage": "Aligner sur la page",
+      "align": {
+        "left": "Aligner à gauche",
+        "hcenter": "Centrer horizontalement",
+        "right": "Aligner à droite",
+        "top": "Aligner en haut",
+        "vcenter": "Centrer verticalement",
+        "bottom": "Aligner en bas"
+      },
+      "layer": "Ordre des calques",
+      "order": {
+        "front": "Mettre au premier plan",
+        "forward": "Avancer",
+        "backward": "Reculer",
+        "back": "Mettre à l’arrière-plan"
+      },
+      "text": "Texte",
+      "content": "Contenu du texte",
+      "font": "Police",
+      "weight": "Graisse",
+      "weights": {
+        "w100": "Fine",
+        "w200": "Extra-légère",
+        "w300": "Légère",
+        "w400": "Normale",
+        "w500": "Moyenne",
+        "w600": "Demi-grasse",
+        "w700": "Grasse",
+        "w800": "Extra-grasse",
+        "w900": "Noire"
+      },
+      "size": "Taille",
+      "color": "Couleur",
+      "alignment": "Alignement",
+      "alignLeft": "Gauche",
+      "alignCenter": "Centre",
+      "alignRight": "Droite",
+      "lineHeight": "Interligne",
+      "letterSpacing": "Espacement des lettres",
+      "direction": "Sens",
+      "dirAuto": "Auto",
+      "dirLtr": "G→D",
+      "dirRtl": "D→G",
+      "role": "Rôle",
+      "roles": {
+        "title": "Titre",
+        "subtitle": "Sous-titre",
+        "body": "Texte",
+        "caption": "Légende"
+      },
+      "uppercase": "Majuscules",
+      "shape": "Forme",
+      "shapeType": "Type de forme",
+      "fill": "Remplissage",
+      "noFill": "Aucun",
+      "stroke": "Contour",
+      "strokeWidth": "Épaisseur du contour",
+      "thickness": "Épaisseur",
+      "dotSpacing": "Espacement des points",
+      "roundEnds": "Extrémités arrondies",
+      "cornerRadius": "Arrondi des angles",
+      "icon": "Icône",
+      "image": "Image",
+      "fit": "Ajustement",
+      "fitContain": "Contenir",
+      "fitCover": "Remplir",
+      "replaceImage": "Remplacer l’image",
+      "chart": "Graphique",
+      "chartType": "Type de graphique",
+      "layout": "Disposition",
+      "data": "Données",
+      "colors": "Couleurs",
+      "applyPalette": "Appliquer une palette",
+      "choosePalette": "Choisir une palette…",
+      "colorByRow": "Une couleur par catégorie",
+      "display": "Libellés et style",
+      "showValues": "Afficher les valeurs",
+      "showLegend": "Afficher la légende",
+      "showGrid": "Afficher la grille",
+      "showAxis": "Afficher l’axe",
+      "smooth": "Courbes lissées",
+      "labelSize": "Taille des libellés",
+      "valueSize": "Taille des valeurs",
+      "lineWidth": "Épaisseur des lignes",
+      "maxValue": "Maximum (100 %)",
+      "numberFormat": "Format des nombres",
+      "formatStyle": "Format",
+      "formatNumber": "Nombre",
+      "formatPercent": "Pourcentage",
+      "formatCurrency": "Devise",
+      "currency": "Devise",
+      "decimals": "Décimales",
+      "compact": "Compact (1,2 k)",
+      "prefix": "Préfixe",
+      "suffix": "Suffixe",
+      "typography": "Typographie et couleurs",
+      "textColor": "Texte",
+      "mutedColor": "Texte secondaire",
+      "gridColor": "Grille et lignes",
+      "surfaceColor": "Cartes et pistes"
+    },
+    "data": {
+      "tableLabel": "Données du graphique",
+      "label": "Libellé",
+      "date": "Date ou année",
+      "seriesName": "Nom de la série {n}",
+      "removeSeries": "Supprimer la série {name}",
+      "note": "Note",
+      "description": "Description",
+      "icon": "Icône",
+      "actions": "Actions sur la ligne",
+      "rowLabel": "Libellé de la ligne {n}",
+      "cell": "Valeur {series} pour {row}",
+      "noteFor": "Note pour {row}",
+      "iconFor": "Icône pour {row}",
+      "moveUp": "Monter",
+      "moveDown": "Descendre",
+      "removeRow": "Supprimer {row}",
+      "addRow": "Ajouter une ligne",
+      "addSeries": "Ajouter une série",
+      "newRow": "Élément {n}",
+      "newSeries": "Série {n}",
+      "paste": "Coller depuis un tableur",
+      "pasteHint": "Collez des cellules copiées depuis Excel, Google Sheets ou un fichier CSV. La première colonne contient les libellés ; la ligne d’en-tête est détectée automatiquement.",
+      "pasteError": "Aucun tableau trouvé. Collez au moins deux colonnes : libellés et valeurs.",
+      "usePasted": "Utiliser ces données"
+    },
+    "export": {
+      "title": "Exporter le design",
+      "close": "Fermer",
+      "format": "Format",
+      "scale": "Résolution",
+      "resolution": "{width} × {height} pixels",
+      "scaleLimited": "Réduite à la plus grande image que votre navigateur peut créer.",
+      "quality": "Qualité",
+      "transparent": "Fond transparent",
+      "noTransparency": "Le JPG ne gère pas la transparence : les zones transparentes deviennent blanches.",
+      "pageSize": "Format de page",
+      "pageDesign": "Identique au design",
+      "pageCustom": "Taille personnalisée",
+      "widthMm": "Largeur de page",
+      "heightMm": "Hauteur de page",
+      "orientation": "Orientation",
+      "orientationAuto": "Auto",
+      "portrait": "Portrait",
+      "landscape": "Paysage",
+      "margin": "Marge",
+      "dpi": "Résolution d’impression",
+      "pdfNote": "Le PDF contient votre design sous forme d’image à {dpi} DPI : les polices et l’arabe sont identiques à l’écran. Pour un fichier entièrement vectoriel, utilisez le SVG.",
+      "svgNote": "Les polices sont intégrées au fichier SVG : il s’affiche de la même façon sur tous les ordinateurs.",
+      "generating": "Préparation du fichier…",
+      "error": "Le fichier n’a pas pu être créé.",
+      "previewAlt": "Aperçu du fichier exporté",
+      "pageInfo": "Page {width} × {height} mm",
+      "pixels": "{width} × {height} px",
+      "download": "Télécharger en {format}"
+    }
+  },
+  "palettes": {
+    "random": "Palette aléatoire",
+    "generate": "Générer",
+    "use": "Utiliser",
+    "copyColor": "Copier {color}",
+    "selected": "Palette sélectionnée",
+    "harmonies": "Harmonies de couleurs",
+    "baseColor": "Couleur de base",
+    "useAsBase": "Utiliser {color} comme couleur de base",
+    "harmony": {
+      "complementary": "Complémentaire",
+      "analogous": "Analogue",
+      "triadic": "Triadique",
+      "splitComplementary": "Complémentaire divisée",
+      "monochromatic": "Monochrome"
+    },
+    "contrast": "Accessibilité (contraste WCAG)",
+    "textColor": "Couleur du texte",
+    "backgroundColor": "Couleur du fond",
+    "sampleHeading": "Titre lisible",
+    "sampleText": "Cet exemple montre l’aspect d’un texte courant avec ces deux couleurs.",
+    "ratio": "Rapport de contraste {ratio}:1",
+    "wcag": {
+      "AAA": "Conforme AAA pour tous les textes",
+      "AA": "Conforme AA pour un texte normal",
+      "AA-large": "Conforme AA pour les grands textes seulement",
+      "fail": "Contraste insuffisant pour du texte"
+    },
+    "wcagShort": {
+      "AAA": "AAA",
+      "AA": "AA",
+      "AA-large": "AA grand",
+      "fail": "Échec"
+    },
+    "onWhiteBlack": "Chaque couleur en texte sur blanc et sur noir",
+    "color": "Couleur",
+    "onWhite": "Sur blanc",
+    "onBlack": "Sur noir",
+    "code": "Code",
+    "library": "Bibliothèque de palettes ({count})",
+    "category": "Style",
+    "all": "Toutes",
+    "favourites": "Favoris ({count})",
+    "categories": {
+      "modern": "Moderne",
+      "minimal": "Minimal",
+      "luxury": "Luxe",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Sombre",
+      "vibrant": "Vif",
+      "gradient": "Dégradé",
+      "monochrome": "Monochrome"
+    },
+    "search": "Rechercher un code HEX ou un style",
+    "colorFilter": "Filtrer par couleur",
+    "anyColor": "Toutes les couleurs",
+    "families": {
+      "red": "Rouge",
+      "orange": "Orange",
+      "yellow": "Jaune",
+      "green": "Vert",
+      "teal": "Bleu-vert",
+      "blue": "Bleu",
+      "purple": "Violet",
+      "pink": "Rose",
+      "brown": "Brun",
+      "neutral": "Neutre"
+    },
+    "noFavourites": "Aucun favori. Cliquez sur le cœur d’une palette pour l’enregistrer ici.",
+    "noResults": "Aucune palette ne correspond à ces filtres.",
+    "favourite": "Ajouter aux favoris",
+    "unfavourite": "Retirer des favoris"
+  },
+  "patterns": {
+    "type": "Type de motif",
+    "groups": {
+      "geometric": "Géométrique",
+      "dots": "Pois",
+      "stripes": "Rayures",
+      "grids": "Grilles",
+      "waves": "Vagues",
+      "abstract": "Abstrait",
+      "modern": "Moderne"
+    },
+    "types": {
+      "dots": "Pois",
+      "circles": "Cercles",
+      "grid": "Grille",
+      "plus": "Croix",
+      "stripes": "Rayures",
+      "checks": "Damier",
+      "triangles": "Triangles",
+      "diamonds": "Losanges",
+      "hexagons": "Hexagones",
+      "zigzag": "Zigzag",
+      "waves": "Vagues",
+      "confetti": "Confettis",
+      "blobs": "Formes organiques",
+      "memphis": "Memphis"
+    },
+    "background": "Fond",
+    "transparent": "Fond transparent",
+    "primary": "Couleur principale",
+    "secondary": "Deuxième couleur",
+    "fromPalette": "Couleurs d’une palette",
+    "choosePalette": "Choisir une palette…",
+    "paletteCategories": {
+      "modern": "Moderne",
+      "minimal": "Minimal",
+      "luxury": "Luxe",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Sombre",
+      "vibrant": "Vif",
+      "gradient": "Dégradé",
+      "monochrome": "Monochrome"
+    },
+    "spacing": "Espacement",
+    "scale": "Taille des formes",
+    "stroke": "Épaisseur du trait",
+    "rotation": "Rotation",
+    "opacity": "Opacité",
+    "shuffle": "Mélanger",
+    "previewLabel": "Aperçu du motif {type}",
+    "export": "Exporter",
+    "width": "Largeur",
+    "height": "Hauteur",
+    "cssCode": "Fond CSS",
+    "seamless": "Chaque motif se répète sans jointure dans toutes les directions."
+  },
+  "desktop": {
+    "appName": "Toolbox",
+    "nav": {
+      "main": "Navigation principale",
+      "home": "Accueil",
+      "allTools": "Tous les outils",
+      "chartDesigner": "Créateur de graphiques",
+      "favorites": "Favoris",
+      "projects": "Projets récents",
+      "settings": "Paramètres",
+      "about": "À propos de Toolbox",
+      "categories": "Catégories"
+    },
+    "categories": {
+      "image": "Outils image",
+      "design": "Outils de design",
+      "colors": "Outils couleur",
+      "text": "Outils texte",
+      "calculators": "Calculatrices",
+      "developer": "Outils développeur"
+    },
+    "search": {
+      "placeholder": "Rechercher un outil… (Ctrl+K)",
+      "label": "Rechercher un outil",
+      "noResults": "Aucun outil ne correspond à « {query} »."
+    },
+    "home": {
+      "greeting": "Bienvenue dans Toolbox",
+      "subtitle": "Vos outils préférés, directement sur votre ordinateur. Les fichiers sont traités sur cet appareil.",
+      "featured": "Outils populaires",
+      "recent": "Utilisés récemment",
+      "favorites": "Favoris",
+      "categories": "Parcourir par catégorie",
+      "count": "{count, plural, one {# outil} other {# outils}}"
+    },
+    "tool": {
+      "favorite": "Ajouter aux favoris",
+      "unfavorite": "Retirer des favoris",
+      "local": "Fonctionne sur cet ordinateur. Vos fichiers ne sont pas envoyés.",
+      "back": "Tous les outils"
+    },
+    "favorites": {
+      "title": "Favoris",
+      "empty": "Aucun favori pour l’instant. Ouvrez un outil et cliquez sur l’étoile pour le garder ici."
+    },
+    "projects": {
+      "title": "Projets récents",
+      "subtitle": "Projets du Créateur de graphiques enregistrés sur cet ordinateur.",
+      "empty": "Aucun projet. Commencez un design : il est enregistré ici automatiquement.",
+      "new": "Nouveau design",
+      "open": "Ouvrir",
+      "delete": "Supprimer",
+      "confirmDelete": "Confirmer la suppression",
+      "elements": "{count, plural, one {# élément} other {# éléments}}",
+      "updated": "Modifié le {date}"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "language": "Langue",
+      "languageHint": "Au premier lancement, l’application suit la langue de votre système.",
+      "theme": "Apparence",
+      "themeSystem": "Système",
+      "themeLight": "Clair",
+      "themeDark": "Sombre",
+      "data": "Données sur cet ordinateur",
+      "dataHint": "Les designs, favoris et paramètres sont stockés uniquement sur cet ordinateur et conservés lors des mises à jour.",
+      "clearRecents": "Effacer les outils utilisés récemment",
+      "cleared": "Outils utilisés récemment effacés.",
+      "shortcuts": "Raccourcis clavier",
+      "shortcutSearch": "Rechercher un outil",
+      "shortcutSettings": "Ouvrir les paramètres",
+      "shortcutHome": "Aller à l’accueil"
+    },
+    "about": {
+      "title": "À propos de Toolbox",
+      "product": "Toolbox Desktop",
+      "version": "Version {version}",
+      "build": "Build",
+      "channel": "Canal de publication",
+      "channels": {
+        "stable": "Stable",
+        "beta": "Bêta"
+      },
+      "releaseDate": "Date de publication",
+      "notSet": "Non définie",
+      "platform": "Plateforme",
+      "profile": "Type de build",
+      "profiles": {
+        "production": "Production",
+        "development": "Développement"
+      },
+      "engine": "Moteur",
+      "notInApp": "Les détails de version s’affichent dans l’application installée.",
+      "updates": "Mises à jour",
+      "updatesNote": "La vérification automatique des mises à jour arrivera dans une version ultérieure. D’ici là, les nouvelles versions sont publiées sur le site Toolbox.",
+      "website": "Visiter le site Toolbox",
+      "noWebsite": "L’adresse du site sera définie pour la première version publique.",
+      "privacy": "Confidentialité",
+      "privacyText": "Toolbox Desktop ne demande aucun compte et n’envoie aucune statistique. Vos fichiers restent sur cet ordinateur. Les seules requêtes réseau sont le téléchargement unique du modèle de suppression d’arrière-plan et les liens que vous choisissez d’ouvrir.",
+      "credits": "Composants open source",
+      "creditsText": "Conçu avec Tauri, Next.js et React. Polices sous licence SIL Open Font License, icônes Lucide (ISC), modèles de suppression d’arrière-plan BiRefNet (MIT) et MODNet (Apache-2.0), ONNX Runtime (MIT).",
+      "agencyTitle": "Conçu par Nexoraat",
+      "agencyBody": "Toolbox est conçu et développé par Nexoraat, une agence digitale basée à Marrakech, au Maroc. Nexoraat réalise des sites web, des applications mobiles, des identités visuelles et des solutions d’IA, et pilote des campagnes de marketing digital, de SEO et de publicité pour les entreprises.",
+      "projectTitle": "Vous avez un projet ?",
+      "projectBody": "Besoin d’un site, d’une application ou d’une campagne marketing qui donne des résultats ? Parlez-nous de votre projet : l’équipe Nexoraat vous répondra.",
+      "projectCta": "Nous contacter sur WhatsApp",
+      "agencyVisit": "Visiter nexoraat.com"
+    },
+    "save": {
+      "saved": "Enregistré dans {path}",
+      "failed": "Le fichier n’a pas pu être enregistré : {error}",
+      "dismiss": "Fermer"
+    },
+    "platforms": {
+      "windows": "Windows",
+      "macos": "macOS",
+      "linux": "Linux"
+    },
+    "builtBy": "Conçu par Nexoraat · Lancer un projet",
+    "updates": {
+      "available": "Toolbox {version} est disponible.",
+      "current": "Vous avez la version {current}.",
+      "download": "Télécharger la mise à jour",
+      "later": "Plus tard",
+      "check": "Rechercher des mises à jour",
+      "checking": "Recherche…",
+      "upToDate": "Vous avez la dernière version ({version}).",
+      "failed": "Impossible de vérifier les mises à jour. Vérifiez votre connexion internet.",
+      "downloadVersion": "Télécharger la version {version}",
+      "howTo": "Toolbox vérifie sur le site si une nouvelle version existe et vous prévient. Pour mettre à jour, téléchargez le nouvel installateur et lancez-le : vos designs et paramètres sont conservés.",
+      "notConfigured": "La vérification des mises à jour démarre dès que l’adresse du site Toolbox est définie pour cette version.",
+      "onlyInApp": "La vérification des mises à jour fonctionne dans l’application installée."
+    }
+  },
+  "desktopPage": {
+    "metaTitle": "Toolbox Desktop pour Windows – Téléchargement gratuit",
+    "metaDescription": "Téléchargez Toolbox Desktop pour Windows 10 et 11 : outils image, suppression d’arrière-plan, création de graphiques et d’infographies, outils couleur et plus, traités sur votre ordinateur.",
+    "title": "Toolbox Desktop",
+    "subtitle": "Vos outils préférés, directement sur votre ordinateur.",
+    "description": "Accédez aux outils Toolbox depuis une application de bureau dédiée, avec une gestion pratique des fichiers, des flux de travail professionnels et des mises à jour régulières.",
+    "downloadWindows": "Télécharger pour Windows",
+    "downloadFormat": "Télécharger le {format}",
+    "viewNotes": "Voir les notes de version",
+    "installGuide": "Guide d’installation",
+    "comingSoon": "L’application Windows est en cours de test et sera bientôt disponible ici.",
+    "facts": {
+      "version": "Dernière version",
+      "notYet": "Bientôt",
+      "windows": "Windows",
+      "windowsValue": "10 et 11, 64 bits",
+      "size": "Taille de l’installateur",
+      "date": "Date de publication",
+      "price": "Prix",
+      "free": "Gratuit, sans compte"
+    },
+    "downloads": "Téléchargements",
+    "exeTitle": "Installateur Windows (.exe)",
+    "exeHint": "Recommandé. S’installe pour votre compte, sans droits administrateur.",
+    "msiTitle": "Installateur Windows (.msi)",
+    "msiHint": "Pour les administrateurs et l’installation pour tous les utilisateurs.",
+    "card": {
+      "platform": "Plateforme",
+      "arch": "Architecture",
+      "format": "Format",
+      "version": "Version",
+      "size": "Taille",
+      "date": "Date de publication"
+    },
+    "channels": {
+      "stable": "Stable",
+      "beta": "Bêta"
+    },
+    "verifyHint": "Après le téléchargement, vous pouvez comparer l’empreinte SHA-256 du fichier avec celle affichée ici (PowerShell : Get-FileHash <fichier> -Algorithm SHA256).",
+    "featuresTitle": "Ce que vous obtenez",
+    "features": {
+      "desktop": {
+        "title": "Une vraie application de bureau",
+        "text": "Sa propre fenêtre, une navigation latérale, des raccourcis clavier et la boîte d’enregistrement native de Windows."
+      },
+      "local": {
+        "title": "Vos fichiers restent sur votre PC",
+        "text": "Images, données et designs sont traités sur votre ordinateur et jamais envoyés."
+      },
+      "designer": {
+        "title": "Créateur de graphiques et d’infographies",
+        "text": "Créez graphiques, cartes KPI et infographies, puis exportez en PNG, JPG, SVG ou PDF."
+      },
+      "background": {
+        "title": "Suppression d’arrière-plan par IA",
+        "text": "Détourez vos photos sur votre ordinateur. Le modèle d’IA est téléchargé une fois, puis réutilisé."
+      },
+      "images": {
+        "title": "Outils image, couleur et texte",
+        "text": "Compressez, redimensionnez et convertissez des images, créez palettes et motifs, comptez et nettoyez du texte."
+      },
+      "offline": {
+        "title": "Fonctionne hors ligne",
+        "text": "Après l’installation, les outils fonctionnent sans internet. Seule la première utilisation du détourage demande une connexion."
+      },
+      "fast": {
+        "title": "Accès rapide",
+        "text": "Favoris, outils récents et projets de design enregistrés sur l’écran d’accueil."
+      },
+      "languages": {
+        "title": "Français, anglais et arabe",
+        "text": "Prise en charge complète de l’arabe de droite à gauche, avec des polices arabes dans l’éditeur."
+      }
+    },
+    "requirementsTitle": "Configuration requise",
+    "requirements": {
+      "os": "Windows 10 (version 1809 ou ultérieure) ou Windows 11",
+      "arch": "Processeur 64 bits (x64)",
+      "webview": "Runtime Microsoft Edge WebView2 (inclus dans Windows 11 ; l’installateur l’ajoute s’il manque)",
+      "internet": "Connexion internet pour le téléchargement, et une fois pour le modèle de détourage",
+      "storage": "Espace disque pour l’application, plus environ 135 Mo si vous utilisez le détourage"
+    },
+    "requirementsNote": "La configuration matérielle minimale sera publiée après des tests sur différents ordinateurs.",
+    "notesTitle": "Notes de version",
+    "notesVersion": "Version {version}",
+    "notes": {
+      "n1": "Première version de Toolbox Desktop pour Windows.",
+      "n2": "Tous les outils Toolbox fonctionnent en local, y compris le Créateur de graphiques et d’infographies.",
+      "n3": "Suppression d’arrière-plan avec téléchargement unique et vérifié du modèle.",
+      "n4": "Boîte d’enregistrement native, favoris, outils récents et projets de design locaux.",
+      "n5": "Français, anglais et arabe, avec mise en page de droite à gauche."
+    },
+    "notesPlatforms": "Plateformes : Windows 10 et 11, x64.",
+    "notesNone": "Les notes de version apparaîtront ici avec la première version publique.",
+    "installTitle": "Comment installer",
+    "install": {
+      "download": {
+        "title": "Télécharger",
+        "text": "Cliquez sur « Télécharger pour Windows » pour obtenir l’installateur .exe."
+      },
+      "verify": {
+        "title": "Vérifier le fichier (facultatif)",
+        "text": "Comparez son empreinte SHA-256 avec celle de cette page."
+      },
+      "run": {
+        "title": "Lancer l’installateur",
+        "text": "Ouvrez le fichier téléchargé, choisissez votre langue et suivez les étapes."
+      },
+      "open": {
+        "title": "Ouvrir Toolbox",
+        "text": "Lancez Toolbox depuis le menu Démarrer ou le raccourci du bureau."
+      },
+      "update": {
+        "title": "Mises à jour",
+        "text": "Les nouvelles versions sont publiées sur cette page. Installez-les par-dessus l’ancienne ; vos projets sont conservés."
+      },
+      "uninstall": {
+        "title": "Désinstaller",
+        "text": "Allez dans Paramètres → Applications → Applications installées, trouvez Toolbox et choisissez Désinstaller. Vos projets sont conservés sauf si vous supprimez les données."
+      }
+    },
+    "troubleTitle": "Dépannage",
+    "trouble": {
+      "smartscreen": {
+        "q": "Windows SmartScreen affiche un avertissement",
+        "a": "SmartScreen avertit pour les applications récentes ou pas encore signées. Ne continuez que si vous avez téléchargé l’installateur depuis cette page et que son empreinte SHA-256 correspond ; choisissez alors « Informations complémentaires » puis « Exécuter quand même ». Si quelque chose ne correspond pas, supprimez le fichier sans l’exécuter."
+      },
+      "webview": {
+        "q": "L’installateur mentionne WebView2",
+        "a": "Toolbox utilise Microsoft Edge WebView2 pour son interface. Restez connecté pour que l’installateur l’ajoute, ou installez-le depuis le site de Microsoft."
+      },
+      "model": {
+        "q": "Le détourage ne peut pas télécharger son modèle",
+        "a": "Vérifiez votre connexion et votre pare-feu. Le modèle est téléchargé une fois ; ensuite l’outil fonctionne hors ligne."
+      },
+      "update": {
+        "q": "Comment mettre à jour ?",
+        "a": "Téléchargez la dernière version sur cette page et installez-la par-dessus la vôtre. Les mises à jour automatiques sont prévues dans une prochaine version."
+      }
+    }
   }
 }

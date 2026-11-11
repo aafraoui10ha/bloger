@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Download, Eraser } from "lucide-react";
 import { detectFormat, formatBytes, MAX_IMAGE_BYTES, outputFilename, validateImageInput, type DetectedFormat } from "@/tools/logic/image";
-import { applyMask, BG_MODEL_MB, type BgMode, type BgRequest, type BgResponse } from "@/tools/image/bg-protocol";
+import { applyMask, BG_MODEL_MB, type BgMode, type BgRequest, type BgResponse, type BgStage } from "@/tools/image/bg-protocol";
 import { ImageDropzone } from "@/tools/image/ImageDropzone";
 import { ErrorMessage, ResetButton, useToolEvents } from "@/tools/ui";
 
 const ACCEPTED: DetectedFormat[] = ["png", "jpeg", "webp"];
+/** Running inside Toolbox Desktop (Tauri): messages talk about the app, not a browser or website. */
+const IN_DESKTOP_APP = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 /** Longest side used for the cut-out; larger photos are scaled down to keep memory use safe on phones. */
 const MAX_SIDE = 4096;
 const CHECKER = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='8' height='8' fill='%23e6ddbd'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23e6ddbd'/%3E%3C/svg%3E\")";
@@ -29,14 +31,19 @@ function discardWorker() {
 
 export function BackgroundRemover() {
   const t = useTranslations("bgremove");
+  /** The desktop variant of a message ("<key>Desktop") when running in the app and one exists. */
+  const tk = (key: string) => (IN_DESKTOP_APP && t.has(`${key}Desktop`) ? `${key}Desktop` : key);
   const ti = useTranslations("image");
   const locale = useLocale();
   const events = useToolEvents("background-remover");
   const [source, setSource] = useState<Source | null>(null);
-  const [phase, setPhase] = useState<"idle" | "downloading" | "processing" | "done">("idle");
-  const [progress, setProgress] = useState<{ loaded: number; total: number } | null>(null);
+  const [phase, setPhase] = useState<"idle" | "loading" | "processing" | "done">("idle");
+  // Model loading: current stage, download source and byte progress (total null = unknown).
+  const [stage, setStage] = useState<BgStage | "download">("checking");
+  const [progress, setProgress] = useState<{ source: "local" | "external"; loaded: number; total: number | null } | null>(null);
+  const [notices, setNotices] = useState<{ fallback: boolean; cacheSkipped: boolean }>({ fallback: false, cacheSkipped: false });
   const [error, setError] = useState<string | null>(null);
-  const [failure, setFailure] = useState<{ reload: boolean; detail: string } | null>(null);
+  const [failure, setFailure] = useState<{ reload: boolean; kind: "network" | "integrity" | "other"; detail: string } | null>(null);
   const [bg, setBg] = useState<Background>("transparent");
   const [color, setColor] = useState("#eee3b0");
   const [result, setResult] = useState<{ url: string; blob: Blob } | null>(null);
@@ -77,6 +84,7 @@ export function BackgroundRemover() {
     setError(null);
     setFailure(null);
     setProgress(null);
+    setNotices({ fallback: false, cacheSkipped: false });
     setMode(null);
     cutout.current = null;
     events.reset();
@@ -94,6 +102,9 @@ export function BackgroundRemover() {
       const bitmap = await createImageBitmap(file);
       const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
       setSource({ file, url: URL.createObjectURL(file), bitmap, width: Math.round(bitmap.width * scale), height: Math.round(bitmap.height * scale) });
+      // Start the worker now (nothing is sent to it yet) so its script is loaded
+      // while the user is still online and the run can use cached model files.
+      getWorker();
     } catch {
       setError(ti("errors.decodeFailed"));
     }
@@ -103,18 +114,26 @@ export function BackgroundRemover() {
     if (!source) return;
     setError(null);
     setFailure(null);
-    setPhase("downloading");
+    setProgress(null);
+    setNotices({ fallback: false, cacheSkipped: false });
+    setStage("checking");
+    setPhase("loading");
     const w = getWorker();
     w.onmessage = (e: MessageEvent<BgResponse>) => {
       const msg = e.data;
-      if (msg.type === "progress") setProgress({ loaded: msg.loaded, total: msg.total });
+      if (msg.type === "stage") setStage(msg.stage);
+      else if (msg.type === "progress") {
+        setStage("download");
+        setProgress({ source: msg.source, loaded: msg.loaded, total: msg.total });
+      } else if (msg.type === "fallback") setNotices((n) => ({ ...n, fallback: true }));
+      else if (msg.type === "cacheSkipped") setNotices((n) => ({ ...n, cacheSkipped: true }));
       else if (msg.type === "ready") {
         setMode(msg.mode);
         setPhase("processing");
       }
       else if (msg.type === "error") {
         setPhase("idle");
-        setFailure({ reload: false, detail: msg.message });
+        setFailure({ reload: false, kind: msg.kind, detail: msg.message });
         discardWorker();
         console.error("background removal failed:", msg.message);
       } else if (msg.type === "done") {
@@ -137,14 +156,27 @@ export function BackgroundRemover() {
     w.onerror = (ev) => {
       ev.preventDefault();
       setPhase("idle");
-      setFailure({ reload: true, detail: ev.message || "Worker failed to start" });
+      setFailure({ reload: true, kind: "other", detail: ev.message || "Worker failed to start" });
       discardWorker();
     };
     w.postMessage({ blob: source.file, width: source.width, height: source.height } satisfies BgRequest);
   }
 
-  const busy = phase === "downloading" || phase === "processing";
-  const pct = progress && progress.total ? Math.min(100, Math.round((progress.loaded / progress.total) * 100)) : null;
+  const busy = phase === "loading" || phase === "processing";
+  const pct = progress && progress.total ? Math.min(100, Math.floor((progress.loaded / progress.total) * 100)) : null;
+  const downloading = phase === "loading" && stage === "download" && progress;
+
+  function statusText(): string {
+    if (phase === "processing") return t("processing");
+    if (phase === "done") return t("done");
+    if (phase !== "loading") return t("waiting");
+    if (stage === "checking") return t("checking");
+    if (stage === "verifying") return t("verifying");
+    if (stage === "loading") return t("loadingModel");
+    if (!progress) return t("checking");
+    const key = progress.source === "local" ? "downloadLocal" : "downloadExternal";
+    return pct === null ? t(tk(`${key}Unknown`)) : t(tk(key), { percent: pct });
+  }
 
   return (
     <div className="space-y-5">
@@ -164,24 +196,37 @@ export function BackgroundRemover() {
                 // eslint-disable-next-line @next/next/no-img-element -- local object URL
                 <img src={result.url} alt={t("resultAlt")} className="max-h-96 w-full object-contain" />
               ) : (
-                <p className="p-6 text-center text-sm text-ink/70" aria-live="polite">
-                  {phase === "downloading" ? (pct !== null ? t("downloading", { percent: pct }) : t("preparing")) : phase === "processing" ? t("processing") : t("waiting")}
-                </p>
+                <div className="p-6 text-center text-sm text-ink/70">
+                  <p aria-live="polite">{statusText()}</p>
+                  {downloading && progress.total !== null && (
+                    <p className="mt-1 text-xs tabular-nums">{t("bytes", { loaded: formatBytes(progress.loaded, locale), total: formatBytes(progress.total, locale) })}</p>
+                  )}
+                </div>
               )}
             </div>
           </figure>
         </div>
       )}
 
-      {busy && (
-        <div className="h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={t("progressLabel")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={phase === "processing" ? 100 : (pct ?? 0)}>
-          <div className={`h-full rounded-full bg-accent-2 transition-[width] duration-300 ${phase === "processing" ? "animate-pulse" : ""}`} style={{ width: `${phase === "processing" ? 100 : (pct ?? 5)}%` }} />
+      {/* Model download: determinate when the size is known, otherwise indeterminate. */}
+      {phase === "loading" && (
+        <div className="h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={t("progressLabel")} aria-valuemin={0} aria-valuemax={100} {...(downloading && pct !== null ? { "aria-valuenow": pct, "aria-valuetext": statusText() } : { "aria-valuetext": statusText() })}>
+          <div className={`h-full rounded-full bg-accent-2 transition-[width] duration-300 ${downloading && pct !== null ? "" : "animate-pulse"}`} style={{ width: `${downloading && pct !== null ? Math.max(pct, 2) : 100}%` }} />
         </div>
       )}
+      {/* Image processing has no measurable progress: always indeterminate. */}
+      {phase === "processing" && (
+        <div className="h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-label={t("processingLabel")} aria-valuetext={t("processing")}>
+          <div className="h-full w-full animate-pulse rounded-full bg-accent" />
+        </div>
+      )}
+      {notices.fallback && busy && <p className="alert-info">{t(tk("fallbackNotice"))}</p>}
+      {notices.cacheSkipped && phase === "done" && <p className="hint">{t(tk("cacheSkipped"))}</p>}
+      {phase === "done" && <p className="sr-only" role="status">{t("done")}</p>}
 
       {source && phase !== "done" && (
         <div className="space-y-3">
-          <p className="alert-info">{t("firstRunNotice", { size: BG_MODEL_MB })}</p>
+          <p className="alert-info">{t(tk("firstRunNotice"), { size: BG_MODEL_MB })}</p>
           <div className="flex flex-wrap gap-2">
             <button type="button" className="btn-primary" onClick={run} disabled={busy}>
               <Eraser className="size-4" aria-hidden="true" />
@@ -192,7 +237,7 @@ export function BackgroundRemover() {
         </div>
       )}
 
-      {mode === "portrait" && (phase === "processing" || phase === "done") && <p className="alert-warning">{t("portraitMode")}</p>}
+      {mode === "portrait" && (phase === "processing" || phase === "done") && <p className="alert-warning">{t(tk("portraitMode"))}</p>}
 
       {phase === "done" && (
         <div className="space-y-4">
@@ -226,10 +271,10 @@ export function BackgroundRemover() {
       <ErrorMessage>{error}</ErrorMessage>
       {failure && (
         <div role="alert" className="alert-error space-y-2">
-          <p>{t(failure.reload ? "errorReload" : /fetch|network|load failed/i.test(failure.detail) ? "errorNetwork" : "error")}</p>
+          <p>{t(tk(failure.reload ? "errorReload" : failure.kind === "integrity" ? "errorIntegrity" : failure.kind === "network" || /fetch|network|load failed/i.test(failure.detail) ? "errorNetwork" : "error"))}</p>
           <div className="flex flex-wrap items-center gap-3">
             <button type="button" className="btn-secondary btn-sm" onClick={() => (failure.reload ? window.location.reload() : run())}>
-              {t(failure.reload ? "reload" : "retry")}
+              {t(tk(failure.reload ? "reload" : "retry"))}
             </button>
             <details className="text-xs">
               <summary className="cursor-pointer">{t("details")}</summary>

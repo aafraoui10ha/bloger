@@ -33,9 +33,8 @@ export async function Footer({ locale, siteName }: { locale: AppLocale; siteName
       <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="flex items-center gap-2.5 text-lg font-bold">
-            <span aria-hidden="true" className="grid size-9 place-items-center rounded-xl bg-cream text-base font-extrabold text-ink">
-              {siteName.slice(0, 1)}
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- small static logo, already optimised */}
+            <img src="/logo/logo-128.png" alt="" width={36} height={36} className="size-9 shrink-0" />
             {siteName}
           </p>
           <p className="mt-2 text-sm text-muted">{t("about")}</p>
@@ -59,6 +58,11 @@ export async function Footer({ locale, siteName }: { locale: AppLocale; siteName
             <li>
               <Link href="/tools" className="transition-colors hover:text-fg">
                 {tc("allTools")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/desktop" className="transition-colors hover:text-fg">
+                {tn("desktop")}
               </Link>
             </li>
             {categories.map((c) => (

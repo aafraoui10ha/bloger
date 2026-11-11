@@ -3,6 +3,7 @@ import path from "node:path";
 
 const alias = {
   "@": path.resolve(import.meta.dirname, "src"),
+  "@desktop": path.resolve(import.meta.dirname, "desktop/src"),
   // Server-only guard is a no-op outside Next.js.
   "server-only": path.resolve(import.meta.dirname, "tests/support/empty.ts"),
 };

@@ -54,7 +54,8 @@
     "cookies": "Cookie Settings",
     "editorial": "Editorial Policy",
     "corrections": "Corrections Policy",
-    "services": "Services"
+    "services": "Services",
+    "desktop": "Desktop app"
   },
   "home": {
     "metaTitle": "Free online tools for images, text and calculations",
@@ -596,12 +597,10 @@
   "bgremove": {
     "remove": "Remove background",
     "working": "Working…",
-    "preparing": "Preparing the AI model…",
-    "downloading": "Downloading the AI model… {percent}%",
     "processing": "Removing the background…",
     "waiting": "The result will appear here.",
-    "firstRunNotice": "The first time, your browser downloads the AI model (up to about {size} MB) from Hugging Face and keeps it in its cache for next time. Your image is never uploaded: it is processed on your device.",
-    "progressLabel": "Progress",
+    "firstRunNotice": "The first time, your browser downloads the AI model (up to about {size} MB) from this website and saves it for next time. Your image is never uploaded: it is processed on your device.",
+    "progressLabel": "AI model download",
     "background": "Background",
     "bg": {
       "transparent": "Transparent",
@@ -613,10 +612,881 @@
     "error": "The background could not be removed. Try again; if it keeps failing, try Chrome or Edge on a computer and share the technical details with us.",
     "scaledNote": "Large photos are processed at {width} × {height} pixels to protect your device’s memory.",
     "portraitMode": "Your browser doesn’t support WebGPU, so a lighter AI model that works best on people is used. For products and objects, open this page in a recent version of Chrome, Edge or Safari on a computer.",
-    "errorNetwork": "The AI model could not be downloaded. An ad blocker, privacy extension, Brave Shields, antivirus web protection or a firewall may be blocking huggingface.co or cdn.jsdelivr.net. Allow those sites (or pause the blocker for this page), then try again.",
+    "errorNetwork": "The AI model couldn’t be downloaded from this website or from the backup source. Check your connection. If an ad blocker, antivirus or firewall is active, allow this site, huggingface.co and cdn.jsdelivr.net, then try again.",
     "errorReload": "This page was open while the site was updated, so the tool couldn’t start. Reload the page and try again.",
     "reload": "Reload page",
     "retry": "Try again",
-    "details": "Technical details"
+    "details": "Technical details",
+    "checking": "Checking for a saved copy of the AI model…",
+    "downloadLocal": "Downloading the AI model from this website… {percent}%",
+    "downloadLocalUnknown": "Downloading the AI model from this website…",
+    "downloadExternal": "Downloading the AI model from the backup source… {percent}%",
+    "downloadExternalUnknown": "Downloading the AI model from the backup source…",
+    "bytes": "{loaded} of {total}",
+    "fallbackNotice": "This website’s copy of the model couldn’t be downloaded, so the backup source (Hugging Face and jsDelivr) is being used. The files are still checked before use.",
+    "verifying": "Verifying file integrity…",
+    "loadingModel": "Loading the AI model into memory…",
+    "done": "Background removed. You can choose a background and download the PNG.",
+    "processingLabel": "Image processing",
+    "cacheSkipped": "Your browser didn’t allow the model to be saved, so it will be downloaded again next time.",
+    "errorIntegrity": "The downloaded model files failed the security check, so they were not used. Please try again later.",
+    "firstRunNoticeDesktop": "The first time, Toolbox downloads the AI model (up to about {size} MB) and saves it on this computer, so later uses work offline. Your image is never uploaded: it is processed on your computer.",
+    "portraitModeDesktop": "WebGPU acceleration isn’t available on this computer, so Toolbox is using its compatible fallback model. It runs on the processor and works best on photos of people; results on products and objects may be less precise.",
+    "downloadLocalDesktop": "Downloading the AI model from the Toolbox website… {percent}%",
+    "downloadLocalUnknownDesktop": "Downloading the AI model from the Toolbox website…",
+    "fallbackNoticeDesktop": "The Toolbox website’s copy of the model couldn’t be downloaded, so the backup source (Hugging Face and jsDelivr) is being used. The files are still checked before use.",
+    "cacheSkippedDesktop": "The model couldn’t be saved on this computer, so it will be downloaded again next time.",
+    "errorNetworkDesktop": "The AI model couldn’t be downloaded. Check your internet connection. If an antivirus or firewall is active, allow Toolbox to connect, then try again. After one successful download the tool works offline.",
+    "errorReloadDesktop": "The background remover couldn’t start. Restart Toolbox and try again.",
+    "errorDesktop": "The background could not be removed. Try again; if it keeps failing, restart Toolbox and share the technical details with us.",
+    "reloadDesktop": "Reload"
+  },
+  "designer": {
+    "loading": "Loading the designer…",
+    "untitled": "Untitled design",
+    "copyOf": "{name} (copy)",
+    "panels": "Design panels",
+    "properties": "Properties",
+    "selectedAnnouncement": "{type} selected",
+    "tabs": {
+      "templates": "Templates",
+      "charts": "Charts",
+      "elements": "Elements",
+      "text": "Text",
+      "colors": "Colours",
+      "uploads": "Uploads",
+      "projects": "Projects"
+    },
+    "toolbar": {
+      "name": "Design name",
+      "saved": "Saved on this device",
+      "saving": "Saving…",
+      "notSaved": "Not saved: browser storage is unavailable",
+      "saveFailed": "Could not save",
+      "undo": "Undo",
+      "redo": "Redo",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "fit": "Fit to screen",
+      "zoomLevel": "Zoom {percent}%. Click to fit to the screen",
+      "grid": "Show grid",
+      "snap": "Snap to grid and guides",
+      "preview": "Preview",
+      "closePreview": "Back to editing",
+      "fullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen",
+      "export": "Export"
+    },
+    "mobile": {
+      "edit": "Edit",
+      "design": "Design",
+      "close": "Close panel"
+    },
+    "canvas": {
+      "label": "Design canvas: {name}",
+      "handle": {
+        "nw": "Resize from top-left corner",
+        "n": "Resize from top edge",
+        "ne": "Resize from top-right corner",
+        "e": "Resize from right edge",
+        "se": "Resize from bottom-right corner",
+        "s": "Resize from bottom edge",
+        "sw": "Resize from bottom-left corner",
+        "w": "Resize from left edge"
+      }
+    },
+    "templates": {
+      "size": "Canvas size",
+      "blank": "Blank design",
+      "use": "Use the {name} template",
+      "names": {
+        "editorial": "Minimal editorial",
+        "corporate": "Corporate business",
+        "tech": "Modern technology",
+        "finance": "Financial report",
+        "marketing": "Marketing statistics",
+        "social": "Social infographic",
+        "premium": "Dark premium",
+        "colorful": "Colourful modern",
+        "swiss": "Swiss typography",
+        "magazine": "Magazine data story",
+        "timeline": "Milestone timeline",
+        "dashboard": "KPI dashboard"
+      }
+    },
+    "presets": {
+      "instagramPost": "Instagram post",
+      "instagramPortrait": "Instagram portrait",
+      "instagramStory": "Instagram story",
+      "facebookPost": "Facebook post",
+      "linkedinPost": "LinkedIn post",
+      "presentation": "Presentation 16:9",
+      "a4Portrait": "A4 portrait",
+      "a4Landscape": "A4 landscape",
+      "custom": "Custom size"
+    },
+    "charts": {
+      "heading": "Add a chart",
+      "hint": "Each chart comes with sample data that you can edit in the properties panel."
+    },
+    "chartKinds": {
+      "bar": "Bar",
+      "hbar": "Horizontal bar",
+      "line": "Line",
+      "area": "Area",
+      "pie": "Pie",
+      "doughnut": "Doughnut",
+      "radar": "Radar",
+      "scatter": "Scatter",
+      "comparison": "Comparison",
+      "progress": "Progress",
+      "kpi": "KPI cards",
+      "timeline": "Timeline",
+      "infographic": "Infographic"
+    },
+    "variants": {
+      "bars": "Bars",
+      "rings": "Rings",
+      "cards": "Cards",
+      "plain": "Plain",
+      "horizontal": "Horizontal",
+      "vertical": "Vertical",
+      "list": "List",
+      "grid": "Grid"
+    },
+    "elements": {
+      "shapes": "Shapes and decorations",
+      "icons": "Icons",
+      "add": "Add {name}"
+    },
+    "shapes": {
+      "rect": "Rectangle",
+      "ellipse": "Ellipse",
+      "triangle": "Triangle",
+      "line": "Line",
+      "star": "Star",
+      "ring": "Ring",
+      "arc": "Half circle",
+      "wave": "Wave",
+      "dots": "Dot grid",
+      "blob": "Blob"
+    },
+    "icons": {
+      "search": "Search icons",
+      "groups": {
+        "business": "Business",
+        "finance": "Finance",
+        "people": "People",
+        "tech": "Technology",
+        "commerce": "Commerce and travel",
+        "communication": "Communication",
+        "nature": "Nature",
+        "symbols": "Symbols"
+      }
+    },
+    "text": {
+      "add": "Add text",
+      "presets": {
+        "title": "Add a heading",
+        "subtitle": "Add a subheading",
+        "body": "Add body text",
+        "caption": "Add a caption or source"
+      },
+      "pairings": "Font combinations",
+      "pairingsHint": "Applies the heading font to titles and the body font to all other text and charts.",
+      "pairingNames": {
+        "modern": "Modern",
+        "editorial": "Editorial",
+        "swiss": "Swiss",
+        "tech": "Technology",
+        "corporate": "Corporate",
+        "magazine": "Magazine",
+        "bold": "Bold display",
+        "classic": "Classic",
+        "arabicModern": "Arabic modern",
+        "arabicCorporate": "Arabic corporate",
+        "arabicClassic": "Arabic classic"
+      },
+      "fonts": "Font library",
+      "fontsHint": "Click a font to apply it to the selected text or chart, or to add new text in that font.",
+      "fontApplied": "{font} applied to the selected element."
+    },
+    "fontCategories": {
+      "sans": "Modern sans-serif",
+      "business": "Business",
+      "serif": "Editorial serif",
+      "display": "Display",
+      "arabic": "Arabic and Latin"
+    },
+    "colors": {
+      "hint": "Click a palette to apply it to the charts, icons and shapes in your design.",
+      "random": "Random palette",
+      "shuffle": "New random palette",
+      "applyColors": "Apply the colours {colors}",
+      "harmony": "Harmony from a colour",
+      "baseColor": "Base colour",
+      "harmonyType": "Harmony type",
+      "library": "Palette library",
+      "category": "Palette category",
+      "all": "All styles",
+      "applyPalette": "Apply the {name} palette"
+    },
+    "harmonies": {
+      "complementary": "Complementary",
+      "analogous": "Analogous",
+      "triadic": "Triadic",
+      "splitComplementary": "Split-complementary",
+      "monochromatic": "Monochromatic"
+    },
+    "paletteCategories": {
+      "modern": "Modern",
+      "minimal": "Minimal",
+      "luxury": "Luxury",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Dark",
+      "vibrant": "Vibrant",
+      "gradient": "Gradient",
+      "monochrome": "Monochrome"
+    },
+    "uploads": {
+      "upload": "Upload images or logos",
+      "hint": "PNG, JPG, WebP or SVG, up to 10 MB. Images stay on your device and are saved with your designs in this browser.",
+      "empty": "Your uploads will appear here.",
+      "add": "Add {name} to the design",
+      "delete": "Delete {name}",
+      "unsupported": "{name}: this file type is not supported. Use PNG, JPG, WebP or SVG.",
+      "tooLarge": "{name} is larger than {max}.",
+      "failed": "{name} could not be read."
+    },
+    "projects": {
+      "new": "New blank design",
+      "savedLocally": "Designs are saved automatically in this browser on this device.",
+      "notPersistent": "Your browser does not allow storage here, so designs are kept only until you close this tab.",
+      "elements": "{count, plural, one {# element} other {# elements}}",
+      "open": "Open",
+      "current": "Open now",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "confirmDelete": "Confirm delete"
+    },
+    "layers": {
+      "title": "Layers",
+      "empty": "No elements yet. Add a chart, text or shape from the left panel.",
+      "text": "Text",
+      "chart": "Chart",
+      "shape": "Shape",
+      "icon": "Icon",
+      "image": "Image"
+    },
+    "patternTypes": {
+      "dots": "Dots",
+      "circles": "Circles",
+      "grid": "Grid",
+      "plus": "Plus signs",
+      "stripes": "Stripes",
+      "checks": "Checks",
+      "triangles": "Triangles",
+      "diamonds": "Diamonds",
+      "hexagons": "Hexagons",
+      "zigzag": "Zigzag",
+      "waves": "Waves",
+      "confetti": "Confetti",
+      "blobs": "Blobs",
+      "memphis": "Memphis"
+    },
+    "inspector": {
+      "nothingSelected": "Select an element on the canvas to edit it, or change the design settings below.",
+      "document": "Design",
+      "name": "Name",
+      "canvasSize": "Canvas size",
+      "width": "Width",
+      "height": "Height",
+      "background": "Background",
+      "backgroundColor": "Background colour",
+      "transparentBackground": "Transparent background",
+      "pattern": "Background pattern",
+      "noPattern": "No pattern",
+      "patternColor": "Pattern colour",
+      "patternColor2": "Second colour",
+      "patternSize": "Spacing",
+      "patternScale": "Shape size",
+      "patternStroke": "Line thickness",
+      "rotation": "Rotation",
+      "opacity": "Opacity",
+      "duplicate": "Duplicate",
+      "lock": "Lock",
+      "unlock": "Unlock",
+      "delete": "Delete",
+      "arrange": "Position and size",
+      "alignToPage": "Align to page",
+      "align": {
+        "left": "Align left",
+        "hcenter": "Centre horizontally",
+        "right": "Align right",
+        "top": "Align top",
+        "vcenter": "Centre vertically",
+        "bottom": "Align bottom"
+      },
+      "layer": "Layer order",
+      "order": {
+        "front": "Bring to front",
+        "forward": "Bring forward",
+        "backward": "Send backward",
+        "back": "Send to back"
+      },
+      "text": "Text",
+      "content": "Text content",
+      "font": "Font",
+      "weight": "Weight",
+      "weights": {
+        "w100": "Thin",
+        "w200": "Extra light",
+        "w300": "Light",
+        "w400": "Regular",
+        "w500": "Medium",
+        "w600": "Semibold",
+        "w700": "Bold",
+        "w800": "Extra bold",
+        "w900": "Black"
+      },
+      "size": "Size",
+      "color": "Colour",
+      "alignment": "Alignment",
+      "alignLeft": "Left",
+      "alignCenter": "Centre",
+      "alignRight": "Right",
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing",
+      "direction": "Direction",
+      "dirAuto": "Auto",
+      "dirLtr": "LTR",
+      "dirRtl": "RTL",
+      "role": "Role",
+      "roles": {
+        "title": "Title",
+        "subtitle": "Subtitle",
+        "body": "Body",
+        "caption": "Caption"
+      },
+      "uppercase": "Uppercase",
+      "shape": "Shape",
+      "shapeType": "Shape type",
+      "fill": "Fill",
+      "noFill": "None",
+      "stroke": "Outline",
+      "strokeWidth": "Outline width",
+      "thickness": "Thickness",
+      "dotSpacing": "Dot spacing",
+      "roundEnds": "Rounded ends",
+      "cornerRadius": "Corner radius",
+      "icon": "Icon",
+      "image": "Image",
+      "fit": "Fit",
+      "fitContain": "Fit inside",
+      "fitCover": "Fill box",
+      "replaceImage": "Replace image",
+      "chart": "Chart",
+      "chartType": "Chart type",
+      "layout": "Layout",
+      "data": "Data",
+      "colors": "Colours",
+      "applyPalette": "Apply a palette",
+      "choosePalette": "Choose a palette…",
+      "colorByRow": "One colour per category",
+      "display": "Labels and style",
+      "showValues": "Show values",
+      "showLegend": "Show legend",
+      "showGrid": "Show grid lines",
+      "showAxis": "Show axis",
+      "smooth": "Smooth lines",
+      "labelSize": "Label size",
+      "valueSize": "Value size",
+      "lineWidth": "Line width",
+      "maxValue": "Maximum (100%)",
+      "numberFormat": "Number format",
+      "formatStyle": "Format",
+      "formatNumber": "Number",
+      "formatPercent": "Percentage",
+      "formatCurrency": "Currency",
+      "currency": "Currency",
+      "decimals": "Decimals",
+      "compact": "Compact (1.2K)",
+      "prefix": "Prefix",
+      "suffix": "Suffix",
+      "typography": "Typography and colours",
+      "textColor": "Text",
+      "mutedColor": "Secondary text",
+      "gridColor": "Grid and lines",
+      "surfaceColor": "Cards and tracks"
+    },
+    "data": {
+      "tableLabel": "Chart data",
+      "label": "Label",
+      "date": "Date or year",
+      "seriesName": "Name of series {n}",
+      "removeSeries": "Remove series {name}",
+      "note": "Note",
+      "description": "Description",
+      "icon": "Icon",
+      "actions": "Row actions",
+      "rowLabel": "Label of row {n}",
+      "cell": "{series} value for {row}",
+      "noteFor": "Note for {row}",
+      "iconFor": "Icon for {row}",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "removeRow": "Remove {row}",
+      "addRow": "Add row",
+      "addSeries": "Add series",
+      "newRow": "Item {n}",
+      "newSeries": "Series {n}",
+      "paste": "Paste from spreadsheet",
+      "pasteHint": "Paste cells copied from Excel, Google Sheets or a CSV file. The first column holds the labels; a header row is detected automatically.",
+      "pasteError": "No table found. Paste at least two columns: labels and values.",
+      "usePasted": "Use this data"
+    },
+    "export": {
+      "title": "Export your design",
+      "close": "Close",
+      "format": "Format",
+      "scale": "Resolution",
+      "resolution": "{width} × {height} pixels",
+      "scaleLimited": "Reduced to fit the largest image your browser can create.",
+      "quality": "Quality",
+      "transparent": "Transparent background",
+      "noTransparency": "JPG does not support transparency; transparent areas become white.",
+      "pageSize": "Page size",
+      "pageDesign": "Same as the design",
+      "pageCustom": "Custom size",
+      "widthMm": "Page width",
+      "heightMm": "Page height",
+      "orientation": "Orientation",
+      "orientationAuto": "Auto",
+      "portrait": "Portrait",
+      "landscape": "Landscape",
+      "margin": "Margin",
+      "dpi": "Print resolution",
+      "pdfNote": "The PDF contains your design as a {dpi} DPI image, so fonts and Arabic text look exactly as on screen. For a fully vector file, use SVG.",
+      "svgNote": "Fonts are embedded in the SVG file, so it looks the same on any computer.",
+      "generating": "Preparing the file…",
+      "error": "The file could not be created.",
+      "previewAlt": "Preview of the exported file",
+      "pageInfo": "Page {width} × {height} mm",
+      "pixels": "{width} × {height} px",
+      "download": "Download {format}"
+    }
+  },
+  "palettes": {
+    "random": "Random palette",
+    "generate": "Generate",
+    "use": "Use",
+    "copyColor": "Copy {color}",
+    "selected": "Selected palette",
+    "harmonies": "Colour harmonies",
+    "baseColor": "Base colour",
+    "useAsBase": "Use {color} as the base colour",
+    "harmony": {
+      "complementary": "Complementary",
+      "analogous": "Analogous",
+      "triadic": "Triadic",
+      "splitComplementary": "Split-complementary",
+      "monochromatic": "Monochromatic"
+    },
+    "contrast": "Accessibility (WCAG contrast)",
+    "textColor": "Text colour",
+    "backgroundColor": "Background colour",
+    "sampleHeading": "Readable heading",
+    "sampleText": "This sample shows how body text looks with these two colours.",
+    "ratio": "Contrast ratio {ratio}:1",
+    "wcag": {
+      "AAA": "Passes AAA for all text",
+      "AA": "Passes AA for normal text",
+      "AA-large": "Passes AA for large text only",
+      "fail": "Fails WCAG contrast for text"
+    },
+    "wcagShort": {
+      "AAA": "AAA",
+      "AA": "AA",
+      "AA-large": "AA large",
+      "fail": "Fail"
+    },
+    "onWhiteBlack": "Each colour as text on white and on black",
+    "color": "Colour",
+    "onWhite": "On white",
+    "onBlack": "On black",
+    "code": "Code",
+    "library": "Palette library ({count})",
+    "category": "Style",
+    "all": "All",
+    "favourites": "Favourites ({count})",
+    "categories": {
+      "modern": "Modern",
+      "minimal": "Minimal",
+      "luxury": "Luxury",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Dark",
+      "vibrant": "Vibrant",
+      "gradient": "Gradient",
+      "monochrome": "Monochrome"
+    },
+    "search": "Search by HEX code or style",
+    "colorFilter": "Filter by colour",
+    "anyColor": "Any colour",
+    "families": {
+      "red": "Red",
+      "orange": "Orange",
+      "yellow": "Yellow",
+      "green": "Green",
+      "teal": "Teal",
+      "blue": "Blue",
+      "purple": "Purple",
+      "pink": "Pink",
+      "brown": "Brown",
+      "neutral": "Neutral"
+    },
+    "noFavourites": "No favourites yet. Click the heart on a palette to save it here.",
+    "noResults": "No palette matches these filters.",
+    "favourite": "Add to favourites",
+    "unfavourite": "Remove from favourites"
+  },
+  "patterns": {
+    "type": "Pattern type",
+    "groups": {
+      "geometric": "Geometric",
+      "dots": "Dots",
+      "stripes": "Stripes",
+      "grids": "Grids",
+      "waves": "Waves",
+      "abstract": "Abstract",
+      "modern": "Modern"
+    },
+    "types": {
+      "dots": "Dots",
+      "circles": "Circles",
+      "grid": "Grid",
+      "plus": "Plus signs",
+      "stripes": "Stripes",
+      "checks": "Checks",
+      "triangles": "Triangles",
+      "diamonds": "Diamonds",
+      "hexagons": "Hexagons",
+      "zigzag": "Zigzag",
+      "waves": "Waves",
+      "confetti": "Confetti",
+      "blobs": "Blobs",
+      "memphis": "Memphis"
+    },
+    "background": "Background",
+    "transparent": "Transparent background",
+    "primary": "Main colour",
+    "secondary": "Second colour",
+    "fromPalette": "Colours from a palette",
+    "choosePalette": "Choose a palette…",
+    "paletteCategories": {
+      "modern": "Modern",
+      "minimal": "Minimal",
+      "luxury": "Luxury",
+      "corporate": "Corporate",
+      "nature": "Nature",
+      "pastel": "Pastel",
+      "vintage": "Vintage",
+      "dark": "Dark",
+      "vibrant": "Vibrant",
+      "gradient": "Gradient",
+      "monochrome": "Monochrome"
+    },
+    "spacing": "Spacing",
+    "scale": "Shape size",
+    "stroke": "Line thickness",
+    "rotation": "Rotation",
+    "opacity": "Opacity",
+    "shuffle": "Shuffle",
+    "previewLabel": "Preview of the {type} pattern",
+    "export": "Export",
+    "width": "Width",
+    "height": "Height",
+    "cssCode": "CSS background",
+    "seamless": "Every pattern tiles seamlessly in all directions."
+  },
+  "desktop": {
+    "appName": "Toolbox",
+    "nav": {
+      "main": "Main navigation",
+      "home": "Home",
+      "allTools": "All tools",
+      "chartDesigner": "Chart Designer",
+      "favorites": "Favourites",
+      "projects": "Recent projects",
+      "settings": "Settings",
+      "about": "About Toolbox",
+      "categories": "Categories"
+    },
+    "categories": {
+      "image": "Image tools",
+      "design": "Design tools",
+      "colors": "Colour tools",
+      "text": "Text tools",
+      "calculators": "Calculators",
+      "developer": "Developer tools"
+    },
+    "search": {
+      "placeholder": "Search tools… (Ctrl+K)",
+      "label": "Search tools",
+      "noResults": "No tool matches “{query}”."
+    },
+    "home": {
+      "greeting": "Welcome to Toolbox",
+      "subtitle": "Your favourite tools, directly on your computer. Files are processed on this device.",
+      "featured": "Popular tools",
+      "recent": "Recently used",
+      "favorites": "Favourites",
+      "categories": "Browse by category",
+      "count": "{count, plural, one {# tool} other {# tools}}"
+    },
+    "tool": {
+      "favorite": "Add to favourites",
+      "unfavorite": "Remove from favourites",
+      "local": "Runs on this computer. Your files are not uploaded.",
+      "back": "All tools"
+    },
+    "favorites": {
+      "title": "Favourites",
+      "empty": "You have no favourites yet. Open a tool and click the star to keep it here."
+    },
+    "projects": {
+      "title": "Recent projects",
+      "subtitle": "Chart & Infographic Designer projects saved on this computer.",
+      "empty": "No projects yet. Start a design and it is saved here automatically.",
+      "new": "New design",
+      "open": "Open",
+      "delete": "Delete",
+      "confirmDelete": "Confirm delete",
+      "elements": "{count, plural, one {# element} other {# elements}}",
+      "updated": "Updated {date}"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "languageHint": "On first launch the app follows your system language.",
+      "theme": "Appearance",
+      "themeSystem": "System",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "data": "Data on this computer",
+      "dataHint": "Designs, favourites and settings are stored only on this computer and are kept when you update the app.",
+      "clearRecents": "Clear recently used tools",
+      "cleared": "Recently used tools cleared.",
+      "shortcuts": "Keyboard shortcuts",
+      "shortcutSearch": "Search tools",
+      "shortcutSettings": "Open settings",
+      "shortcutHome": "Go to home"
+    },
+    "about": {
+      "title": "About Toolbox",
+      "product": "Toolbox Desktop",
+      "version": "Version {version}",
+      "build": "Build",
+      "channel": "Release channel",
+      "channels": {
+        "stable": "Stable",
+        "beta": "Beta"
+      },
+      "releaseDate": "Release date",
+      "notSet": "Not set",
+      "platform": "Platform",
+      "profile": "Build type",
+      "profiles": {
+        "production": "Production",
+        "development": "Development"
+      },
+      "engine": "Engine",
+      "notInApp": "Version details are shown in the installed app.",
+      "updates": "Updates",
+      "updatesNote": "Automatic update checks will arrive in a later version. Until then, new versions are published on the Toolbox website.",
+      "website": "Visit the Toolbox website",
+      "noWebsite": "The website address will be set for the first public release.",
+      "privacy": "Privacy",
+      "privacyText": "Toolbox Desktop needs no account and sends no analytics. Your files stay on this computer. The only network requests are the one-time download of the background-removal model and the links you choose to open.",
+      "credits": "Open-source components",
+      "creditsText": "Built with Tauri, Next.js and React. Fonts under the SIL Open Font License, icons by Lucide (ISC), background-removal models BiRefNet (MIT) and MODNet (Apache-2.0), ONNX Runtime (MIT).",
+      "agencyTitle": "Built by Nexoraat",
+      "agencyBody": "Toolbox is designed and developed by Nexoraat, a digital agency in Marrakech, Morocco. Nexoraat builds websites, mobile apps, branding and AI solutions, and runs digital marketing, SEO and advertising campaigns for businesses.",
+      "projectTitle": "Have a project in mind?",
+      "projectBody": "Need a website, an app or a marketing campaign that brings results? Tell us about your project, and the Nexoraat team will get back to you.",
+      "projectCta": "Contact us on WhatsApp",
+      "agencyVisit": "Visit nexoraat.com"
+    },
+    "save": {
+      "saved": "Saved to {path}",
+      "failed": "The file could not be saved: {error}",
+      "dismiss": "Dismiss"
+    },
+    "platforms": {
+      "windows": "Windows",
+      "macos": "macOS",
+      "linux": "Linux"
+    },
+    "builtBy": "Built by Nexoraat · Start a project",
+    "updates": {
+      "available": "Toolbox {version} is available.",
+      "current": "You have version {current}.",
+      "download": "Download update",
+      "later": "Later",
+      "check": "Check for updates",
+      "checking": "Checking…",
+      "upToDate": "You have the latest version ({version}).",
+      "failed": "Couldn’t check for updates. Check your internet connection.",
+      "downloadVersion": "Download version {version}",
+      "howTo": "Toolbox checks the website for new versions and lets you know. To update, download the new installer and run it: your designs and settings are kept.",
+      "notConfigured": "Update checks start once the Toolbox website address is set for this build.",
+      "onlyInApp": "Update checks run in the installed app."
+    }
+  },
+  "desktopPage": {
+    "metaTitle": "Toolbox Desktop for Windows – Free Download",
+    "metaDescription": "Download Toolbox Desktop for Windows 10 and 11: image tools, background removal, chart and infographic design, colour tools and more, processed on your computer.",
+    "title": "Toolbox Desktop",
+    "subtitle": "Your favorite tools, directly on your computer.",
+    "description": "Access Toolbox tools from a dedicated desktop application with convenient file handling, professional workflows, and regular updates.",
+    "downloadWindows": "Download for Windows",
+    "downloadFormat": "Download {format}",
+    "viewNotes": "View release notes",
+    "installGuide": "Installation guide",
+    "comingSoon": "The Windows app is being tested and will be available here soon.",
+    "facts": {
+      "version": "Latest version",
+      "notYet": "Coming soon",
+      "windows": "Windows",
+      "windowsValue": "10 and 11, 64-bit",
+      "size": "Installer size",
+      "date": "Release date",
+      "price": "Price",
+      "free": "Free, no account"
+    },
+    "downloads": "Downloads",
+    "exeTitle": "Windows installer (.exe)",
+    "exeHint": "Recommended. Installs for your user account, no administrator rights needed.",
+    "msiTitle": "Windows installer (.msi)",
+    "msiHint": "For IT administrators and installing for all users.",
+    "card": {
+      "platform": "Platform",
+      "arch": "Architecture",
+      "format": "Format",
+      "version": "Version",
+      "size": "File size",
+      "date": "Release date"
+    },
+    "channels": {
+      "stable": "Stable",
+      "beta": "Beta"
+    },
+    "verifyHint": "After downloading, you can compare the file’s SHA-256 checksum with the one shown here (PowerShell: Get-FileHash <file> -Algorithm SHA256).",
+    "featuresTitle": "What you get",
+    "features": {
+      "desktop": {
+        "title": "A real desktop app",
+        "text": "Its own window, sidebar navigation, keyboard shortcuts and the native Windows save dialog."
+      },
+      "local": {
+        "title": "Files stay on your PC",
+        "text": "Images, data and designs are processed on your computer and never uploaded."
+      },
+      "designer": {
+        "title": "Chart & infographic designer",
+        "text": "Create charts, KPI cards and infographics, then export PNG, JPG, SVG or PDF."
+      },
+      "background": {
+        "title": "AI background removal",
+        "text": "Remove photo backgrounds on your computer. The AI model is downloaded once, then reused."
+      },
+      "images": {
+        "title": "Image, colour and text tools",
+        "text": "Compress, resize and convert images, build palettes and patterns, count and clean text."
+      },
+      "offline": {
+        "title": "Works offline",
+        "text": "After installation, the tools work without internet. Only the first use of the background remover needs a connection."
+      },
+      "fast": {
+        "title": "Quick access",
+        "text": "Favourites, recently used tools and your saved design projects on the home screen."
+      },
+      "languages": {
+        "title": "English, French and Arabic",
+        "text": "Full right-to-left support for Arabic, with Arabic fonts in the designer."
+      }
+    },
+    "requirementsTitle": "System requirements",
+    "requirements": {
+      "os": "Windows 10 (version 1809 or later) or Windows 11",
+      "arch": "64-bit (x64) processor",
+      "webview": "Microsoft Edge WebView2 runtime (included in Windows 11; the installer adds it if missing)",
+      "internet": "Internet connection for the download, and once for the background-removal model",
+      "storage": "Free disk space for the app, plus about 135 MB if you use the background remover"
+    },
+    "requirementsNote": "Minimum hardware requirements will be published after testing on a range of computers.",
+    "notesTitle": "Release notes",
+    "notesVersion": "Version {version}",
+    "notes": {
+      "n1": "First release of Toolbox Desktop for Windows.",
+      "n2": "All Toolbox tools run locally, including the Chart & Infographic Designer.",
+      "n3": "Background remover with a verified, one-time model download.",
+      "n4": "Native save dialog, favourites, recent tools and local design projects.",
+      "n5": "English, French and Arabic, with right-to-left layout."
+    },
+    "notesPlatforms": "Platforms: Windows 10 and 11, x64.",
+    "notesNone": "Release notes will appear here with the first public release.",
+    "installTitle": "How to install",
+    "install": {
+      "download": {
+        "title": "Download",
+        "text": "Click “Download for Windows” to get the .exe installer."
+      },
+      "verify": {
+        "title": "Check the file (optional)",
+        "text": "Compare its SHA-256 checksum with the one on this page."
+      },
+      "run": {
+        "title": "Run the installer",
+        "text": "Open the downloaded file, choose your language and follow the steps."
+      },
+      "open": {
+        "title": "Open Toolbox",
+        "text": "Start Toolbox from the Start menu or the desktop shortcut."
+      },
+      "update": {
+        "title": "Updates",
+        "text": "New versions are published on this page. Install a new version over the old one; your projects are kept."
+      },
+      "uninstall": {
+        "title": "Uninstall",
+        "text": "Go to Settings → Apps → Installed apps, find Toolbox and choose Uninstall. Your projects are kept unless you choose to delete app data."
+      }
+    },
+    "troubleTitle": "Troubleshooting",
+    "trouble": {
+      "smartscreen": {
+        "q": "Windows SmartScreen shows a warning",
+        "a": "SmartScreen warns about apps that are new or not yet code-signed. Only continue if you downloaded the installer from this page and its SHA-256 checksum matches; then choose “More info” and “Run anyway”. If anything does not match, delete the file and do not run it."
+      },
+      "webview": {
+        "q": "The installer mentions WebView2",
+        "a": "Toolbox uses Microsoft Edge WebView2 to display its interface. Stay connected to the internet so the installer can add it, or install it from Microsoft."
+      },
+      "model": {
+        "q": "The background remover cannot download its model",
+        "a": "Check your internet connection and firewall. The model is downloaded once; after that the tool works offline."
+      },
+      "update": {
+        "q": "How do I update?",
+        "a": "Download the latest version from this page and install it over your current version. Automatic updates are planned for a future version."
+      }
+    }
   }
 }

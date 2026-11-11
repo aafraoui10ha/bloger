@@ -14,3 +14,17 @@ next-env.d.ts
 .env.*.local
 .env.test
 uploads/
+
+# Self-hosted AI model files (fetched and verified by scripts/models/sync-models.mjs)
+public/models/
+
+# Desktop (Tauri) build output and generated config
+desktop/.next/
+desktop/out/
+desktop/next-env.d.ts
+src-tauri/target/
+src-tauri/gen/
+src-tauri/tauri.generated.conf.json
+desktop/public/fonts/
+desktop/public/ort/
+public/downloads/

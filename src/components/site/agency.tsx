@@ -3,8 +3,9 @@ import { ArrowRight, Bot, ChartLine, ExternalLink, Globe, Megaphone, MessageCirc
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
-export const AGENCY_URL = "https://nexoraat.com";
-const WHATSAPP_URL = "https://wa.me/212619043143";
+import { AGENCY_URL, WHATSAPP_URL } from "@/lib/agency-links";
+
+export { AGENCY_URL };
 
 const SERVICES: { key: string; icon: LucideIcon }[] = [
   { key: "web", icon: Globe },

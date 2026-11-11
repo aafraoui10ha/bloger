@@ -1,0 +1,484 @@
+{
+  "tools": [
+    {
+      "key": "image-compressor",
+      "category": "image",
+      "icon": "image-down",
+      "wide": false,
+      "title": {
+        "en": "Image Compressor",
+        "fr": "Compresseur d’images",
+        "ar": "ضغط الصور"
+      },
+      "short": {
+        "en": "Reduce JPG, PNG and WebP file sizes in your browser while keeping good visual quality.",
+        "fr": "Réduisez le poids de vos images JPG, PNG et WebP dans votre navigateur en gardant une bonne qualité.",
+        "ar": "قلّل حجم صور JPG وPNG وWebP داخل متصفحك مع الحفاظ على جودة جيدة."
+      }
+    },
+    {
+      "key": "image-resizer",
+      "category": "image",
+      "icon": "scaling",
+      "wide": false,
+      "title": {
+        "en": "Image Resizer",
+        "fr": "Redimensionner une image",
+        "ar": "تغيير حجم الصورة"
+      },
+      "short": {
+        "en": "Change image dimensions in pixels, with or without keeping the original proportions.",
+        "fr": "Modifiez les dimensions d’une image en pixels, en conservant ou non ses proportions.",
+        "ar": "غيّر أبعاد الصورة بالبكسل مع الحفاظ على النسب الأصلية أو دونها."
+      }
+    },
+    {
+      "key": "png-to-jpg",
+      "category": "image",
+      "icon": "file-image",
+      "wide": false,
+      "title": {
+        "en": "PNG to JPG Converter",
+        "fr": "Convertisseur PNG en JPG",
+        "ar": "تحويل PNG إلى JPG"
+      },
+      "short": {
+        "en": "Convert PNG images to JPG, choosing the quality and the colour used for transparent areas.",
+        "fr": "Convertissez vos images PNG en JPG en choisissant la qualité et la couleur des zones transparentes.",
+        "ar": "حوّل صور PNG إلى JPG مع اختيار الجودة ولون المناطق الشفافة."
+      }
+    },
+    {
+      "key": "jpg-to-png",
+      "category": "image",
+      "icon": "file-image",
+      "wide": false,
+      "title": {
+        "en": "JPG to PNG Converter",
+        "fr": "Convertisseur JPG en PNG",
+        "ar": "تحويل JPG إلى PNG"
+      },
+      "short": {
+        "en": "Convert JPG images to the lossless PNG format, directly in your browser.",
+        "fr": "Convertissez vos images JPG au format PNG sans perte, directement dans votre navigateur.",
+        "ar": "حوّل صور JPG إلى صيغة PNG دون فقدان، مباشرة في متصفحك."
+      }
+    },
+    {
+      "key": "image-to-webp",
+      "category": "image",
+      "icon": "file-type",
+      "wide": false,
+      "title": {
+        "en": "Image to WebP Converter",
+        "fr": "Convertisseur d’images en WebP",
+        "ar": "تحويل الصور إلى WebP"
+      },
+      "short": {
+        "en": "Convert PNG, JPG, GIF or BMP images to WebP for faster-loading websites.",
+        "fr": "Convertissez vos images PNG, JPG, GIF ou BMP en WebP pour des sites plus rapides.",
+        "ar": "حوّل صور PNG وJPG وGIF وBMP إلى WebP لمواقع أسرع تحميلًا."
+      }
+    },
+    {
+      "key": "image-inspector",
+      "category": "image",
+      "icon": "file-search",
+      "wide": false,
+      "title": {
+        "en": "Image Format & Size Inspector",
+        "fr": "Analyseur de format et de taille d’image",
+        "ar": "فحص صيغة الصورة وحجمها"
+      },
+      "short": {
+        "en": "See an image’s real format, pixel dimensions, file size and whether its extension matches its content.",
+        "fr": "Découvrez le vrai format d’une image, ses dimensions, son poids et si son extension correspond à son contenu.",
+        "ar": "اعرف الصيغة الحقيقية للصورة وأبعادها وحجمها، وهل يطابق امتدادها محتواها."
+      }
+    },
+    {
+      "key": "background-remover",
+      "category": "image",
+      "icon": "scissors",
+      "wide": false,
+      "title": {
+        "en": "Background Remover",
+        "fr": "Suppression d’arrière-plan",
+        "ar": "إزالة خلفية الصور"
+      },
+      "short": {
+        "en": "Remove the background from a photo automatically with AI, right in your browser.",
+        "fr": "Supprimez automatiquement l’arrière-plan d’une photo grâce à l’IA, directement dans votre navigateur.",
+        "ar": "أزل خلفية أي صورة تلقائيًا بالذكاء الاصطناعي داخل متصفحك مباشرة."
+      }
+    },
+    {
+      "key": "word-counter",
+      "category": "text",
+      "icon": "type",
+      "wide": false,
+      "title": {
+        "en": "Word & Character Counter",
+        "fr": "Compteur de mots et de caractères",
+        "ar": "عداد الكلمات والأحرف"
+      },
+      "short": {
+        "en": "Count words, characters, sentences, paragraphs and reading time as you type.",
+        "fr": "Comptez mots, caractères, phrases, paragraphes et temps de lecture pendant la saisie.",
+        "ar": "عُدّ الكلمات والأحرف والجمل والفقرات ومدة القراءة أثناء الكتابة."
+      }
+    },
+    {
+      "key": "text-cleaner",
+      "category": "text",
+      "icon": "eraser",
+      "wide": false,
+      "title": {
+        "en": "Remove Extra Spaces & Clean Text",
+        "fr": "Supprimer les espaces en double et nettoyer un texte",
+        "ar": "حذف المسافات الزائدة وتنظيف النص"
+      },
+      "short": {
+        "en": "Remove duplicate spaces, tabs, stray line breaks and empty lines from any text.",
+        "fr": "Supprimez espaces en double, tabulations, retours à la ligne parasites et lignes vides.",
+        "ar": "احذف المسافات المكررة وعلامات الجدولة وفواصل الأسطر الزائدة والأسطر الفارغة من أي نص."
+      }
+    },
+    {
+      "key": "case-converter",
+      "category": "text",
+      "icon": "case-sensitive",
+      "wide": false,
+      "title": {
+        "en": "Uppercase & Lowercase Converter",
+        "fr": "Convertisseur majuscules / minuscules",
+        "ar": "تحويل الأحرف الكبيرة والصغيرة"
+      },
+      "short": {
+        "en": "Convert text to UPPERCASE, lowercase, Title Case or Sentence case.",
+        "fr": "Convertissez un texte en MAJUSCULES, minuscules, Majuscule À Chaque Mot ou Majuscule en début de phrase.",
+        "ar": "حوّل النص اللاتيني إلى أحرف كبيرة أو صغيرة أو أول حرف كبير في كل كلمة أو في كل جملة."
+      }
+    },
+    {
+      "key": "percentage-calculator",
+      "category": "calculators",
+      "icon": "percent",
+      "wide": false,
+      "title": {
+        "en": "Percentage Calculator",
+        "fr": "Calculatrice de pourcentage",
+        "ar": "حاسبة النسبة المئوية"
+      },
+      "short": {
+        "en": "Find a percentage of a number, what percent one number is of another, or the percentage change.",
+        "fr": "Calculez un pourcentage d’un nombre, ce que représente un nombre en pourcentage d’un autre, ou une variation.",
+        "ar": "احسب نسبة مئوية من عدد، أو كم يمثل عدد من آخر بالمئة، أو نسبة التغيّر."
+      }
+    },
+    {
+      "key": "discount-calculator",
+      "category": "calculators",
+      "icon": "tag",
+      "wide": false,
+      "title": {
+        "en": "Discount & Final Price Calculator",
+        "fr": "Calculatrice de remise et de prix final",
+        "ar": "حاسبة التخفيض والسعر النهائي"
+      },
+      "short": {
+        "en": "Work out the sale price, the amount saved and the final price including tax or VAT.",
+        "fr": "Calculez le prix soldé, l’économie réalisée et le prix final avec taxe ou TVA.",
+        "ar": "احسب سعر التخفيض ومقدار التوفير والسعر النهائي مع الضريبة."
+      }
+    },
+    {
+      "key": "average-calculator",
+      "category": "calculators",
+      "icon": "sigma",
+      "wide": false,
+      "title": {
+        "en": "Average Calculator",
+        "fr": "Calculatrice de moyenne",
+        "ar": "حاسبة المتوسط"
+      },
+      "short": {
+        "en": "Calculate the mean, median, sum, minimum, maximum and range of a list of numbers.",
+        "fr": "Calculez la moyenne, la médiane, la somme, le minimum, le maximum et l’étendue d’une liste de nombres.",
+        "ar": "احسب المتوسط الحسابي والوسيط والمجموع وأصغر وأكبر قيمة والمدى لقائمة أرقام."
+      }
+    },
+    {
+      "key": "qr-code-generator",
+      "category": "developer",
+      "icon": "qr-code",
+      "wide": false,
+      "title": {
+        "en": "QR Code Generator",
+        "fr": "Générateur de QR code",
+        "ar": "مولّد رمز QR"
+      },
+      "short": {
+        "en": "Create QR codes for links or text and download them as PNG or SVG.",
+        "fr": "Créez des QR codes pour des liens ou du texte et téléchargez-les en PNG ou SVG.",
+        "ar": "أنشئ رموز QR للروابط أو النصوص ونزّلها بصيغة PNG أو SVG."
+      }
+    },
+    {
+      "key": "json-formatter",
+      "category": "developer",
+      "icon": "braces",
+      "wide": false,
+      "title": {
+        "en": "JSON Formatter & Validator",
+        "fr": "Formateur et validateur JSON",
+        "ar": "تنسيق JSON والتحقق منه"
+      },
+      "short": {
+        "en": "Format, validate and minify JSON with clear error messages and positions.",
+        "fr": "Formatez, validez et minifiez du JSON avec des messages d’erreur et positions clairs.",
+        "ar": "نسّق JSON وتحقق من صحته وصغّره مع رسائل خطأ ومواضع واضحة."
+      }
+    },
+    {
+      "key": "color-converter",
+      "category": "developer",
+      "icon": "palette",
+      "wide": false,
+      "title": {
+        "en": "HEX / RGB Color Converter",
+        "fr": "Convertisseur de couleurs HEX / RVB",
+        "ar": "تحويل الألوان HEX / RGB"
+      },
+      "short": {
+        "en": "Convert colours between HEX, RGB and HSL and check contrast with white and black.",
+        "fr": "Convertissez les couleurs entre HEX, RVB et TSL et vérifiez le contraste avec le blanc et le noir.",
+        "ar": "حوّل الألوان بين HEX وRGB وHSL وتحقق من التباين مع الأبيض والأسود."
+      }
+    },
+    {
+      "key": "unit-converter",
+      "category": "calculators",
+      "icon": "ruler",
+      "wide": false,
+      "title": {
+        "en": "Unit Converter",
+        "fr": "Convertisseur d’unités",
+        "ar": "محوّل الوحدات"
+      },
+      "short": {
+        "en": "Convert length, weight, temperature, volume, area and data size units.",
+        "fr": "Convertissez longueurs, poids, températures, volumes, surfaces et tailles de données.",
+        "ar": "حوّل وحدات الطول والوزن ودرجة الحرارة والحجم والمساحة وحجم البيانات."
+      }
+    },
+    {
+      "key": "base64-converter",
+      "category": "developer",
+      "icon": "binary",
+      "wide": false,
+      "title": {
+        "en": "Base64 Encoder & Decoder",
+        "fr": "Encodeur et décodeur Base64",
+        "ar": "ترميز Base64 وفكّه"
+      },
+      "short": {
+        "en": "Encode text to Base64 or decode Base64 back to readable text, with full UTF-8 support.",
+        "fr": "Encodez un texte en Base64 ou décodez du Base64 en texte lisible, avec prise en charge complète de l’UTF-8.",
+        "ar": "رمّز النص إلى Base64 أو فكّ ترميز Base64 إلى نص مقروء، مع دعم كامل لـ UTF-8."
+      }
+    },
+    {
+      "key": "url-encoder",
+      "category": "developer",
+      "icon": "link",
+      "wide": false,
+      "title": {
+        "en": "URL Encoder & Decoder",
+        "fr": "Encodeur et décodeur d’URL",
+        "ar": "ترميز الروابط وفكّها"
+      },
+      "short": {
+        "en": "Percent-encode text for URLs or decode encoded URLs back to readable text.",
+        "fr": "Encodez un texte en pourcentage pour une URL ou décodez une URL encodée en texte lisible.",
+        "ar": "رمّز النص بالنسبة المئوية لاستخدامه في الروابط، أو فكّ الروابط المرمّزة إلى نص مقروء."
+      }
+    },
+    {
+      "key": "password-generator",
+      "category": "developer",
+      "icon": "key-round",
+      "wide": false,
+      "title": {
+        "en": "Password Generator",
+        "fr": "Générateur de mots de passe",
+        "ar": "مولّد كلمات المرور"
+      },
+      "short": {
+        "en": "Create strong, random passwords with the length and character types you choose.",
+        "fr": "Créez des mots de passe forts et aléatoires, avec la longueur et les caractères de votre choix.",
+        "ar": "أنشئ كلمات مرور قوية وعشوائية بالطول وأنواع الأحرف التي تختارها."
+      }
+    },
+    {
+      "key": "uuid-generator",
+      "category": "developer",
+      "icon": "dices",
+      "wide": false,
+      "title": {
+        "en": "UUID Generator",
+        "fr": "Générateur d’UUID",
+        "ar": "مولّد UUID"
+      },
+      "short": {
+        "en": "Generate random version 4 UUIDs (GUIDs), one or up to 100 at a time.",
+        "fr": "Générez des UUID version 4 (GUID) aléatoires, un seul ou jusqu’à 100 à la fois.",
+        "ar": "أنشئ معرّفات UUID عشوائية من الإصدار 4، واحدًا أو حتى 100 دفعة واحدة."
+      }
+    },
+    {
+      "key": "hash-generator",
+      "category": "developer",
+      "icon": "hash",
+      "wide": false,
+      "title": {
+        "en": "Hash Generator (SHA-256)",
+        "fr": "Générateur de hash (SHA-256)",
+        "ar": "مولّد الهاش (SHA-256)"
+      },
+      "short": {
+        "en": "Compute SHA-1, SHA-256, SHA-384 and SHA-512 hashes of any text.",
+        "fr": "Calculez les empreintes SHA-1, SHA-256, SHA-384 et SHA-512 d’un texte.",
+        "ar": "احسب بصمات SHA-1 وSHA-256 وSHA-384 وSHA-512 لأي نص."
+      }
+    },
+    {
+      "key": "timestamp-converter",
+      "category": "developer",
+      "icon": "clock",
+      "wide": false,
+      "title": {
+        "en": "Unix Timestamp Converter",
+        "fr": "Convertisseur de timestamp Unix",
+        "ar": "محوّل الطابع الزمني Unix"
+      },
+      "short": {
+        "en": "Convert Unix timestamps to readable dates and dates back to timestamps.",
+        "fr": "Convertissez un horodatage Unix en date lisible, et une date en horodatage.",
+        "ar": "حوّل الطوابع الزمنية Unix إلى تواريخ مقروءة، والتواريخ إلى طوابع زمنية."
+      }
+    },
+    {
+      "key": "bmi-calculator",
+      "category": "calculators",
+      "icon": "heart-pulse",
+      "wide": false,
+      "title": {
+        "en": "BMI Calculator",
+        "fr": "Calculateur d’IMC",
+        "ar": "حاسبة مؤشر كتلة الجسم"
+      },
+      "short": {
+        "en": "Calculate your body mass index from weight and height, with the WHO adult category.",
+        "fr": "Calculez votre indice de masse corporelle à partir du poids et de la taille, avec la catégorie OMS.",
+        "ar": "احسب مؤشر كتلة جسمك من الوزن والطول، مع فئة منظمة الصحة العالمية للبالغين."
+      }
+    },
+    {
+      "key": "age-calculator",
+      "category": "calculators",
+      "icon": "cake",
+      "wide": false,
+      "title": {
+        "en": "Age Calculator",
+        "fr": "Calculateur d’âge",
+        "ar": "حاسبة العمر"
+      },
+      "short": {
+        "en": "Find your exact age in years, months and days, and the days until your next birthday.",
+        "fr": "Obtenez votre âge exact en années, mois et jours, et le nombre de jours avant votre anniversaire.",
+        "ar": "اعرف عمرك بالضبط بالسنوات والأشهر والأيام، وعدد الأيام حتى عيد ميلادك القادم."
+      }
+    },
+    {
+      "key": "loan-calculator",
+      "category": "calculators",
+      "icon": "landmark",
+      "wide": false,
+      "title": {
+        "en": "Loan Calculator",
+        "fr": "Calculateur de prêt",
+        "ar": "حاسبة القروض"
+      },
+      "short": {
+        "en": "Estimate the monthly payment, total cost and total interest of a fixed-rate loan.",
+        "fr": "Estimez la mensualité, le coût total et les intérêts d’un prêt à taux fixe.",
+        "ar": "قدّر القسط الشهري والتكلفة الإجمالية والفوائد لقرض بفائدة ثابتة."
+      }
+    },
+    {
+      "key": "lorem-ipsum-generator",
+      "category": "text",
+      "icon": "pilcrow",
+      "wide": false,
+      "title": {
+        "en": "Lorem Ipsum Generator",
+        "fr": "Générateur de Lorem Ipsum",
+        "ar": "مولّد نص Lorem Ipsum"
+      },
+      "short": {
+        "en": "Generate placeholder paragraphs of Lorem Ipsum text for designs and mock-ups.",
+        "fr": "Générez des paragraphes de faux texte Lorem Ipsum pour vos maquettes.",
+        "ar": "أنشئ فقرات من نص Lorem Ipsum المؤقت للتصاميم والنماذج."
+      }
+    },
+    {
+      "key": "chart-designer",
+      "category": "design",
+      "icon": "chart-pie",
+      "wide": true,
+      "title": {
+        "en": "Chart & Infographic Designer",
+        "fr": "Créateur de graphiques et d’infographies",
+        "ar": "مصمم الرسوم البيانية والإنفوجرافيك"
+      },
+      "short": {
+        "en": "Design publication-ready charts, KPI cards, timelines and infographics. Edit data, colours and fonts, then download PNG, JPG, SVG or PDF.",
+        "fr": "Concevez des graphiques, cartes KPI, frises et infographies prêts à publier. Modifiez données, couleurs et polices, puis téléchargez en PNG, JPG, SVG ou PDF.",
+        "ar": "صمّم رسومًا بيانية وبطاقات مؤشرات وخطوطًا زمنية وإنفوجرافيك جاهزة للنشر. عدّل البيانات والألوان والخطوط ثم نزّل PNG أو JPG أو SVG أو PDF."
+      }
+    },
+    {
+      "key": "color-palettes",
+      "category": "design",
+      "icon": "swatch-book",
+      "wide": false,
+      "title": {
+        "en": "Colour Palette Library",
+        "fr": "Bibliothèque de palettes de couleurs",
+        "ar": "مكتبة لوحات الألوان"
+      },
+      "short": {
+        "en": "Browse 110 professional colour palettes, build harmonies and check WCAG contrast. Copy HEX codes or CSS in one click.",
+        "fr": "Parcourez 110 palettes professionnelles, créez des harmonies et vérifiez le contraste WCAG. Copiez les codes HEX ou le CSS en un clic.",
+        "ar": "تصفّح 110 لوحات ألوان احترافية، وأنشئ تناسقات لونية، وافحص التباين وفق WCAG. انسخ رموز HEX أو CSS بنقرة."
+      }
+    },
+    {
+      "key": "pattern-generator",
+      "category": "design",
+      "icon": "layout-grid",
+      "wide": false,
+      "title": {
+        "en": "Pattern Generator",
+        "fr": "Générateur de motifs",
+        "ar": "مولّد الأنماط"
+      },
+      "short": {
+        "en": "Create seamless geometric, dotted, striped, wavy and abstract patterns. Download as SVG, PNG or CSS.",
+        "fr": "Créez des motifs continus géométriques, à pois, rayés, ondulés ou abstraits. Téléchargez-les en SVG, PNG ou CSS.",
+        "ar": "أنشئ أنماطًا متكررة بلا فواصل: هندسية ومنقطة ومخططة ومتموجة وتجريدية. نزّلها بصيغة SVG أو PNG أو CSS."
+      }
+    }
+  ]
+}

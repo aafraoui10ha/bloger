@@ -22,7 +22,8 @@ A multilingual (English / French / Arabic) platform of free, privacy-friendly on
 **Public site** (`/en`, `/fr`, `/ar` — Arabic is right-to-left)
 - Homepage with search, featured tools, tools by category, recent tools, guides, how-it-works and trust sections.
 - 27 working tools, all processed **in the browser** (no uploads):
-  - Images: AI background remover, compressor, resizer, PNG→JPG, JPG→PNG, →WebP, format & size inspector (magic-byte detection). The background remover runs BiRefNet-lite (MIT) on WebGPU, or MODNet (Apache-2.0) on the CPU when WebGPU is missing, via Transformers.js in a Web Worker; model weights download from Hugging Face and the ONNX runtime from jsDelivr on first use. Image work runs in a Web Worker with `OffscreenCanvas`, falling back to the main thread.
+  - Images: AI background remover, compressor, resizer, PNG→JPG, JPG→PNG, →WebP, format & size inspector (magic-byte detection). The background remover runs BiRefNet-lite (MIT) on WebGPU, or MODNet (Apache-2.0) on the CPU when WebGPU is missing, via Transformers.js in a Web Worker; model and runtime files are self-hosted and SHA-256 verified, with Hugging Face/jsDelivr as fallback. Image work runs in a Web Worker with `OffscreenCanvas`, falling back to the main thread.
+  - Design: **Chart & Infographic Designer** (`src/tools/designer/`): an SVG editor with 13 chart types (d3-scale/d3-shape geometry), 12 size-adaptive templates, drag/resize/rotate with snapping, undo/redo, 17 self-hosted OFL fonts (incl. Cairo, Tajawal, IBM Plex Sans Arabic, Amiri) in `public/fonts/designer/`, RTL layout, IndexedDB projects, and PNG/JPG/SVG (fonts embedded)/PDF (pdf-lib, 150–300 DPI image) export. Also a **Colour Palette Library** (110 palettes, harmonies, WCAG contrast) and a **Pattern Generator** (14 seamless patterns → SVG/PNG/CSS). Run `npm run fonts:sync` only after changing `src/tools/designer/fonts.json`.
   - Text: word & character counter (Unicode-aware), whitespace cleaner, case converter.
   - Calculators: percentage, discount + VAT, average/median, unit converter, BMI (WHO adult categories), exact age, loan/mortgage payment.
   - Developer: QR code (PNG/SVG), JSON formatter/validator, HEX/RGB/HSL converter with WCAG contrast, Base64 (UTF-8 safe), URL encoder, password generator (Web Crypto), UUID v4, SHA hashes, Unix timestamp converter.
@@ -98,6 +99,8 @@ Integration tests use `bloger_test` (override with `TEST_DATABASE_URL`). They em
 | `db:seed` | Idempotent seed; never creates users, never overwrites edits, never enables ads |
 | `admin:create` | Create a dashboard account (`--role SUPER_ADMIN|ADMIN|EDITOR|AUTHOR`) |
 | `admin:reset-password` | Account recovery from the server shell |
+| `models:sync` | Copy and verify the background-remover model files into `public/models/` (runs before `build`) |
+| `models:update` | Rebuild the model manifest from pinned upstream files (only when changing models) |
 
 ## Project structure
 
@@ -157,7 +160,7 @@ Technical limitations:
 - **Public pages render on demand** (marked dynamic in the build), not as static ISR. That's correct and simple, but per-page caching can be tuned later.
 - The **built-in consent banner is not a Google-certified CMP**. Use *External CMP* mode with Google's "Privacy & messaging" (or another certified CMP) before serving ads in the EEA/UK/CH.
 - The **S3 storage driver** is implemented but wasn't exercised against a live bucket here. Database storage is fully tested.
-- **Background remover:** the any-subject model needs WebGPU (recent desktop Chrome, Edge, Safari). Other browsers get the lighter people-focused model. The WebGPU path could not be exercised in this headless environment; the CPU path is verified. Test it once in your own Chrome.
+- **Background remover:** the any-subject model needs WebGPU (recent desktop Chrome, Edge, Safari). Other browsers get the lighter people-focused model. The CPU path, self-hosted loading, cache, offline reuse and external fallback are verified in Chrome. The WebGPU path was only checked on a GPU without fp16 support, so it took the fallback route. Test it once on a recent GPU. Model files are self-hosted and integrity-checked (see docs/DEPLOYMENT.md).
 - **Not measured:** Lighthouse/Core Web Vitals scores and real devices. No score is claimed.
 - **E2E depth:** articles, access control and AdSense validation have full workflow tests; other dashboard sections have render tests, not end-to-end save tests.
 - The project is **not yet a Git repository**. Run `git init` and keep `.env` out of commits (it is already in `.gitignore`).

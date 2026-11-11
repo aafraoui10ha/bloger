@@ -139,11 +139,72 @@ test("new tools work: loan calculator and password generator", async ({ page }) 
   await expect(page.getByLabel("Password", { exact: true })).toHaveValue(/^.{16}$/);
 });
 
-// Model inference is verified manually: it downloads AI weights from Hugging Face.
 test("background remover page renders and rejects non-image files", async ({ page }) => {
   await page.goto("/en/tools/remove-background");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Background Remover");
   await page.locator('input[type="file"]').setInputFiles({ name: "notes.png", mimeType: "image/png", buffer: Buffer.from("not really a png") });
   await expect(page.locator(".alert-error")).toBeVisible();
   await expect(page.getByRole("button", { name: "Remove background" })).toHaveCount(0);
+});
+
+// Runs the real model from this website's own copy (needs `npm run build`, which syncs the files).
+test("background remover runs from self-hosted model files and never uploads the image", async ({ page }) => {
+  test.setTimeout(240_000);
+  const png = makePng(320, 240);
+  const requests: { url: string; method: string; body: Buffer | null }[] = [];
+  page.context().on("request", (r) => requests.push({ url: r.url(), method: r.method(), body: r.postDataBuffer() }));
+  await page.goto("/en/tools/remove-background");
+  await page.locator('input[type="file"]').setInputFiles({ name: "photo.png", mimeType: "image/png", buffer: png });
+  await page.getByRole("button", { name: "Remove background" }).click();
+  await expect(page.getByRole("progressbar", { name: "AI model download" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Image with the background removed" })).toBeVisible({ timeout: 200_000 });
+  await expect(page.getByRole("status")).toContainText("Background removed");
+
+  const modelRequests = requests.filter((r) => r.url.includes("/models/background-removal/"));
+  expect(modelRequests.length).toBeGreaterThan(0);
+  expect(modelRequests.every((r) => r.method === "GET")).toBe(true);
+  expect(requests.filter((r) => /huggingface.co|hf.co|jsdelivr/.test(r.url))).toEqual([]);
+  // No request carries the image: no bodies containing PNG data and nothing larger than a small event payload.
+  const signature = png.subarray(0, 8);
+  for (const r of requests) {
+    if (!r.body) continue;
+    expect(r.body.includes(signature), r.url).toBe(false);
+    expect(r.body.length, r.url).toBeLessThan(4096);
+  }
+});
+
+test("desktop download page works in every language and offers no unpublished downloads", async ({ page }) => {
+  for (const [path, heading, nav] of [
+    ["/en/desktop", "Toolbox Desktop", "Desktop app"],
+    ["/fr/desktop", "Toolbox Desktop", "Application PC"],
+    ["/ar/desktop", "Toolbox Desktop", "تطبيق الحاسوب"],
+  ] as const) {
+    const res = await page.goto(path);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
+    await expect(page.getByRole("link", { name: nav }).first()).toBeVisible();
+  }
+  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  await page.goto("/en/desktop");
+  if (await page.getByTestId("coming-soon").isVisible()) {
+    // No release configured: no download buttons at all.
+    await expect(page.getByTestId("primary-download")).toHaveCount(0);
+    await expect(page.locator('a[href$=".exe"], a[href$=".msi"]')).toHaveCount(0);
+  } else {
+    // A release is configured: every card shows a SHA-256 and its link serves the installer as a download.
+    const cards = page.locator('[data-testid^="download-"]');
+    expect(await cards.count()).toBeGreaterThan(0);
+    for (const card of await cards.all()) {
+      await expect(card.locator("code")).toHaveText(/^[0-9a-f]{64}$/);
+      const href = await card.getByRole("link").getAttribute("href");
+      const res = await page.request.head(new URL(href!, page.url()).href);
+      expect(res.status(), href!).toBe(200);
+      expect(res.headers()["content-disposition"] ?? "", href!).toContain("attachment");
+    }
+    await expect(page.getByTestId("primary-download")).toHaveAttribute("href", /.exe$/);
+  }
+  await expect(page.getByRole("heading", { name: "System requirements" })).toBeVisible();
+  await expect(page.getByText("SmartScreen", { exact: false }).first()).toBeVisible();
+  await page.getByRole("link", { name: "Installation guide" }).click();
+  await expect(page.getByRole("heading", { name: "How to install" })).toBeInViewport();
 });

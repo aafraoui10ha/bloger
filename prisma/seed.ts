@@ -15,6 +15,9 @@ import { toolsAr } from "./seed-data/tools.ar";
 import { extraToolsEn } from "./seed-data/tools-extra.en";
 import { extraToolsFr } from "./seed-data/tools-extra.fr";
 import { extraToolsAr } from "./seed-data/tools-extra.ar";
+import { designToolsEn } from "./seed-data/tools-design.en";
+import { designToolsFr } from "./seed-data/tools-design.fr";
+import { designToolsAr } from "./seed-data/tools-design.ar";
 import { pages } from "./seed-data/pages";
 import { demoArticles } from "./seed-data/articles";
 import type { AnyToolKey as ToolKey } from "./seed-data/types";
@@ -29,6 +32,7 @@ const TOOL_CATEGORIES = {
   image: { icon: "image", en: ["Image tools", "image-tools", "Compress, resize, convert and inspect images in your browser."], fr: ["Outils image", "outils-image", "Compressez, redimensionnez, convertissez et analysez vos images dans le navigateur."], ar: ["أدوات الصور", "أدوات-الصور", "اضغط الصور وغيّر حجمها وحوّلها وافحصها داخل متصفحك."] },
   text: { icon: "text", en: ["Text tools", "text-tools", "Count, clean and transform text in any language."], fr: ["Outils texte", "outils-texte", "Comptez, nettoyez et transformez vos textes dans toutes les langues."], ar: ["أدوات النصوص", "أدوات-النصوص", "عُدّ النصوص ونظّفها وحوّلها بأي لغة."] },
   calculators: { icon: "calculator", en: ["Calculators", "calculators", "Percentages, discounts, averages and unit conversions."], fr: ["Calculatrices", "calculatrices", "Pourcentages, remises, moyennes et conversions d’unités."], ar: ["الحاسبات", "الحاسبات", "النسب المئوية والتخفيضات والمتوسطات وتحويل الوحدات."] },
+  design: { icon: "palette", en: ["Design & graphics", "design-tools", "Colour palettes, patterns and chart graphics for social media, reports and the web."], fr: ["Design et graphisme", "outils-design", "Palettes de couleurs, motifs et graphiques de données pour les réseaux sociaux, les rapports et le web."], ar: ["أدوات التصميم", "أدوات-التصميم", "لوحات ألوان وأنماط ورسوم بيانية لوسائل التواصل والتقارير والويب."] },
   developer: { icon: "code", en: ["Developer & web tools", "developer-tools", "QR codes, JSON, colours and encoders for web work."], fr: ["Outils web et développeur", "outils-developpeur", "QR codes, JSON, couleurs et encodeurs pour le web."], ar: ["أدوات المطورين والويب", "أدوات-المطورين", "رموز QR وJSON والألوان وأدوات الترميز لأعمال الويب."] },
 } as const;
 
@@ -38,7 +42,7 @@ const ARTICLE_CATEGORIES = {
   calculations: { en: ["Calculations", "calculations"], fr: ["Calculs", "calculs"], ar: ["الحسابات", "الحسابات"] },
 } as const;
 
-const FEATURED: ToolKey[] = ["background-remover", "image-compressor", "image-resizer", "word-counter", "password-generator", "loan-calculator", "image-to-webp"];
+const FEATURED: ToolKey[] = ["chart-designer", "background-remover", "image-compressor", "image-resizer", "word-counter", "password-generator", "loan-calculator", "image-to-webp"];
 const RELATED: Partial<Record<ToolKey, ToolKey[]>> = {
   "image-compressor": ["image-resizer", "image-to-webp", "image-inspector"],
   "image-resizer": ["image-compressor", "image-inspector", "png-to-jpg"],
@@ -67,6 +71,9 @@ const RELATED: Partial<Record<ToolKey, ToolKey[]>> = {
   "loan-calculator": ["percentage-calculator", "discount-calculator"],
   "lorem-ipsum-generator": ["word-counter", "text-cleaner"],
   "background-remover": ["image-resizer", "image-compressor", "png-to-jpg"],
+  "chart-designer": ["color-palettes", "pattern-generator", "background-remover"],
+  "color-palettes": ["pattern-generator", "chart-designer", "color-converter"],
+  "pattern-generator": ["color-palettes", "chart-designer", "image-to-webp"],
 };
 
 const PLACEMENTS = [
@@ -124,7 +131,7 @@ async function main() {
   }
 
   // Tools with full translated content.
-  const content = { en: { ...toolsEn, ...extraToolsEn }, fr: { ...toolsFr, ...extraToolsFr }, ar: { ...toolsAr, ...extraToolsAr } };
+  const content = { en: { ...toolsEn, ...extraToolsEn, ...designToolsEn }, fr: { ...toolsFr, ...extraToolsFr, ...designToolsFr }, ar: { ...toolsAr, ...extraToolsAr, ...designToolsAr } };
   const toolIds: Record<string, string> = {};
   let toolOrder = 0;
   for (const key of Object.keys(TOOL_MODULES) as ToolKey[]) {

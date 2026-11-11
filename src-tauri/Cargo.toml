@@ -1,0 +1,32 @@
+[package]
+name = "toolbox-desktop"
+# Kept in sync with package.json by `npm run desktop:version` (package.json is the source of truth).
+version = "1.0.1"
+description = "Toolbox Desktop"
+authors = ["Toolbox"]
+license = "UNLICENSED"
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "toolbox_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+percent-encoding = "2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
